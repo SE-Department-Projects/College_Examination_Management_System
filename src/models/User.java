@@ -1,3 +1,5 @@
+package models;
+
 public class User {
 
     // attributes
@@ -51,8 +53,6 @@ public class User {
         System.out.println("You have logged out successfully");
     }
 
-    public static void main(String[] args) {
-        System.out.println("hello world");
-    }
+
 
 }
