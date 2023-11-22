@@ -10,7 +10,7 @@ package java_project;
  */
 public class Lecturers {
     
-    ManagerExams examManager;
+    ManagerExams  xamManager;
     ReportGenerator reportGenerator;
 
     public Lecturers(String username, String password, int maxExams) {
