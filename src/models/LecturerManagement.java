@@ -33,7 +33,7 @@ public class LecturerManagement {
                 return i;  // return the index of the lecture
             }
         }
-        return 0; // D.N.E
+        return -1; // D.N.E
     }
 
 
