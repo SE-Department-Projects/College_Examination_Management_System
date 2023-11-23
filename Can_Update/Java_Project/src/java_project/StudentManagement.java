@@ -72,7 +72,7 @@ return false;
 
 
 //-------------------SEARCH STUDENT--------------------------------------------
-public  ArrayList<Student> searchStd(int id)
+public ArrayList<Student> searchStd(int id)
 
 {
    
