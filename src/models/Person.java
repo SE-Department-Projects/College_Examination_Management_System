@@ -6,6 +6,7 @@ public abstract class Person {
     private String userName;
     private String password;
     private String role; // admin, user, lecturer
+    private boolean isLoggedOut = false;
 
     // constructor
     public Person(String userName, String password, String role) {
@@ -16,14 +17,29 @@ public abstract class Person {
 
     // Setters
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-        // TODO: make validation
+    public boolean setUserName(String userName) {
+
+            // validation (username must be atleast 6 characters)
+        if (userName.length() >= 6) {
+            this.userName = userName;
+            return true;
+        } 
+        else {
+            return false;
+        }
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-        // TODO: make validation
+    public boolean setPassword(String password) {
+
+            // validation (password must be atleast 8 characters and has atleast 1 alphabet letter)
+        if (password.length() >= 8 && password.matches(".*[a-zA-Z]+.*")) {
+            this.password = password;
+            return true;
+        }
+        else {
+            return false;
+        }
+        
     }
 
     // Getters
@@ -50,7 +66,7 @@ public abstract class Person {
     // logout method
 
     public void logout() {
-        System.out.println("You have logged out successfully");
+        this.isLoggedOut = true;
     }
 
 
