@@ -3,8 +3,8 @@ package helpers;
 import java.util.Scanner;
 
 public class Functions {
-     Scanner scanner = new Scanner(System.in);
-    public  int readInt() {
+    static Scanner scanner = new Scanner(System.in);
+    public static   int readInt() {
         int num = 0;
 
         while (true) {

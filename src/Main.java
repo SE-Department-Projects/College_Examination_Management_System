@@ -1,9 +1,8 @@
 import helpers.Authentication;
+import helpers.Functions;
 import models.Admin;
 import models.Lecturer;
-import models.Person;
 
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -60,6 +59,7 @@ public class Main {
 
                             switch (op) {
                                 case 1:
+
                                     System.out.print("Enter lecturer Username: ");
                                     String LecUsername = input.nextLine();
 
@@ -81,7 +81,7 @@ public class Main {
 
                                 case 3:
                                     System.out.print("Enter lecturer id to search: ");
-                                    lecID = input.nextInt();
+                                    lecID = Functions.readInt();
 
                                     int index = admin1.lectureManager.findLecIndex(lecID);
                                     if (index == -1) {
@@ -96,7 +96,7 @@ public class Main {
 
                                 case 4:
                                     System.out.printf("%-10s%-16s%-25s\n", "id", "name", "password");
-                                    for (Lecturer lec : admin1.lectureManager.getLecturersArr1()) {
+                                    for (Lecturer lec : admin1.lectureManager.getLecturersArr()) {
                                         System.out.printf("\n%-10s%-16s%-25s", lec.getID(), lec.getUserName(), lec.getPassword());
 
                                     }
@@ -123,7 +123,6 @@ public class Main {
                 System.exit(0);
             }
 
-//        }
 
 
     }

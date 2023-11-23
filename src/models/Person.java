@@ -5,7 +5,7 @@ public abstract class Person {
     // attributes
     private String userName;
     private String password;
-    private String role; // admin, user, lecturer
+    private final String role; // admin, user, lecturer
     private boolean isLoggedOut = false;
 
     // constructor

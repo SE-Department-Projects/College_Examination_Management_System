@@ -1,7 +1,7 @@
 package models;
 
 public class Subject {
-    private int SubjID;
+    private final int SubjID;
     private String name;
     private int LecturerID;
 

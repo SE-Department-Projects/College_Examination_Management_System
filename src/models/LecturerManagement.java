@@ -5,74 +5,78 @@ import java.util.ArrayList;
 public class LecturerManagement {
 
     //    private Lecturer[] lecturersArr = new Lecturer[10];
-    private ArrayList<Lecturer> lecturersArr1 = new ArrayList<>();
+    private ArrayList<Lecturer> lecturersArr = new ArrayList<>();
 
 
+    //add lecturer
     public void addLecturer(Lecturer lecturer) {
-        lecturersArr1.add(lecturer);
+        lecturersArr.add(lecturer);
     }
 
+    //delete lecturer
     public boolean deleteLecturer(int ID) {
 
         int index = findLecIndex(ID);
 
         if (index != -1) {
-            lecturersArr1.remove(lecturersArr1.get(index));
+            lecturersArr.remove(lecturersArr.get(index));
 
             return true;  // done
         }
         return false; // D.N.E
     }
 
+    //search lecturer
     public Lecturer searchLecturer(int index) {
 
-     return  lecturersArr1.get(index);
+     return  lecturersArr.get(index);
 
     }
 
 
+    //update lecturer username
     public boolean updateLecUsername(int ID, String newUsername) {
         int index = findLecIndex(ID);
-        if (index != 0) {
+        if (index != -1) {
 
-            lecturersArr1.get(index).setUserName(newUsername);
+            lecturersArr.get(index).setUserName(newUsername);
             return true;
         }
         return false;
     }
 
+
+    //update lecturer password
     public boolean updateLecPassword(int ID, String password) {
         int index = findLecIndex(ID);
 
-        if (index != 0) {
-            lecturersArr1.get(index).setPassword(password);
+        if (index != -1) {
+            lecturersArr.get(index).setPassword(password);
             return true;
         }
         return false;
     }
 
-    public ArrayList<Lecturer> listLecturer() {
-        return lecturersArr1;
+
+    //list all student
+    public ArrayList<Lecturer> getLecturersArr() {
+        return lecturersArr;
     }
 
-    public ArrayList<Lecturer> getLecturersArr1() {
-        return lecturersArr1;
-    }
-
-    public void setLecturersArr1(ArrayList<Lecturer> lecturersArr1) {
-        this.lecturersArr1 = lecturersArr1;
+    public void setLecturersArr(ArrayList<Lecturer> lecturersArr) {
+        this.lecturersArr = lecturersArr;
     }
 
 
-
+    //find the index if the student
     public int findLecIndex(int ID) {
 
         if (ID <= 0) {
             return -1;   // D.N.E
         }
 
-        for (int i = 0; i < lecturersArr1.size(); i++) {
-            if (ID == lecturersArr1.get(i).getID()) {
+        for (int i = 0; i < lecturersArr.size(); i++) {
+            if (ID == lecturersArr.get(i).getID()) {
 
                 return i;  // return the index of the lecture
             }

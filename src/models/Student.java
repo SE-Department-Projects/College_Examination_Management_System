@@ -59,5 +59,9 @@ public class Student extends Person{
         //     // loop for accessable exams for std
         // }
     }
+
+    public int getId() {
+        return id;
+    }
 }
 
