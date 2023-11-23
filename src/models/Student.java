@@ -9,7 +9,7 @@ public class Student extends Person{
     static int numOfStudents = 0;
     private int degree;
     private final int id;
-    private ArrayList<Subject> registeredSubjects = new ArrayList<>();
+    private ArrayList<Subject> registeredSubjects;
     
 
     // Constructor
@@ -30,9 +30,13 @@ public class Student extends Person{
         // To do implementation
     }
 
-    public void setSubjects(Subject subj) {
+    public void addSubject(Subject subj) {
         registeredSubjects.add(subj);
     } 
+
+    public void delSubject(Subject subj) {
+        registeredSubjects.remove(subj);
+    }
 
     // Getters
     public int getDegree() {
