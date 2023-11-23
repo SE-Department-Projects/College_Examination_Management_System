@@ -13,8 +13,8 @@ public class Student extends Person{
     
 
     // Constructor
-    public Student(String username, String password, String role) {
-        super(username, password, role);   
+    public Student(String username, String password) {
+        super(username, password, "student");   
         this.id = ++numOfStudents;
         this.registeredSubjects = new ArrayList<>();
     }
