@@ -16,7 +16,7 @@ public class LecturerManagement {
 
         int index = findLecIndex(ID);
 
-        if (index != 0) {
+        if (index != -1) {
             lecturersArr1.remove(lecturersArr1.get(index));
 
             return true;  // done
@@ -24,16 +24,10 @@ public class LecturerManagement {
         return false; // D.N.E
     }
 
-    public int searchLecturer(int ID) {
+    public Lecturer searchLecturer(int index) {
 
+     return  lecturersArr1.get(index);
 
-        for (int i = 0; i < lecturersArr1.size(); i++) {
-            if (ID == lecturersArr1.get(i).getID()) {
-
-                return i;  // return the index of the lecture
-            }
-        }
-        return -1; // D.N.E
     }
 
 
@@ -69,20 +63,12 @@ public class LecturerManagement {
         this.lecturersArr1 = lecturersArr1;
     }
 
-//    private boolean isFound(int ID) {
-//        for (Lecturer lecturer : lecturersArr1) {
-//
-//            if (ID == lecturer.getID()) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 
-    private int findLecIndex(int ID) {
+
+    public int findLecIndex(int ID) {
 
         if (ID <= 0) {
-            return 0;
+            return -1;   // D.N.E
         }
 
         for (int i = 0; i < lecturersArr1.size(); i++) {
@@ -92,7 +78,7 @@ public class LecturerManagement {
             }
         }
 
-        return 0;
+        return -1;
     }
 
 }

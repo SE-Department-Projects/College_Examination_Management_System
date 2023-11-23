@@ -41,6 +41,7 @@ public class Student extends Person{
 
     public boolean getIsExamed() {
         // To do implementation
+        return true;
     }
 
     public ArrayList<Subject> getSubjects() {

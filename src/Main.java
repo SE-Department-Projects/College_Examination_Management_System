@@ -1,7 +1,7 @@
 import helpers.Authentication;
 import models.Admin;
 import models.Lecturer;
-import models.User;
+import models.Person;
 
 import java.util.Locale;
 import java.util.Scanner;
@@ -38,7 +38,7 @@ public class Main {
                     System.out.println("login Success");
                     System.out.println("---------------------------\n");
 
-                    Admin admin1 = new Admin(username, password, "Admin");
+                    Admin admin1 = new Admin(username, password);
 
                     System.out.println("choose only on option to manage: ");
 
@@ -67,7 +67,7 @@ public class Main {
                                     String LecPassword = input.nextLine();
 
 
-                                    admin1.lectureManager.addLecturer(new Lecturer(LecUsername, LecPassword, "Lecturer"));
+                                    admin1.lectureManager.addLecturer(new Lecturer(LecUsername, LecPassword));
                                     System.out.println("\n---- lecturer added successfully ----\n");
                                     break;
 
@@ -83,11 +83,11 @@ public class Main {
                                     System.out.print("Enter lecturer id to search: ");
                                     lecID = input.nextInt();
 
-                                    int index = admin1.lectureManager.searchLecturer(lecID);
+                                    int index = admin1.lectureManager.findLecIndex(lecID);
                                     if (index == -1) {
                                         System.out.println("\n------the lecturer not found----\n");
                                     } else {
-                                        Lecturer lecturer = admin1.lectureManager.getLecturersArr1().get(index);
+                                        Lecturer lecturer = admin1.lectureManager.searchLecturer(index);
                                         System.out.println(lecturer.getID() + "   " + lecturer.getUserName() + "   " + lecturer.getPassword());
                                         System.out.println("\n-------------------");
 
