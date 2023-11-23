@@ -1,6 +1,6 @@
 package models;
 
-public class Admin extends User
+public class Admin extends Person
 {
     public LecturerManagement lectureManager = new LecturerManagement();
 

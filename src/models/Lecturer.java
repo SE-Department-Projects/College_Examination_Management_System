@@ -1,6 +1,6 @@
 package models;
 
-public class Lecturer extends User {
+public class Lecturer extends Person {
 
     static int numOfLecturer = 0;
     private final int ID;

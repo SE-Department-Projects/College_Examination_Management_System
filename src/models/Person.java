@@ -1,6 +1,6 @@
 package models;
 
-public abstract class User {
+public abstract class Person {
 
     // attributes
     private String userName;
@@ -8,7 +8,7 @@ public abstract class User {
     private String role; // admin, user, lecturer
 
     // constructor
-    public User(String userName, String password, String role) {
+    public Person(String userName, String password, String role) {
         this.userName = userName;
         this.password = password;
         this.role = role;
