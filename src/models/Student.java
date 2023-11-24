@@ -30,12 +30,24 @@ public class Student extends Person{
         // To do implementation
     }
 
-    public void addSubject(Subject subj) {
-        registeredSubjects.add(subj);
+    public boolean addSubject(Subject subj) {
+        if (this.registeredSubjects.contains(subj)){
+            return false;
+        }
+        else{
+            this.registeredSubjects.add(subj);
+            return true;
+        }
     } 
 
-    public void delSubject(Subject subj) {
-        registeredSubjects.remove(subj);
+    public boolean delSubject(Subject subj) {
+        if (this.registeredSubjects.contains(subj)){
+            this.registeredSubjects.remove(subj);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     // Getters
