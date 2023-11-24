@@ -30,6 +30,7 @@ public class Lecturer extends Person {
     }
     
 
+
     public boolean delSubject(Subject subject) {
         if (this.subjects.contains(subject)){
             this.subjects.remove(subject);
