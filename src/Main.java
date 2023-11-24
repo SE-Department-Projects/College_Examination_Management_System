@@ -1,5 +1,5 @@
-import helpers.Authentication;
-import models.Admin;
+import helpers.*;
+import models.*;
 import roles.AdminRole;
 
 import java.util.Scanner;
@@ -9,55 +9,59 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String roleNum, username, password;
-//        boolean systemIsOpen = true;  // howa lisa ma 3ml
+        String username, password;
+        int roleNum;
 
-        System.out.println("---- welcome to our system ---");
 
-        System.out.println("1=> Admin");
-        System.out.println("2=> Lecturer");
-        System.out.println("3=> Student");
+        System.out.println("---- welcome to our system ----");
+
+        System.out.println("1=> Admin\n2=> Lecturer\n3=> Student");
 
 
         System.out.print("enter the num of the role: ");
-        roleNum = input.nextLine();
+        roleNum = Functions.readInt();
 
-        if (roleNum.equals("1")) {
+        while (roleNum != 1 && roleNum != 2 && roleNum != 3) {
+            System.out.print("this role not exist please enter a valid role num or 0 for exit: ");
+            roleNum = Functions.readInt();
+            if (roleNum == 0) {
+                System.exit(0);
+            }
 
-            System.out.print("Enter Username: ");
-            username = input.nextLine().toLowerCase();
+        }
 
-            System.out.print("Enter Password: ");
-            password = input.nextLine().toLowerCase();
+        System.out.print("Enter Username: ");
+        username = input.nextLine().toLowerCase();
+
+        System.out.print("Enter Password: ");
+
+        password = input.nextLine().toLowerCase();
+
+
+        if (roleNum == 1) {   //admin role
+
 
             if (Authentication.adminLogin(username, password)) {
                 System.out.println("login Success");
                 System.out.println("---------------------------\n");
 
-                Admin admin1 = new Admin(username, password);
+                Admin admin1 = new Admin(username, password);  // will be the admin that returns from the file
 
-                System.out.println("choose only on option to manage: ");
+                AdminRole.adminRole(admin1);
 
-                System.out.println("1=> Lecturer\n2=> Student\n3=> Subject");
-                System.out.print("Enter your answer");
-                String optionsAnswer = input.nextLine();
-
-                if (optionsAnswer.equals("1")) {  //admin role
-                    AdminRole.adminRole(admin1);
-                } else {
-                    System.out.println("else de bta3et 3aiz y3mil manage lehh bezabt");
-                }
             } else {
                 System.out.println("you are not Authenticated");
                 System.exit(0);
             }
 
 
-        } else {
-            System.out.println("esbor lma nkhlas aly fo2");
+        } else if (roleNum == 2) { //lecturer role
+            System.out.println("lecturer section coming soon...");
+            System.exit(0);
+        } else {  // student role
+            System.out.println("student section coming soon...");
             System.exit(0);
         }
-
 
     }
 }
