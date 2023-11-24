@@ -21,14 +21,40 @@ public class StudentManagement {
 
 
     //--------------- ADD STUDENT----------------------------------------------
-    public void addStd(Student student) {
+
+    public void addStd(Student student) { // Method explaination in SubjectManagement.java
         studentArray.add(student);
     }
 
 
+    //-----------------FIND STUDENT INDEX------------------------------------------
+
+    public int findStdIndex(int id) { // Method explaination in SubjectManagement.java
+
+        if (id <= -1) {
+            return -1;
+        }
+        for (int i = 0; i < studentArray.size(); i++) {
+            if (id == (studentArray.get(i)).getId()) {
+
+                return i;  // return the index of the student
+            }
+        }
+        return -1;
+    }
+
+
+//-------------------SEARCH STUDENT--------------------------------------------
+    // before running check if the index is not -1
+    public Student searchStd(int index) {  // Method explaination in SubjectManagement.java
+        return studentArray.get(index);
+    }
+
+
+
 //----------------- DELETE STUDENT------------------------------------------
 
-    public boolean deleteStd(int id) {
+    public boolean deleteStd(int id) {   // Method explaination in SubjectManagement.java
         int index = findStdIndex(id);
         if (index != -1) {
             studentArray.remove(studentArray.get(index));
@@ -39,6 +65,7 @@ public class StudentManagement {
 
 
     //-------------------UPDATE STUDENT USERNAME---------------------------------
+
     public boolean updateStdUsername(int id, String newUsername) {
         int index = findStdIndex(id);
 
@@ -62,11 +89,8 @@ public class StudentManagement {
     }
 
 
-//-------------------SEARCH STUDENT--------------------------------------------
+    
 
-    public Student searchStd(int index) {
-        return studentArray.get(index);
-    }
 
     //----------------------LIST STUDENT---------------------------------------------
     public ArrayList<Student> listStd() {
@@ -74,19 +98,6 @@ public class StudentManagement {
     }
 
 
-    public int findStdIndex(int id) {
-
-        if (id <= -1) {
-            return 0;
-        }
-        for (int i = 0; i < studentArray.size(); i++) {
-            if (id == (studentArray.get(i)).getId()) {
-
-                return i;  // return the index of the student
-            }
-        }
-        return -1;
-    }
 
 
 }

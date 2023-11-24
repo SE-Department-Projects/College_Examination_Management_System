@@ -19,12 +19,26 @@ public class Lecturer extends Person {
         return ID;
     }
 
-    public void addSubject(Subject subject) {
-        this.subjects.add(subject);
+    public boolean addSubject(Subject subject) {
+        if (this.subjects.contains(subject)){
+            return false;
+        }
+        else{
+            this.subjects.add(subject);
+            return true;
+        }
     }
+    
 
-    public void delSubject(Subject subject) {
-        this.subjects.remove(subject);
+
+    public boolean delSubject(Subject subject) {
+        if (this.subjects.contains(subject)){
+            this.subjects.remove(subject);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
 

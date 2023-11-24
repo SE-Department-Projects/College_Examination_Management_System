@@ -1,91 +1,101 @@
 package models;
+// test
 
 import java.util.ArrayList;
 
-public class SubjectManagement  {
+public class SubjectManagement {
 
 
-    private ArrayList<Subject> ListSubj = new ArrayList<>();
+    private ArrayList<Subject> ListSubj = new ArrayList<>(); // array of subjects
 
-    private Student std;
-    private LecturerManagement lec;
+    private StudentManagement std; // object from student management class to use its methods
+    private LecturerManagement lec; // object from lecturer management class to use its methods
 
 
+    //--------------- ADD SUBJECT----------------------------------------------
 
-    public void addSubject(Subject sub){
+    public void addSubject(Subject sub) { // adds new subject to the list
         ListSubj.add(sub);
     }
 
+    //---------------FIND SUBJECT INDEX----------------------------------------------
 
-    public boolean deleteSubject(int id){ 
-        int index = findSubjIndex(id);
-        if(index != -1){
-            Subject sub = searchSubject(index);
-            ListSubj.remove(sub);
-            return true;
+    public int findSubjIndex(int id) {
+
+        for (int i = 0; i < ListSubj.size(); i++) { // loop on the list of subjects
+            if (ListSubj.get(i).getSubjID() == id) // if the id of the subject equals the id we entered
+                return i; // returns the index of the subject (index not id)
         }
-        else
-            return false;
+        return -1; // else it returns -1
     }
 
 
-    public Subject searchSubject(int index){ //we will enter the index we got from findSubjIndex method in case it didn't return -1
-        
+    //-------------------SEARCH SUBJECT--------------------------------------------
+
+    public Subject searchSubject(int index) { //we will enter the index we got from findSubjIndex method in case it didn't return -1
+
         return ListSubj.get(index);
     }
 
 
-    public int findSubjIndex(int id){
-        
-        for(int i = 0 ; i<ListSubj.size();i++){
-            if(ListSubj.get(i).getSubjID() == id)
-            return i;
-        }
-        return 0;
-    }
-        
-    
+    //-----------------DELETE SUBJECT------------------------------------------
 
-
-    public boolean assignSubj(Subject sub, String role, int idOfUser){
-        if (role == "student"){
-            int index = std.findStdIndex(idOfUser);
-            if (index != -1){
-                Student student = std.searchStudent(index);
-                student.addSubject(sub);
-            }
+    public boolean deleteSubject(int id) {
+        int index = findSubjIndex(id); // returns the index of the subject if it exist , else returns -1
+        if (index != -1) {
+            Subject sub = searchSubject(index); // if the subejct exists it returns the subject object
+            ListSubj.remove(sub); // remove the subject
             return true;
-            // TODO StudentManagement.....
-        }
-            else if (role == "lecturer"){
-            int index = lec.findLecIndex(idOfUser);
-            if (index != -1){
-                Lecturer lecturer = lec.searchLecturer(index);
-                lecturer.addSubject(sub);
-            }
-            return true;
-        }
-        else 
+        } else // if it doesn't exist it returns false
             return false;
     }
 
-    public void unassignSubj(Subject sub, String role, int idOfUser){
-        if (role == "student"){
+
+    //---------------ASSIGN SUBJECT----------------------------------------------
+
+    public boolean assignSubj(Subject sub, String role, int idOfUser) { // takes the subject object , the role of the user and the id of the user
+        if (role.equals("student")) { //if the role is student
+            int index = std.findStdIndex(idOfUser); // we find the index of the student ( method from class StudentManagement)
+            if (index != -1) { // if it exists
+                Student student = std.searchStd(index); // we get the student object
+                student.addSubject(sub); // and assign the subject
+            }
+            return true; // true if the subject assigned successfully
+        } else if (role.equals("lecturer")) { // if the role is lecturer
+            int index = lec.findLecIndex(idOfUser); // we find the index of the lecturer ( method from class LecturerManagement)
+            if (index != -1) { // if it exists
+                Lecturer lecturer = lec.searchLecturer(index); // we get the lecturer object
+                lecturer.addSubject(sub); // and assign the subject
+            }
+            return true; // true if the subject assigned successfully
+        } else { // if the role is not student nor lecturer
+            return false;  // returns false
+        }
+    }
+
+
+    //---------------UNASSIGNED SUBJECT----------------------------------------------
+
+    public boolean unassignSubj(Subject sub, String role, int idOfUser) { // SAME AS assignSubj method but instead it deletes the subject
+        if (role.equals("student")) {
             int index = std.findStdIndex(idOfUser);
-            if (index != -1){
-                Student student = std.searchStudent(index);
+            if (index != -1) {
+                Student student = std.searchStd(index);
                 student.delSubject(sub);
             }
-            // TODO StudentManagement.....
-        }
-            else if (role == "lecturer"){
+            return true;
+        } else if (role.equals("lecturer")) {
             int index = lec.findLecIndex(idOfUser);
-            if (index != -1){
+            if (index != -1) {
                 Lecturer lecturer = lec.searchLecturer(index);
                 lecturer.delSubject(sub);
             }
+            return true;
+        } else {
+            return false;
         }
-    } 
+    }
+
 
 }
 
