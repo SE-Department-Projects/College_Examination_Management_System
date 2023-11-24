@@ -28,6 +28,7 @@ public class Lecturer extends Person {
             return true;
         }
     }
+    
 
     public boolean delSubject(Subject subject) {
         if (this.subjects.contains(subject)){

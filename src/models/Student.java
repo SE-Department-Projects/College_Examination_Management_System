@@ -49,6 +49,7 @@ public class Student extends Person{
             return false;
         }
     }
+    
 
     // Getters
     public int getDegree() {
