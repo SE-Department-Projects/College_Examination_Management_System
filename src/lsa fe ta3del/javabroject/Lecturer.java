@@ -11,7 +11,7 @@ import java.util.*;
  * @author DELL
  */
 public class Lecturer {
-    
+
     //Attributes
     private ArrayList<Exam> exams;
 
@@ -33,7 +33,7 @@ public class Lecturer {
     public boolean deleteExam(int examID) {
         int index = findExamIndex(examID);       
         if (index != -1){
-            exams.remove(index);
+            exams.remove(index); 
             return true;
         }
         return false;
@@ -42,12 +42,12 @@ public class Lecturer {
     public boolean updateExam(int examID, Exam updatedExam) {
         int index = findExamIndex(examID);
         if (index != -1) {
-        Exam existingExam = exams.get(index);
-        existingExam.setSubjectName(updatedExam.getSubjectName());
-        existingExam.setDuration(updatedExam.getDuration());
-        existingExam.setQuestions(updatedExam.getQuestions());
-        existingExam.setTrueAnswers(updatedExam.getCorrectAnswers());
-        return true;
+            Exam existingExam = exams.get(index);
+            existingExam.setSubjectName(updatedExam.getSubjectName());
+            existingExam.setDuration(updatedExam.getDuration());
+            existingExam.setQuestions(updatedExam.getQuestions());
+            existingExam.setTrueAnswers(updatedExam.getCorrectAnswers());
+            return true;
         }
         return false;
     }

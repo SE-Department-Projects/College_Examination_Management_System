@@ -36,7 +36,7 @@ public class Exam {
     }
 
     // setter    
-    public void setSubjectName(String subjectName){
+    public void setSubjectName(String subjectName){ // almfrod ad5l subject w a5od al name bta3ha msh ad5l subject name
         this.subjectName = subjectName;
     }
     
@@ -53,28 +53,28 @@ public class Exam {
     }
     
     //Getter
-    public int getExamID(){
-        return examID;
+    public int getExamID(){ 
+        return examID; // this.examID
     }
     
     public String getSubjectName() {
-        return subjectName;
+        return subjectName; // this.subjectName
     }
 
     public int getDuration() {
-        return duration;
+        return duration; // this.duration
     }
 
     public ArrayList<Question> getQuestions() {
-        return new ArrayList<>(questions);
+        return new ArrayList<>(questions); // this.questions
     }
 
     public ArrayList<String> getCorrectAnswers() {
-        return new ArrayList<>(correctAnswers);
+        return new ArrayList<>(correctAnswers); // this.correctAnswers
     }
 
     //others
     public void addQuestion(Question question) {
-        questions.add(question);
+        questions.add(question); 
     }
 }

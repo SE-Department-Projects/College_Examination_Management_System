@@ -17,11 +17,11 @@ public class Question {
     private String questionType;
     
     // Constructors
-    public Question(){
+    public Question(){ // malosh lazma 
     
     }
-   
-    public Question(String questionText, String questionType) {
+    
+    public Question(String questionText, String questionType) { // leh mafesh question answer fe al constructor
         this.questionText = questionText;
         this.questionType = questionType;
     }
