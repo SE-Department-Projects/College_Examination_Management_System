@@ -2,29 +2,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package javabroject;
+package java_project;
 
 /**
  *
  * @author DELL
  */
 public class Question {
-    
+
     // Attributes
     private String questionText;
     private String questionAnswer;
     private double questionMark = 1;
-    private String questionType;
+//    private String questionType;
     
     // Constructors
     public Question(){ // malosh lazma 
     
     }
     
-    public Question(String questionText, String questionType) { // leh mafesh question answer fe al constructor
+    public Question(String questionText) {
         this.questionText = questionText;
-        this.questionType = questionType;
+//        this.questionType = questionType;
     }
+    
     
     //Setter methods
     public void setQuestionText(String questionText) {
@@ -37,11 +38,11 @@ public class Question {
     
     /*public void setQuestionMark(double questionMark){
         this.questionMark = questionMark;
-    }*/
+    }
     
     public void setQuestionType(String questionType){
         this.questionType = questionType;
-    }
+    }*/
 
     // Getter methods
     public String getQuestionText() {
@@ -56,7 +57,9 @@ public class Question {
         return questionMark;
     }
     
-    public String getQuestionType(){
+    /*public String getQuestionType(){
         return questionType;
-    }
+    }*/
+
 }
+
