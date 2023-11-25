@@ -17,7 +17,7 @@ public class Question {
 //    private String questionType;
     
     // Constructors
-    public Question(){ // malosh lazma 
+    public Question(){
     
     }
     
