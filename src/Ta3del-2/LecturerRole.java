@@ -10,13 +10,8 @@ import java.util.*;
  *
  * @author DELL
  */
-<<<<<<< HEAD:src/lsa fe ta3del/javabroject/Lecturer.java
-public class Lecturer {
-
-=======
 public class LecturerRole {
     
->>>>>>> 580432f55bdb7579ea54e5310f2410843794fed9:src/Ta3del-2/LecturerRole.java
     //Attributes
     public FileHandler fileHandler;
     private ArrayList<Exam> exams;
@@ -40,12 +35,8 @@ public class LecturerRole {
     public boolean deleteExam(int examID) {
         int index = findExamIndex(examID);       
         if (index != -1){
-<<<<<<< HEAD:src/lsa fe ta3del/javabroject/Lecturer.java
-            exams.remove(index); 
-=======
             exams.remove(index);
             fileHandler.deleteData("" + examID);
->>>>>>> 580432f55bdb7579ea54e5310f2410843794fed9:src/Ta3del-2/LecturerRole.java
             return true;
         }
         return false;
@@ -54,21 +45,12 @@ public class LecturerRole {
     public boolean updateExam(int examID, Exam updatedExam) {
         int index = findExamIndex(examID);
         if (index != -1) {
-<<<<<<< HEAD:src/lsa fe ta3del/javabroject/Lecturer.java
-            Exam existingExam = exams.get(index);
-            existingExam.setSubjectName(updatedExam.getSubjectName());
-            existingExam.setDuration(updatedExam.getDuration());
-            existingExam.setQuestions(updatedExam.getQuestions());
-            existingExam.setTrueAnswers(updatedExam.getCorrectAnswers());
-            return true;
-=======
         Exam existingExam = exams.get(index);
         existingExam.setSubjectName(updatedExam.getSubjectName());
         existingExam.setDuration(updatedExam.getDuration());
         existingExam.setQuestions(updatedExam.getQuestions());
         existingExam.setCorrectAnswers(updatedExam.getCorrectAnswers());
         return true;
->>>>>>> 580432f55bdb7579ea54e5310f2410843794fed9:src/Ta3del-2/LecturerRole.java
         }
         return false;
     }

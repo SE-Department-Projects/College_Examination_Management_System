@@ -80,12 +80,5 @@ public class Exam {
         return new ArrayList<>(correctAnswers); // this.correctAnswers
     }
 
-<<<<<<< HEAD:src/lsa fe ta3del/javabroject/Exam.java
-    //others
-    public void addQuestion(Question question) {
-        questions.add(question); 
-    }
-=======
     
->>>>>>> 580432f55bdb7579ea54e5310f2410843794fed9:src/Ta3del-2/Exam.java
 }
