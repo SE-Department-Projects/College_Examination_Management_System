@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package javabroject;
+package java_project;
 
 import java.util.*;
 
@@ -11,7 +11,7 @@ import java.util.*;
  * @author DELL
  */
 public class Exam {
-    
+
     // Attributes
     static int numOfExam = 0;
     private int examID;
@@ -19,20 +19,23 @@ public class Exam {
     private int duration;
     private ArrayList<Question> questions;
     private ArrayList<String> correctAnswers;
+    private FileHandler examFile;
     
     // Constructors
     public Exam(){
         this.questions = new ArrayList<>();
-        this.correctAnswers = new ArrayList<>();
+//        this.correctAnswers = new ArrayList<>();
         this.examID = ++numOfExam;
+        this.examFile = new FileHandler("exam_" + this.examID + ".txt");
     }
     
     public Exam(String subjectName, int duration) {
         this.subjectName = subjectName;
         this.duration = duration;
         this.questions = new ArrayList<>();
-        this.correctAnswers = new ArrayList<>();
+//        this.correctAnswers = new ArrayList<>();
         this.examID = ++numOfExam;
+        this.examFile = new FileHandler("exam_" + this.examID + ".txt");
     }
 
     // setter    
@@ -44,7 +47,7 @@ public class Exam {
         this.duration = duration;
     }
     
-    public void setTrueAnswers(ArrayList<String> correctAnswer){
+    public void setCorrectAnswers(ArrayList<String> correctAnswer){
         this.correctAnswers = correctAnswer;
     }
     
@@ -64,6 +67,10 @@ public class Exam {
     public int getDuration() {
         return duration;
     }
+    
+    public void addQuestion(Question question) {
+        questions.add(question);
+    }
 
     public ArrayList<Question> getQuestions() {
         return new ArrayList<>(questions);
@@ -73,8 +80,5 @@ public class Exam {
         return new ArrayList<>(correctAnswers);
     }
 
-    //others
-    public void addQuestion(Question question) {
-        questions.add(question);
-    }
+    
 }
