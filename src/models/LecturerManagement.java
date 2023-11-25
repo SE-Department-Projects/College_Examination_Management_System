@@ -51,7 +51,7 @@ public class LecturerManagement {
 
         int index = findLecIndex(ID);
 
-        if (index != 0) {
+        if (index != -1) {
             lecturersArr.remove(lecturersArr.get(index));
 
             return true;  // done

@@ -13,7 +13,7 @@ public class Functions {
                 return num;
 
             } catch (Exception exception) {
-                System.out.print("enter a valid int num");
+                System.out.print("enter a valid int num: ");
                 scanner.nextLine();
             }
         }
