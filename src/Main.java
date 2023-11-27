@@ -1,6 +1,6 @@
 import helpers.*;
 import models.*;
-import roles.AdminRole;
+import roles.*;
 
 import java.util.Scanner;
 
@@ -68,8 +68,30 @@ public class Main {
                     }
 
                 } else if (roleNum == 2) { // lecturer role
-                    System.out.println("lecturer section coming soon...");
-                    System.exit(0);
+                    if (Authentication.lecturerLogin(username, password)) {
+                        isAuth = true;
+                        isLoggedin = true;
+                        System.out.println("login Success");
+                        System.out.println("---------------------------\n");
+
+                        Lecturer lecturer = new Lecturer(username, password); 
+
+                        LecturerRole.lecturerRolee(lecturer);
+
+                    }
+                    else{
+                        System.out.println("\nyou are not Authenticated\n 1=> try again\n 0=> logout");
+                        int answer = Functions.readInt();
+                        if (answer == 0)
+                            break;
+                        else if (answer == 1)
+                            isAuth = false;
+                        else {
+                            System.out.println("\ninvalid input\n");
+                            break;
+                        }
+                    }
+                    
                 } else { // student role
                     System.out.println("student section coming soon...");
                     System.exit(0);

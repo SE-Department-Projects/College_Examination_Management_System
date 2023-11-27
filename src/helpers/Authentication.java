@@ -10,4 +10,13 @@ public class Authentication {
         }
         return false;
     }
+
+    public static boolean lecturerLogin(String username, String password) // ba3den nb2a nhadel el files
+    {
+        if(username.equals("lusername") && password.equals("lpassword"))
+        {
+                return  true;
+        }
+        return false;
+    }
 }

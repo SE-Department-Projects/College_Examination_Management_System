@@ -38,9 +38,9 @@ public class Student extends Person{
             this.registeredSubjects.add(subj);
             return true;
         }
-    } 
+    }
 
-    
+
 
     public boolean delSubject(Subject subj) {
         if (this.registeredSubjects.contains(subj)){
@@ -75,8 +75,8 @@ public class Student extends Person{
         // }
     }
 
-    public int getId() {
-        return id;
+    public int getID() {
+        return this.id;
     }
 }
 

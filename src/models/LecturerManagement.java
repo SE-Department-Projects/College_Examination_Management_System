@@ -60,11 +60,13 @@ public class LecturerManagement {
     }
 
 
+
+
     //---------------UPDATE LECTURER----------------------------------------------
 
     public boolean updateLecUsername(int ID, String newUsername) {
         int index = findLecIndex(ID);
-        if (index != 0) {
+        if (index != -1) {
 
             lecturersArr.get(index).setUserName(newUsername);
             return true;
@@ -75,7 +77,7 @@ public class LecturerManagement {
     public boolean updateLecPassword(int ID, String password) {
         int index = findLecIndex(ID);
 
-        if (index != 0) {
+        if (index != -1) {
             lecturersArr.get(index).setPassword(password);
             return true;
         }

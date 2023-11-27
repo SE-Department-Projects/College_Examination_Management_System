@@ -31,11 +31,11 @@ public class StudentManagement {
 
     public int findStdIndex(int id) { // Method explaination in SubjectManagement.java
 
-        if (id <= -1) {
+        if (id <= 0) {
             return -1;
         }
         for (int i = 0; i < studentArray.size(); i++) {
-            if (id == (studentArray.get(i)).getId()) {
+            if (id == studentArray.get(i).getID()) {
 
                 return i;  // return the index of the student
             }
@@ -93,11 +93,12 @@ public class StudentManagement {
 
 
     //----------------------LIST STUDENT---------------------------------------------
-    public ArrayList<Student> listStd() {
+
+    public ArrayList<Student> getStudentArray() {
         return studentArray;
     }
 
-
-
-
+    public void setStudentArray(ArrayList<Student> studentArray) {
+        this.studentArray = studentArray;
+    }
 }
