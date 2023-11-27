@@ -28,7 +28,7 @@ public class AdminRole {
                     do {
 
 
-                        System.out.println("\nSelect operation");
+                        System.out.println("\n\nSelect operation");
                         System.out.println("1=> add\n2=> delete\n3=> search\n4=> list\n5=> update\n6=> Back\n0=> exit");
                         System.out.println("\n");
                         System.out.print("enter operation num: ");
@@ -68,9 +68,11 @@ public class AdminRole {
                                     System.out.println("\n------the lecturer not found----\n");
                                 } else {
                                     Lecturer lecturer = admin1.lectureManager.searchLecturer(index);
-                                    System.out.println(lecturer.getID() + "   " + lecturer.getUserName() + "   " + lecturer.getPassword());
-                                    System.out.println("\n-------------------");
-
+                                    // System.out.println(lecturer.getID() + "   " + lecturer.getUserName() + "   " + lecturer.getPassword());
+                                    // System.out.println("\n-------------------");
+                                    System.out.printf("%-10s%-16s%-25s%-30s\n", "ID", "username", "password", "subject");
+                                    System.out.printf("%-10s%-16s%-25s%-30s\n", lecturer.getID(), lecturer.getUserName(), lecturer.getPassword(),"Put SUBJECT HERE");//TODO set subject name
+                                    
                                 }
                                 break;
 
@@ -86,17 +88,17 @@ public class AdminRole {
                                 System.out.println("1 => update username\n2=> password");
                                 int updateOP = Functions.readInt();
                                 if (updateOP == 1) {
-                                    System.out.print("enter lecID to update username");
+                                    System.out.print("enter lecID to update username: ");
                                     lecID = Functions.readInt();
-                                    System.out.print("enter the new Username");
+                                    System.out.print("enter the new Username: ");
                                     String newUsername = input.nextLine();
                                     boolean update = admin1.lectureManager.updateLecUsername(lecID, newUsername);
                                     System.out.println(update ? "updated username successfully" : "failure");
-                                    System.out.println(admin1.lectureManager.getLecturersArr().get(0).getUserName());
+                                    // System.out.println(admin1.lectureManager.getLecturersArr().get(0).getUserName());
                                 } else if (updateOP == 2) {
-                                    System.out.print("enter lecID tp update password");
+                                    System.out.print("enter lecID tp update password: ");
                                     lecID = Functions.readInt();
-                                    System.out.print("enter the new password");
+                                    System.out.print("enter the new password: ");
                                     String newpassword = input.nextLine();
                                     boolean update = admin1.lectureManager.updateLecPassword(lecID, newpassword);
                                     System.out.println(update ? "updated password successfully" : "failure");
@@ -114,7 +116,7 @@ public class AdminRole {
 
                     } while (true);
                 } else if (optionsAnswer == 2) { //manage student section
-                    System.out.println("\nSelect operation");
+                    System.out.println("\n\nSelect operation");
                     System.out.println("1=> add\n2=> delete\n3=> search\n4=> list\n5=> update\n6=> Back\n0=> exit");
                     System.out.println("\n");
                     System.out.print("enter operation num: ");
@@ -155,7 +157,7 @@ public class AdminRole {
                             } else {
                                 Student student = admin1.studentManager.searchStd(index);
                                 System.out.printf("%-10s%-16s%-25s%-30s\n", "ID", "username", "password", "subject(s)");
-                                System.out.printf("%-10s%-16s%-25s\n", student.getID(), student.getUserName(), student.getPassword());
+                                System.out.printf("%-10s%-16s%-25s%-30s\n", student.getID(), student.getUserName(), student.getPassword(),"put subjects here"); //TODO put subject here
 
                                 System.out.println("\n-------------------");
 
@@ -175,16 +177,16 @@ public class AdminRole {
                             System.out.println("1 => update username\n2=> password");
                             int updateOP = Functions.readInt();
                             if (updateOP == 1) {
-                                System.out.print("enter StdID to update username");
+                                System.out.print("enter StdID to update username: ");
                                 stdID = Functions.readInt();
-                                System.out.print("enter the new Username");
+                                System.out.print("enter the new Username: ");
                                 String newUsername = input.nextLine();
                                 boolean update = admin1.studentManager.updateStdUsername(stdID, newUsername);
                                 System.out.println(update ? "updated username successfully" : "failure to update the username");
                             } else if (updateOP == 2) {
-                                System.out.print("enter stdID tp update password");
+                                System.out.print("enter stdID to update password: ");
                                 stdID = Functions.readInt();
-                                System.out.print("enter the new password");
+                                System.out.print("enter the new password: ");
                                 String newpassword = input.nextLine();
                                 boolean update = admin1.lectureManager.updateLecPassword(stdID, newpassword);
                                 System.out.println(update ? "updated password successfully" : "failure");
@@ -203,7 +205,7 @@ public class AdminRole {
 
                 } else if (optionsAnswer == 3) {  // subject management
 
-                    System.out.println("\nSelect operation");
+                    System.out.println("\n\nSelect operation");
                     System.out.println("1=> add\n2=> delete\n3=> search\n4=> list\n5=> update\n6=> Back\n0=> exit");
                     System.out.println("\n");
                     System.out.print("enter operation num: ");
@@ -254,8 +256,7 @@ public class AdminRole {
                             System.out.println("--- the count of subjects in the system is: " + Subject.getSubjectCounter()+ " ---");
                             System.out.printf("%-10s%-16s%-25s%-30s\n", "id", "subject name", "subject code", "lecturer ID");
                             for (Subject sub : admin1.subjectManager.getSubjectArrayList()) {
-                                System.out.printf("%-10s%-16s%-25s%-30s\n",sub.getLecturerID(), sub.getSubjectName(), sub.getSubjectCode(),sub.getLecturerID() );
-
+                                System.out.printf("%-10s%-16s%-25s%-30s\n",sub.getSubjID(), sub.getSubjectName(), sub.getSubjectCode(),sub.getLecturerID() );
                             }
                             break;
 
