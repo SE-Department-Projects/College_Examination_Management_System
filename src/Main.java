@@ -5,7 +5,11 @@ import roles.*;
 import java.util.Scanner;
 
 public class Main {
+
+    public Main() {
+    }
     static Scanner input = new Scanner(System.in);
+    public static boolean isBack = true;
 
     public static void main(String[] args) {
 
@@ -15,7 +19,7 @@ public class Main {
         boolean isAuth = false;
 
         System.out.println("---- welcome to our system ----");
-
+        
         while (!isLoggedin) {
 
             System.out.println("1=> Admin\n2=> Lecturer\n3=> Student\n0=> exit");
@@ -52,7 +56,7 @@ public class Main {
 
                         Admin admin1 = new Admin(username, password); // will be the admin that returns from the file
 
-                        AdminRole.adminRole(admin1);
+                        AdminRole.adminRole();
 
                     } else {
                         System.out.println("\nyou are not Authenticated\n 1=> try again\n 0=> logout");

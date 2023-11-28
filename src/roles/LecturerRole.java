@@ -103,10 +103,10 @@ public class LecturerRole {
                     System.out.printf("%-10s%-16s%-25s\n","ID","Name","Degree");
                     System.out.println("\n");
                     //! this works, but the array is empty try running the comment underneath and it will list them
-                    // ArrayList<Student> students = lecturer.studentManager.getStudentArray();
-                    ArrayList<Student> students = new ArrayList<>();
-                    students.add(new Student("ss", "ss"));
-                    students.add(new Student("sssssssss", "ss"));
+                    ArrayList<Student> students = StudentManagement.getStudentArray();
+                    // ArrayList<Student> students = new ArrayList<>();
+                    // students.add(new Student("ss", "ss"));
+                    // students.add(new Student("sssssssss", "ss"));
                     for(Student std : students){
                         System.out.printf("%-10s%-16s%-25s",std.getID(),std.getUserName(),std.getDegree());
                         System.out.print("\n");

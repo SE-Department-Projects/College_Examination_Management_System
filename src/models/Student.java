@@ -67,6 +67,27 @@ public class Student extends Person{
         return registeredSubjects;
     }
 
+    public String getSubjectsAsString() {
+        String subjects = "";
+        for (Subject subject : registeredSubjects) {
+            subjects += subject.getSubjectName() + ", ";
+        }
+        return subjects;
+    }
+
+    public int findSubjIndex(int id) {
+
+        for (int i = 0; i < registeredSubjects.size(); i++) { // loop on the list of subjects
+            if (registeredSubjects.get(i).getSubjID() == id) // if the id of the subject equals the id we entered
+                return i; // returns the index of the subject (index not id)
+        }
+        return -1; // else it returns -1
+    }
+
+    public Subject getSubject(int index) { // check that index is not -1
+            return registeredSubjects.get(index);
+    }
+
 
     public void enterExam() {
         // for (Subject subject : registeredSubjects) {

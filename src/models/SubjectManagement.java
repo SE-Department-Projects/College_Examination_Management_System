@@ -77,6 +77,7 @@ public class SubjectManagement {
                 boolean status = lecturer.setSubject(sub); // and assign the subject
                 if (!status)
                     return false;
+                sub.setLecturerID(idOfUser);
             }
             return true; // true if the subject assigned successfully
         } else { // if the role is not student nor lecturer
@@ -104,12 +105,20 @@ public class SubjectManagement {
                 boolean status = lecturer.delSubject(sub);
                 if (!status)
                     return false;
+                sub.setLecturerID(0);
             }
             return true;
         } else {
             return false;
         }
     }
+
+
+
+
+
+
+
     public static ArrayList<Subject> getSubjectArrayList() {
         return subjectArrayList;
     }
