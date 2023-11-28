@@ -6,16 +6,16 @@ public class Student extends Person{
 
     
     // Attributes
-    static int numOfStudents = 0;
+    private static int numOfStudents = 0;
     private int degree;
-    private final int id;
+    private final int ID;
     private ArrayList<Subject> registeredSubjects;
     
 
     // Constructor
     public Student(String username, String password) {
         super(username, password, "student");   
-        this.id = ++numOfStudents;
+        this.ID = ++numOfStudents;
         this.registeredSubjects = new ArrayList<>();
     }
 
@@ -76,7 +76,7 @@ public class Student extends Person{
     }
 
     public int getID() {
-        return this.id;
+        return this.ID;
     }
 }
 

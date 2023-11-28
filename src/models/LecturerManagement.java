@@ -5,19 +5,25 @@ import java.util.ArrayList;
 public class LecturerManagement {
 
     //    private Lecturer[] lecturersArr = new Lecturer[10];
-    private ArrayList<Lecturer> lecturersArr = new ArrayList<>();
+    private static ArrayList<Lecturer> lecturersArr = new ArrayList<>();
+
+    //---------------CONSTRUCTOR----------------------------------------------
+    // public LecturerManagement() {
+    //     Lecturer initialLecturer = new Lecturer("0", "0"); // initial lecturer
+    //     lecturersArr.add(initialLecturer);
+    // }
 
 
 //--------------- ADD LECTURER----------------------------------------------
 
-    public void addLecturer(Lecturer lecturer) {  // Method explaination in SubjectManagement.java
+    public static void addLecturer(Lecturer lecturer) {  // Method explaination in SubjectManagement.java
         lecturersArr.add(lecturer);
 }
 
 
     //-----------------FIND LECTURER INDEX------------------------------------------
 
-    public int findLecIndex(int ID) {  // Method explaination in SubjectManagement.java
+    public static int findLecIndex(int ID) {  // Method explaination in SubjectManagement.java
 
         if (ID <= 0) {
             return -1;
@@ -38,7 +44,7 @@ public class LecturerManagement {
     //-------------------SEARCH LECTURER--------------------------------------------
 
     // before running check if the index is not -1
-    public Lecturer searchLecturer(int index) {  // Method explaination in SubjectManagement.java
+    public static Lecturer searchLecturer(int index) {  // Method explaination in SubjectManagement.java
 
         return  lecturersArr.get(index);
 
@@ -47,7 +53,7 @@ public class LecturerManagement {
 
     //----------------- DELETE LECTURER------------------------------------------
 
-    public boolean deleteLecturer(int ID) {  // Method explaination in SubjectManagement.java
+    public static boolean deleteLecturer(int ID) {  // Method explaination in SubjectManagement.java
 
         int index = findLecIndex(ID);
 
@@ -64,7 +70,7 @@ public class LecturerManagement {
 
     //---------------UPDATE LECTURER----------------------------------------------
 
-    public boolean updateLecUsername(int ID, String newUsername) {
+    public static boolean updateLecUsername(int ID, String newUsername) {
         int index = findLecIndex(ID);
         if (index != -1) {
 
@@ -74,7 +80,7 @@ public class LecturerManagement {
         return false;
     }
 
-    public boolean updateLecPassword(int ID, String password) {
+    public static boolean updateLecPassword(int ID, String password) {
         int index = findLecIndex(ID);
 
         if (index != -1) {
@@ -86,12 +92,12 @@ public class LecturerManagement {
 
 
     //---------------LIST LECTURER----------------------------------------------
-    public ArrayList<Lecturer> getLecturersArr() {
+    public static ArrayList<Lecturer> getLecturersArr() {
         return lecturersArr;
     }
 
-    public void setLecturersArr(ArrayList<Lecturer> lecturersArr) {
-        this.lecturersArr = lecturersArr;
+    public static void setLecturersArr(ArrayList<Lecturer> lecturersArray) {
+        lecturersArr = lecturersArray;
     }
 
 

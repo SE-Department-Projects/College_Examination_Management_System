@@ -8,28 +8,31 @@ public class StudentManagement {
 
 //----------DATA FIELDS------------------------------------------------------------------------------------
 
-    private ArrayList<Student> studentArray = new ArrayList<>();
+    private static ArrayList<Student> studentArray = new ArrayList<>();
+
+
+//-------------CONSTRUCTOR--------------------------------------------------------------------------------
+
+    // public StudentManagement() {
+    //     Student initialStudent = new Student("0", "0"); // initial student
+    //     studentArray.add(initialStudent);
+    // }
 
 
 //-------------METHODS--------------------------------------------------------------------------------------
 
 
-    //------------STUDENT MANAGER  NOT IMPORTANT----------------------------------------------
-    public StudentManagement() {
-
-    }
-
 
     //--------------- ADD STUDENT----------------------------------------------
 
-    public void addStd(Student student) { // Method explaination in SubjectManagement.java
+    public static void addStd(Student student) { // Method explaination in SubjectManagement.java
         studentArray.add(student);
     }
 
 
     //-----------------FIND STUDENT INDEX------------------------------------------
 
-    public int findStdIndex(int id) { // Method explaination in SubjectManagement.java
+    public static int findStdIndex(int id) { // Method explaination in SubjectManagement.java
 
         if (id <= 0) {
             return -1;
@@ -46,7 +49,7 @@ public class StudentManagement {
 
 //-------------------SEARCH STUDENT--------------------------------------------
     // before running check if the index is not -1
-    public Student searchStd(int index) {  // Method explaination in SubjectManagement.java
+    public static Student searchStd(int index) {  // Method explaination in SubjectManagement.java
         return studentArray.get(index);
     }
 
@@ -54,7 +57,7 @@ public class StudentManagement {
 
 //----------------- DELETE STUDENT------------------------------------------
 
-    public boolean deleteStd(int id) {   // Method explaination in SubjectManagement.java
+    public static boolean deleteStd(int id) {   // Method explaination in SubjectManagement.java
         int index = findStdIndex(id);
         if (index != -1) {
             studentArray.remove(studentArray.get(index));
@@ -66,7 +69,7 @@ public class StudentManagement {
 
     //-------------------UPDATE STUDENT USERNAME---------------------------------
 
-    public boolean updateStdUsername(int id, String newUsername) {
+    public static boolean updateStdUsername(int id, String newUsername) {
         int index = findStdIndex(id);
 
         if (index != -1) {
@@ -79,7 +82,7 @@ public class StudentManagement {
 
     //------------------UPDATE STUDENT PASSWORD-----------------------------------
 
-    public boolean updateStdPassword(int id, String newPass) {
+    public static boolean updateStdPassword(int id, String newPass) {
         int index = findStdIndex(id);
         if (index != -1) {
             studentArray.get(index).setPassword(newPass);
@@ -94,11 +97,11 @@ public class StudentManagement {
 
     //----------------------LIST STUDENT---------------------------------------------
 
-    public ArrayList<Student> getStudentArray() {
+    public static ArrayList<Student> getStudentArray() {
         return studentArray;
     }
 
-    public void setStudentArray(ArrayList<Student> studentArray) {
-        this.studentArray = studentArray;
+    public static void setStudentArray(ArrayList<Student> studentArr) {
+        studentArray = studentArr;
     }
 }
