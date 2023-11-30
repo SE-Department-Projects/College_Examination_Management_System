@@ -1,6 +1,7 @@
 package models;
 
 import java.io.*;
+import java.util.Scanner;
 
 public class FileHandler {
     
@@ -11,25 +12,25 @@ public class FileHandler {
     }
     
     
-    public String createFile(){
+    public int createFile(){
         try {
-            if(file.createNewFile())
-                return "File is Created";
+            if(this.file.createNewFile())
+                return 1;
             else
-                return "File already Exists";
+                return 2;
         }
         catch(IOException ex) {
-            return "Exception : " + ex.getMessage();
+            return -1;
         }
     }
     
 
     public String writeFile(String data, boolean append) {
         try {
-            FileWriter fw = new FileWriter(file, append);
+            FileWriter fw = new FileWriter(this.file, append);
             fw.append(data).append("\n");
             fw.close();
-            return "Data written to the file";
+            return "Data written successfully";
         } 
         catch (IOException ex) {
             return "Exception: " + ex.getMessage();
@@ -39,70 +40,16 @@ public class FileHandler {
     
     public String readFile() {
         try {
-            FileReader fr = new FileReader(file);
-            int c;
+            Scanner input = new Scanner(this.file);
             StringBuilder content = new StringBuilder();
-            while ((c = fr.read()) != -1) {
-                content.append((char) c);
+            while (input.hasNextLine()) {
+                content.append(input.nextLine()).append("\n");
             }
-            fr.close();
+            input.close();
             return content.toString();
         } catch (IOException ex) {
             return "Exception: " + ex.getMessage();
         }
     }
 
-    public String updateData(String oldData, String newData) {
-        try {
-            FileReader fr = new FileReader(file);
-            FileWriter fw = new FileWriter(file, false); // false means overwrite the file
-
-            int c;
-            StringBuilder content = new StringBuilder();
-
-            while ((c = fr.read()) != -1) {
-                char character = (char) c;
-                content.append(character);
-            }
-
-            fr.close();
-
-            String fileContent = content.toString();
-            fileContent = fileContent.replace(oldData, newData);
-
-            fw.write(fileContent);
-            fw.close();
-
-            return "Data updated successfully";
-        } 
-        catch (IOException ex) {
-            return "Exception: " + ex.getMessage();
-        }
-    }
-    
-    public String deleteData(String dataToDelete) {
-        try {
-            FileReader fr = new FileReader(file);
-            StringBuilder content = new StringBuilder();
-            int c;
-
-            while ((c = fr.read()) != -1) {
-                char character = (char) c;
-                content.append(character);
-            }
-
-            fr.close();
-
-            String fileContent = content.toString();
-            fileContent = fileContent.replace(dataToDelete, "");
-            
-            FileWriter fw = new FileWriter(file, false);
-            fw.write(fileContent);
-            fw.close();
-
-            return "Data deleted successfully";
-        } catch (IOException ex) {
-            return "Exception: " + ex.getMessage();
-        }
-    }
 }

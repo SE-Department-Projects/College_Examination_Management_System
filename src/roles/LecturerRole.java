@@ -38,7 +38,7 @@ public class LecturerRole {
 
                         switch (op){
                             case 1:
-                            Subject sub = new Subject("IS","IS-203");
+                            Subject sub = new Subject("IS","IS-203"); //TODO remove this later
                             lecturer.setSubject(sub);
                                 System.out.println("You are now adding an exam to subject" + lecturer.getSubject().getSubjectName()); 
                                 System.out.println("Enter the Exam duration in minutes: ");
@@ -88,7 +88,9 @@ public class LecturerRole {
                                 break;
                             case 0:
                                 System.out.println("logout successfully");
-                                System.exit(0);
+                                isBackChosen = true;
+                                isStillOperating = false;
+                                break;
 
                             default:
                                 System.out.println("can not find the operation");
@@ -99,7 +101,7 @@ public class LecturerRole {
                     }while (op != 0 && op != 6);
 
                 }
-                else if (optionsAnswer == 2) {
+                else if (optionsAnswer == 2) { // TODO change REPORT COMPLETELY
                     System.out.printf("%-10s%-16s%-25s\n","ID","Name","Degree");
                     System.out.println("\n");
                     //! this works, but the array is empty try running the comment underneath and it will list them
@@ -123,5 +125,7 @@ public class LecturerRole {
                 isStillOperating = false;
             }
         }
+
+
     }
 }

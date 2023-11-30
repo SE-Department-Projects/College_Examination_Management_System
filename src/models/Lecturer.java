@@ -11,7 +11,7 @@ public class Lecturer extends Person {
     private ArrayList<Exam> exams;
     public StudentManagement studentManager = new StudentManagement();
 
-//TODO remove the subject later 
+        //TODO remove the subject later 
     public Lecturer(String userName, String password) {
         super(userName, password, "lecturer");
         this.ID = ++numOfLecturer;
@@ -73,7 +73,6 @@ public class Lecturer extends Person {
         if (index != -1){
             exams.remove(index);
             String formattedExamID = String.format("%-10s",examID);
-            fileHandler.deleteData(formattedExamID);
             return true;
         }
         return false;

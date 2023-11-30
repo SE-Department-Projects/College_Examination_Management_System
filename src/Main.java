@@ -2,16 +2,96 @@ import helpers.*;
 import models.*;
 import roles.*;
 
+import java.io.File;
 import java.util.Scanner;
 
 public class Main {
 
-    public Main() {
-    }
     static Scanner input = new Scanner(System.in);
     public static boolean isBack = true;
 
     public static void main(String[] args) {
+        LecturerManagement lec = new LecturerManagement();
+
+        // File handeling (filling the arrays with the data from the file)
+
+        FileHandler lecturerFileHandler = new FileHandler("Files/lecturers.txt");  // lecturer file handler
+
+        lecturerFileHandler.createFile(); // create the file if it doesn't exist
+
+        String lecturersData = lecturerFileHandler.readFile(); // read the file
+
+        if (lecturersData != "") { // if the file is not empty
+
+            String[] lecturers = lecturersData.split("\n"); // split the data into lines
+            for (String line : lecturers) { // loop through the lines
+                if(line.matches("\\d+-[A-z]+-\\w+")){ // if the line matches the pattern (id-username-password)
+                    String[] data = line.split("-"); // split the line into id, username, password
+                    Lecturer lecturer1 = new Lecturer(data[1],data[2]); // create a new lecturer object (username, password)
+                    LecturerManagement.addLecturer(lecturer1); // add the lecturer to the array
+                }
+            }
+        }
+
+
+
+
+
+
+        FileHandler studentFileHandler = new FileHandler("Files/students.txt"); // student file handler
+
+        studentFileHandler.createFile(); // create the file if it doesn't exist
+
+        String studentsData = studentFileHandler.readFile(); // read the file
+
+        if(studentsData != ""){ // if the file is not empty
+
+            String[] students = studentsData.split("\n"); // split the data into lines
+
+            for (String line : students) { // loop through the lines
+
+                if(line.matches("\\d+-[A-z]+-\\w+")){ // if the line matches the pattern (id-username-password)
+
+                    String[] data = line.split("-"); // split the line into id, username, password
+                    Student student1 = new Student(data[1],data[2]); // create a new student object (username, password)
+                    StudentManagement.addStd(student1); // add the student to the array
+
+                }
+            }
+        }
+
+
+
+
+
+        FileHandler subjectsFileHandler = new FileHandler("Files/subjects.txt"); // subjects file handler
+
+        subjectsFileHandler.createFile(); // create the file if it doesn't exist
+
+        String subjectsData = subjectsFileHandler.readFile(); // read the file
+
+        if(subjectsData != ""){ // if the file is not empty
+
+            String[] subjects = subjectsData.split("\n"); // split the data into lines
+
+            for (String line : subjects) { // loop through the lines
+
+                if(line.matches("\\d+,[A-z]+,\\w+-\\d+")){ // if the line matches the pattern (id-subjectName)
+
+                    String[] data = line.split(","); // split the line into id, subjectName
+                    Subject subject1 = new Subject(data[1],data[2]); // create a new subject object (subjectName)
+                    SubjectManagement.addSubject(subject1); // add the subject to the array
+
+                }
+            }
+        }
+
+
+
+
+
+
+
 
         String username, password;
         int roleNum;
@@ -57,6 +137,8 @@ public class Main {
                         Admin admin1 = new Admin(username, password); // will be the admin that returns from the file
 
                         AdminRole.adminRole();
+                        isLoggedin = true;
+
 
                     } else {
                         System.out.println("\nyou are not Authenticated\n 1=> try again\n 0=> logout");
@@ -81,6 +163,7 @@ public class Main {
                         Lecturer lecturer = new Lecturer(username, password); 
 
                         LecturerRole.lecturerRolee(lecturer);
+                        isLoggedin = true;
 
                     }
                     else{
@@ -103,5 +186,6 @@ public class Main {
             }
 
         }
+
     }
 }
