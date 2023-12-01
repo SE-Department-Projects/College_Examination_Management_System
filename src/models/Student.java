@@ -22,6 +22,11 @@ public class Student extends Person{
         registeredSubjects.add(new Subject("IT","IT-201"));
 
     }
+    public Student(int ID,String username, String password) {
+        super(username, password, "student");
+        this.ID = ID;
+        this.registeredSubjects = new ArrayList<>();
+    }
 
 
 
@@ -111,6 +116,14 @@ public class Student extends Person{
 
     public int getID() {
         return this.ID;
+    }
+
+    public static int getNumOfStudents() {
+        return numOfStudents;
+    }
+
+    public static void setNumOfStudents(int numOfStudents) {
+        Student.numOfStudents = numOfStudents;
     }
 }
 
