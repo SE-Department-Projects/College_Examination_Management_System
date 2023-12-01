@@ -7,7 +7,8 @@ public class Exam {
     // Attributes
     private static int numOfExam = 0;
     private int examID;
-    private String subjectName;   // subject id
+    private String subjectName;
+    private int subjID;
     private int duration;
     private ArrayList<Question> questions;
     private FileHandler examFile;
@@ -19,12 +20,13 @@ public class Exam {
         this.examFile = new FileHandler("exam_" + this.examID + ".txt");
     }
     
-    public Exam(Subject subject, int duration) {
+    public Exam(Subject subject, int duration, int subjID) {
         this.subjectName = subject.getSubjectName();
         this.duration = duration;
         this.questions = new ArrayList<>();
         this.examID = ++numOfExam;
         this.examFile = new FileHandler("exam_" + this.examID + ".txt");
+        this.subjID = subjID;
     }
 
     // setter    

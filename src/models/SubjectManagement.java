@@ -58,38 +58,41 @@ public class SubjectManagement {
     }
 
 
-    //---------------ASSIGN SUBJECT----------------------------------------------
+    //--------------- ASSIGN SUBJECT TO STUDENT ----------------------------------------------
 
-    public static boolean assignSubj(Subject sub, String role, int idOfUser) { // takes the subject object , the role of the user and the id of the user
-        if (role.equals("student")) { //if the role is student
+    public static boolean assignSubjectToStudent(Subject sub, int idOfUser) { // takes the subject object and the id of the user
             int index = StudentManagement.findStdIndex(idOfUser); // we find the index of the student ( method from class StudentManagement)
             if (index != -1) { // if it exists
                 Student student = StudentManagement.searchStd(index); // we get the student object
                 boolean status = student.addSubject(sub); // and assign the subject
                 if (!status)
                     return false;
-            }
             return true; // true if the subject assigned successfully
-        } else if (role.equals("lecturer")) { // if the role is lecturer
-            int index = LecturerManagement.findLecIndex(idOfUser); // we find the index of the lecturer ( method from class LecturerManagement)
-            if (index != -1) { // if it exists
-                Lecturer lecturer = LecturerManagement.searchLecturer(index); // we get the lecturer object
-                boolean status = lecturer.setSubject(sub); // and assign the subject
-                if (!status)
-                    return false;
-                sub.setLecturerID(idOfUser);
-            }
-            return true; // true if the subject assigned successfully
-        } else { // if the role is not student nor lecturer
-            return false;  // returns false
         }
+        return false; // false if the subject didn't assign successfully
     }
 
 
-    //---------------UNASSIGNED SUBJECT----------------------------------------------
 
-    public static boolean unassignSubj(Subject sub, String role, int idOfUser) { // SAME AS assignSubj method but instead it deletes the subject
-        if (role.equals("student")) {
+    //--------------- ASSIGN SUBJECT TO LECTURER  ----------------------------------------------
+    public static boolean assignSubjectToLecturer(Subject sub, int idOfUser){
+
+        int index = LecturerManagement.findLecIndex(idOfUser); // we find the index of the lecturer ( method from class LecturerManagement)
+        if (index != -1) { // if it exists
+            Lecturer lecturer = LecturerManagement.searchLecturer(index); // we get the lecturer object
+            boolean status = lecturer.addSubject(sub); // and assign the subject
+            if (!status)
+                return false;
+            sub.addLecturerID(idOfUser);
+        }
+        return true; // true if the subject assigned successfully
+    }
+
+
+
+    //--------------- UNASSIGN SUBJECT OF STUDENT ----------------------------------------------
+
+    public static boolean unassignSubjOfStudent(Subject sub, int idOfUser) { // SAME AS assignSubj method but instead it deletes the subject
             int index = StudentManagement.findStdIndex(idOfUser);
             if (index != -1) {
                 Student student = StudentManagement.searchStd(index);
@@ -98,19 +101,22 @@ public class SubjectManagement {
                     return false;
             }
             return true;
-        } else if (role.equals("lecturer")) {
+        }
+    
+
+    //--------------- UNASSIGN SUBJECT OF LECTURER ----------------------------------------------
+    
+    public static boolean unassignSubjOfLecturer(Subject sub, int idOfUser){
             int index = LecturerManagement.findLecIndex(idOfUser);
             if (index != -1) {
                 Lecturer lecturer = LecturerManagement.searchLecturer(index);
                 boolean status = lecturer.delSubject(sub);
                 if (!status)
                     return false;
-                sub.setLecturerID(0);
+                sub.removeLecturerID(idOfUser);
             }
             return true;
-        } else {
-            return false;
-        }
+        
     }
 
 

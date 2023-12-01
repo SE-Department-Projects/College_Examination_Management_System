@@ -72,10 +72,10 @@ public class AdminRole {
                                         // System.out.println(lecturer.getID() + "   " + lecturer.getUserName() + "   " + lecturer.getPassword());
                                         // System.out.println("\n-------------------");
                                         System.out.printf("%-10s%-16s%-25s%-30s\n", "ID", "username", "password", "subject");
-                                        if (lecturer.getSubject() == null)
+                                        if (lecturer.getLecturerSubjects().isEmpty())
                                             System.out.printf("%-10s%-16s%-25s%-30s\n", lecturer.getID(), lecturer.getUserName(), lecturer.getPassword(),"No Subject Assigned");
                                         else
-                                            System.out.printf("%-10s%-16s%-25s%-30s\n", lecturer.getID(), lecturer.getUserName(), lecturer.getPassword(),lecturer.getSubject().getSubjectName());
+                                            System.out.printf("%-10s%-16s%-25s%-30s\n", lecturer.getID(), lecturer.getUserName(), lecturer.getPassword(),lecturer.getSubjectsAsString());
                                         
                                     }
                                     break;
@@ -83,10 +83,10 @@ public class AdminRole {
                                 case 4: // lecturer list
                                     System.out.printf("%-10s%-16s%-25s%-30s\n", "id", "name", "password","subject");
                                     for (Lecturer lec : LecturerManagement.getLecturersArr()) {
-                                        if (lec.getSubject() == null)
+                                        if (lec.getLecturerSubjects().isEmpty())
                                             System.out.printf("\n%-10s%-16s%-25s%-30s", lec.getID(), lec.getUserName(), lec.getPassword(),"No Subject Assigned");
                                         else
-                                            System.out.printf("\n%-10s%-16s%-25s%-30s", lec.getID(), lec.getUserName(), lec.getPassword(),lec.getSubject().getSubjectName());
+                                            System.out.printf("\n%-10s%-16s%-25s%-30s", lec.getID(), lec.getUserName(), lec.getPassword(),lec.getSubjectsAsString());
 
                                     }
                                     break;
@@ -114,7 +114,6 @@ public class AdminRole {
 
 
 
-
                                 case 6: // assign subject (lecturer)
                                     if(LecturerManagement.getLecturersArr().isEmpty()){
                                         System.out.println("\nthere are no lecturers in the system, Please add a lecturer first!");
@@ -133,26 +132,10 @@ public class AdminRole {
                                             break;
                                         }
                                         else{
-                                            boolean hasSubjectAlready = false;
-                                            int currentSubID = 0;
-                                            if (LecturerManagement.searchLecturer(lecIndex).getSubject() != null){
-                                                hasSubjectAlready = true;
-                                                currentSubID = LecturerManagement.searchLecturer(lecIndex).getSubject().getSubjID();
-                                                System.out.println("Lecturer already has a subject\n");
-                                                System.out.println("1=> would you like to assign a new one?\n0=> exit");
-                                                int answer = Functions.readPositiveORZeroInt();
-                                                if (answer == 0){
-                                                    break;
-                                                }
-                                                else if( answer != 1){
-                                                    System.out.println("invalid input");
-                                                    break;
-                                                }
-                                                
-                                            }
+                                            Lecturer lecturer = LecturerManagement.searchLecturer(lecIndex);
                                             System.out.println("Here are the list of subjects");
                                             for (Subject subjects : SubjectManagement.getSubjectArrayList()) {
-                                            System.out.println(subjects.getSubjID() + "=> " + subjects.getSubjectName());
+                                                System.out.println(subjects.getSubjID() + "=> " + subjects.getSubjectName());
                                             
                                             }
                                             System.out.print("enter subject ID: ");
@@ -163,24 +146,20 @@ public class AdminRole {
                                                 break;
                                             }
                                             else{
-                                                Subject subject = SubjectManagement.searchSubject(subIndex);
-                                                boolean isAssigned = SubjectManagement.assignSubj(subject, "lecturer", lecID);
+                                                boolean isAssigned = SubjectManagement.assignSubjectToLecturer(SubjectManagement.searchSubject(subIndex), lecID);
                                                 System.out.println(isAssigned ? "\nsubject assigned successfully" : "\nfailure to assign subject");
-                                                if(isAssigned && hasSubjectAlready){
-                                                    Subject prevSub = SubjectManagement.searchSubject(SubjectManagement.findSubjIndex(currentSubID));
-                                                    prevSub.setLecturerID(0);
-                                                }
                                             }
                                             break;
-                                            }
                                         }
-                                    
+                                    }
                                 
+
                                 case 7: // unassign subject (lecturer)
                                     if(LecturerManagement.getLecturersArr().isEmpty()){
                                         System.out.println("\nthere are no lecturers in the system, Please add a lecturer first!");
                                         break;
                                     }
+
                                     else{
                                         System.out.println("enter lecturer ID: ");
                                         lecID = Functions.readPositiveInt();
@@ -191,18 +170,22 @@ public class AdminRole {
                                         }
                                         else{
                                             Lecturer lecturer = LecturerManagement.searchLecturer(lecIndex);
-                                            if(lecturer.getSubject() == null){
-                                                System.out.println("No Subject Assigned");
+                                            if(lecturer.getLecturerSubjects().isEmpty()){
+                                                System.out.println("No Subjects Assigned");
                                                 break;
                                             }
                                             else{
-                                                Subject lecSubject = lecturer.getSubject();
-                                                System.out.println("lecturer " + lecturer.getUserName() +" has Subject: ");
-                                                System.out.println(lecSubject.getSubjID() + "=> " + lecSubject.getSubjectName());
-                                                System.out.println("\n type 1 to unassign the subject or 0 to exit");
+                                                ArrayList<Subject> lecSubjects = lecturer.getLecturerSubjects();
+                                                System.out.println("\nlecturer " + lecturer.getUserName() +" has Subjects: ");
+                                                for (Subject subject : lecSubjects) {
+                                                    System.out.println(subject.getSubjID() + "=> " + subject.getSubjectName());
+                                                }
+                                                System.out.println("\n Select subject to unassign or 0 to exit: ");
                                                 int answer = Functions.readPositiveORZeroInt();
-                                                if (answer == 1){
-                                                    boolean isUnassigned = SubjectManagement.unassignSubj(lecSubject, "lecturer", lecID);
+                                                int subIndex = lecturer.findSubjIndex(answer);
+                                                if (subIndex != -1){ //TODO solve the problem of removing element and the other elements doesn't shift
+                                                    Subject subjToRemove = lecturer.getSubject(subIndex);
+                                                    boolean isUnassigned = SubjectManagement.unassignSubjOfLecturer(subjToRemove, lecID);
                                                     System.out.println(isUnassigned ? "\nsubject unassigned successfully" : "\nfailure to unassign subject");
                                                     break;
                                                 }
@@ -214,14 +197,6 @@ public class AdminRole {
                                             }
                                         }
                                     }
-                                    
-                                    // else{
-                                    //     Lecturer lecturer = LecturerManagement.searchLecturer(lecIndex);
-                                    //     System.out.println("Here are the list of subjects of Dr." + lecturer.getUserName());
-                                    //     for (Subject lecSubjects : lecturer.getLecturerSubjects()) {
-                                    //         System.out.println(lecSubjects.getSubjID() + "=> " + lecSubjects.getSubjectName());
-                                    //     }
-                                    // }
 
                                 case 0:
                                     System.out.println("logout successfully");
@@ -359,7 +334,7 @@ public class AdminRole {
                                             break;
                                         }
                                         else{
-                                            boolean isAssigned = SubjectManagement.assignSubj(SubjectManagement.searchSubject(subIndex), "student", stdID);
+                                            boolean isAssigned = SubjectManagement.assignSubjectToStudent(SubjectManagement.searchSubject(subIndex), stdID);
                                             System.out.println(isAssigned ? "\nsubject assigned successfully" : "\nfailure to assign subject");
                                         }
                                         break;
@@ -383,24 +358,22 @@ public class AdminRole {
                                         }
                                         else{
                                             Student student = StudentManagement.searchStd(stdIndex);
-                                            if(student.getSubjects() == null){
+                                            if(student.getSubjects().isEmpty()){
                                                 System.out.println("No Subject Assigned");
                                                 break;
                                             }
                                             else{
                                                 ArrayList<Subject> stdSubjects = student.getSubjects();
                                                 System.out.println("student " + student.getUserName() +" has Subjects: ");
-                                                // ArrayList<Integer> subjectsID = new ArrayList<>();
                                                 for (Subject subject : stdSubjects) {
                                                     System.out.println(subject.getSubjID() + "=> " + subject.getSubjectName());
-                                                    // subjectsID.add(subject.getSubjID());
                                                 }
                                                 System.out.println("\n Select subject to unassign or 0 to exit: ");
                                                 int answer = Functions.readPositiveORZeroInt();
                                                 int subIndex = student.findSubjIndex(answer);
                                                 if (subIndex != -1){ //TODO solve the problem of removing element and the other elements doesn't shift
                                                     Subject subjToRemove = student.getSubject(subIndex);
-                                                    boolean isUnassigned = SubjectManagement.unassignSubj(subjToRemove, "student", stdID);
+                                                    boolean isUnassigned = SubjectManagement.unassignSubjOfStudent(subjToRemove, stdID);
                                                     System.out.println(isUnassigned ? "\nsubject unassigned successfully" : "\nfailure to unassign subject");
                                                     break;
                                                 }
@@ -412,6 +385,7 @@ public class AdminRole {
                                             }
                                         }
                                     }
+                                    
 
                             case 0:
                                 System.out.println("logout successfully");
@@ -467,10 +441,10 @@ public class AdminRole {
                                 } else {
                                     Subject subject = SubjectManagement.searchSubject(index);
                                     System.out.printf("%-10s%-16s%-25s%-30s\n", "ID", "name", "subject code", "lecturer ID");
-                                    if (subject.getLecturerID() == 0)
+                                    if (subject.getLecturersID().isEmpty())
                                         System.out.printf("%-10s%-16s%-25s%-30s\n", subject.getSubjID(), subject.getSubjectName(), subject.getSubjectCode(),"No Lecturer Assigned");
                                     else
-                                        System.out.printf("%-10s%-16s%-25s%-30s\n", subject.getSubjID(), subject.getSubjectName(), subject.getSubjectCode(), subject.getLecturerID());
+                                        System.out.printf("%-10s%-16s%-25s%-30s\n", subject.getSubjID(), subject.getSubjectName(), subject.getSubjectCode(), subject.getLecturersIdAsString());
 
                                     System.out.println("\n-------------------");
 
@@ -481,10 +455,10 @@ public class AdminRole {
                                 System.out.println("--- the count of subjects in the system is: " + Subject.getSubjectCounter()+ " ---");
                                 System.out.printf("%-10s%-16s%-25s%-30s\n", "id", "subject name", "subject code", "lecturer ID");
                                 for (Subject sub : SubjectManagement.getSubjectArrayList()) {
-                                    if (sub.getLecturerID() == 0)
+                                    if (sub.getLecturersID().isEmpty())
                                         System.out.printf("%-10s%-16s%-25s%-30s\n",sub.getSubjID(), sub.getSubjectName(), sub.getSubjectCode(),"No Lecturer Assigned");
                                     else
-                                        System.out.printf("%-10s%-16s%-25s%-30s\n",sub.getSubjID(), sub.getSubjectName(), sub.getSubjectCode(),sub.getLecturerID() );
+                                        System.out.printf("%-10s%-16s%-25s%-30s\n",sub.getSubjID(), sub.getSubjectName(), sub.getSubjectCode(),sub.getLecturersIdAsString() );
                                 }
                                 break;
 
@@ -532,7 +506,7 @@ public class AdminRole {
             FileHandler studentFileHandler = new FileHandler("Files/students.txt");
 
             studentFileHandler.createFile();
-            studentFileHandler.writeFile("\n", false);
+            studentFileHandler.writeFile("", false);
             for (Student student1 : StudentManagement.getStudentArray()) {
                 studentFileHandler.writeFile(student1.getID()+ "-" + student1.getUserName() + "-" + student1.getPassword(), true);
             }

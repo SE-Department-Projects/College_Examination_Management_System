@@ -43,16 +43,16 @@ public class ExamManager {
 
 
     //Others Methods to List Exams.
-    public static void examsList(Lecturer lec){
-        System.out.println("List of Exams:");
-        System.out.format("%-10s%-16s%-25s\n","ID","Subject Name","Duration");
-        ArrayList<String> formattedExams = lec.listExams();
+    // public static void examsList(Lecturer lec){
+    //     System.out.println("List of Exams:");
+    //     System.out.format("%-10s%-16s%-25s\n","ID","Subject Name","Duration");
+    //     ArrayList<String> formattedExams = lec.listExams();
 
-        for (String formattedExam : formattedExams) {
-            System.out.println(formattedExam);
-        }
-        System.out.print("\n");
-    }
+    //     for (String formattedExam : formattedExams) {
+    //         System.out.println(formattedExam);
+    //     }
+    //     System.out.print("\n");
+    // }
     
 //    public static void reportGenerate(LecturerRole lec){
 //        System.out.println("Report Of Degrees");

@@ -9,8 +9,8 @@ import java.util.Scanner;
 
 public class LecturerRole {
 
-
-    static public void lecturerRolee(Lecturer lecturer){
+    static public void lecturerRole(Lecturer lecturer){
+        //TODO Handle lecturer param
         Scanner input = new Scanner(System.in);
 
         int op;
@@ -26,6 +26,10 @@ public class LecturerRole {
 
             while (optionsAnswer != 0 && isBackChosen == false) {
                 if (optionsAnswer == 1) {
+                    if(lecturer.getLecturerSubjects().isEmpty()){
+                        System.out.println("You don't have subjects to Manage exams");
+                        break;
+                        }
                     do {
                         System.out.println("\nSelect operation");
                         System.out.println("1=> add\n2=> delete\n3=> list\n4=> Back\n0=> exit");
@@ -39,13 +43,24 @@ public class LecturerRole {
 
                         switch (op){
                             case 1:
-                            Subject sub = new Subject("IS","IS-203"); //TODO remove this later
-                            lecturer.setSubject(sub);
-                                System.out.println("You are now adding an exam to subject" + lecturer.getSubject().getSubjectName()); 
+                                for (Subject subject : lecturer.getLecturerSubjects()) {
+                                    System.out.println(subject.getSubjID() + "=>" + subject.getSubjectName());
+                                }
+                                System.out.println("Choose the subject you want to add an exam to or 0 to exit: ");
+                                int subjID = Functions.readPositiveORZeroInt();
+                                if (subjID == 0)
+                                    break;
+                                int index = SubjectManagement.findSubjIndex(subjID);
+                                if (index == -1){
+                                    System.out.println("Subject not found");
+                                    break;
+                                }
+                                Subject subject = SubjectManagement.searchSubject(index);
+                                System.out.println("You are now adding an exam to subject: " + subject.getSubjectName()); 
                                 System.out.println("Enter the Exam duration in minutes: ");
                                 int duration = Functions.readPositiveInt();
 
-                                Exam exam1 = new Exam(lecturer.getSubject(), duration);
+                                Exam exam1 = new Exam(subject, duration, subjID);
 
                                 System.out.println("Enter number of questions: ");
                                 int questionsNum = Functions.readPositiveInt();
@@ -54,39 +69,54 @@ public class LecturerRole {
                                     System.out.println("Question " + i + ":");
                                     System.out.println("Enter question text: ");
                                     String questionText = input.nextLine();
-                                    System.out.println("Enter question Answer(true/false): ");
-                                    String questionAnswer = input.nextLine();
-                                    Question question = new Question(questionText, questionAnswer);
-                                    exam1.addQuestion(question);
-                                }
-                                System.out.println("Exam added successfully");
-                                lecturer.setExam(exam1);
-                                break;
-                            case 2:
-                                boolean isDeleted = false;
-                                while(!isDeleted){
-                                    System.out.println("Enter the ID of the exam you want to delete or 0 to exit: ");
-                                    int examID = Functions.readPositiveORZeroInt();
-                                    if (examID == 0)
-                                        break;
-                                    isDeleted = lecturer.deleteExam(examID);
-                                    if (isDeleted)
-                                        System.out.println("Exam deleted successfully");
-                                    else{
-                                        System.out.println("Exam not found");
+                                    boolean isAnswerValid = false;
+                                    while(!isAnswerValid){
+                                        System.out.println("Enter question Answer(true/false): ");
+                                        String questionAnswer = input.nextLine();
+                                        if (questionAnswer.equalsIgnoreCase("true") || questionAnswer.equalsIgnoreCase("false")){
+                                            isAnswerValid = true;
+                                            Question question = new Question(questionText, questionAnswer);
+                                            exam1.addQuestion(question);
+                                        }
+                                        else{
+                                            System.out.println("Answer must be true or false");
+                                        }
                                     }
                                 }
+                                System.out.println("Exam added successfully");
+                                lecturer.addExam(exam1,subject);
                                 break;
-                            case 3:
-                                System.out.println("List of Exams:");
-                                System.out.printf("%-10s%-16s%-25s\n","ID","Subject Name","Duration");
-                                ArrayList<Exam> exams = lecturer.getExams();
-                                for ( Exam exam : exams) {
-                                    
-                                    System.out.printf("%-10s%-16s%-25s",exam.getExamID(),exam.getSubjectName(),exam.getDuration());
-                                    System.out.print("\n");
+
+                            case 2:
+                                for (Subject subject1 : lecturer.getLecturerSubjects()) {
+                                    System.out.println(subject1.getSubjID() + " " + subject1.getSubjectName());
                                 }
+                                System.out.println("Choose the subject you want to delete an exam or 0 to exit: ");
+                                subjID = Functions.readPositiveORZeroInt();
+                                if (subjID == 0)
+                                    break;
+                                index = SubjectManagement.findSubjIndex(subjID);
+                                if (index == -1){
+                                    System.out.println("Subject not found");
+                                    break;
+                                }
+                                subject = SubjectManagement.searchSubject(index);
+                                System.out.println("You are now deleting the exam from subject" + subject.getSubjectName());
+                                if (lecturer.deleteExam(subject)){
+                                    System.out.println("Exam deleted successfully");
+                                }
+                                else{
+                                    System.out.println("Exam not found");
+                                }
+
+                            case 3:
+                            System.out.println("List of Exams:");
+                            System.out.printf("%-10s%-16s%-25s\n","ID","Subject Name","Duration");
+                            for (Subject subject1 : lecturer.getLecturerSubjects()) {
+                                System.out.println(subject1.getExam().getExamID() +subject1.getSubjectName()+subject1.getExam().getDuration());
+                            }
                                 break;
+
                             case 0:
                                 System.out.println("logout successfully");
                                 isBackChosen = true;
@@ -103,19 +133,34 @@ public class LecturerRole {
 
                 }
                 else if (optionsAnswer == 2) { // TODO change REPORT COMPLETELY
+                    if(lecturer.getLecturerSubjects().isEmpty()){
+                        System.out.println("You don't have subjects to Make Reports");
+                        break;
+                    }
+                    for (Subject subject : lecturer.getLecturerSubjects()) {
+                        System.out.println(subject.getSubjID() + " " + subject.getSubjectName());
+                    }
+                    System.out.println("Choose the subject you want to make report on or 0 to exit: ");
+                    int subjID = Functions.readPositiveORZeroInt();
+                    if (subjID == 0)
+                        break;
+                    int index = SubjectManagement.findSubjIndex(subjID);
+                    if (index == -1){
+                        System.out.println("Subject not found");
+                        break;
+                    }
+                    Subject subject = SubjectManagement.searchSubject(index);
+                    // System.out.println("You are now adding an exam to subject" + subject.getSubjectName()); 
                     System.out.printf("%-10s%-16s%-25s\n","ID","Name","Degree");
                     System.out.println("\n");
-                    //! this works, but the array is empty try running the comment underneath and it will list them
                     ArrayList<Student> students = StudentManagement.getStudentArray();
-                    // ArrayList<Student> students = new ArrayList<>();
-                    // students.add(new Student("ss", "ss"));
-                    // students.add(new Student("sssssssss", "ss"));
                     for(Student std : students){
-                        System.out.printf("%-10s%-16s%-25s",std.getID(),std.getUserName(),std.getDegree());
-                        System.out.print("\n");
+                        if (std.getSubjects().contains(subject)){
+                            System.out.printf("%-10s%-16s%-25s",std.getID(),std.getUserName(),std.getDegree());
+                            System.out.print("\n");
+                        }
                     }
                     break;
-
                 }
                 else {
                     System.out.print("enter valid option to manage or 0 to exit: ");
