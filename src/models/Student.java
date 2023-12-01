@@ -9,7 +9,7 @@ public class Student extends Person{
     private static int numOfStudents = 0;
     private int degree;
     private final int ID;
-    private ArrayList<Subject> registeredSubjects;
+    private ArrayList<Subject> registeredSubjects ;
     
 
     // Constructor
@@ -17,6 +17,10 @@ public class Student extends Person{
         super(username, password, "student");   
         this.ID = ++numOfStudents;
         this.registeredSubjects = new ArrayList<>();
+        registeredSubjects.add(new Subject("Ai","Ai-201"));
+        registeredSubjects.add(new Subject("Is","Is-201"));
+        registeredSubjects.add(new Subject("IT","IT-201"));
+
     }
 
 
@@ -30,8 +34,10 @@ public class Student extends Person{
         // To do implementation
     }
 
+
+
     public boolean addSubject(Subject subj) {
-        if (this.registeredSubjects.contains(subj)){
+        if (this.registeredSubjects.contains(subj)){ // not add the sub to the array
             return false;
         }
         else{
@@ -69,8 +75,15 @@ public class Student extends Person{
 
     public String getSubjectsAsString() {
         String subjects = "";
-        for (Subject subject : registeredSubjects) {
-            subjects += subject.getSubjectName() + ", ";
+        for(int i = 0; i < registeredSubjects.size();i++)
+        {
+            subjects += registeredSubjects.get(i).getSubjectName();
+
+            if(i != registeredSubjects.size() -1)
+            {
+                subjects += ", ";
+
+            }
         }
         return subjects;
     }

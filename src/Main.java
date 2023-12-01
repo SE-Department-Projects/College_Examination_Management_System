@@ -25,17 +25,13 @@ public class Main {
 
             String[] lecturers = lecturersData.split("\n"); // split the data into lines
             for (String line : lecturers) { // loop through the lines
-                if(line.matches("\\d+-[A-z]+-\\w+")){ // if the line matches the pattern (id-username-password)
+                if (line.matches("\\d+-[A-z]+-\\w+")) { // if the line matches the pattern (id-username-password)
                     String[] data = line.split("-"); // split the line into id, username, password
-                    Lecturer lecturer1 = new Lecturer(data[1],data[2]); // create a new lecturer object (username, password)
+                    Lecturer lecturer1 = new Lecturer(data[1], data[2]); // create a new lecturer object (username, password)
                     LecturerManagement.addLecturer(lecturer1); // add the lecturer to the array
                 }
             }
         }
-
-
-
-
 
 
         FileHandler studentFileHandler = new FileHandler("Files/students.txt"); // student file handler
@@ -44,24 +40,21 @@ public class Main {
 
         String studentsData = studentFileHandler.readFile(); // read the file
 
-        if(studentsData != ""){ // if the file is not empty
+        if (studentsData != "") { // if the file is not empty
 
             String[] students = studentsData.split("\n"); // split the data into lines
 
             for (String line : students) { // loop through the lines
 
-                if(line.matches("\\d+-[A-z]+-\\w+")){ // if the line matches the pattern (id-username-password)
+                if (line.matches("\\d+-[A-z]+-\\w+")) { // if the line matches the pattern (id-username-password)
 
                     String[] data = line.split("-"); // split the line into id, username, password
-                    Student student1 = new Student(data[1],data[2]); // create a new student object (username, password)
+                    Student student1 = new Student(data[1], data[2]); // create a new student object (username, password)
                     StudentManagement.addStd(student1); // add the student to the array
 
                 }
             }
         }
-
-
-
 
 
         FileHandler subjectsFileHandler = new FileHandler("Files/subjects.txt"); // subjects file handler
@@ -70,16 +63,16 @@ public class Main {
 
         String subjectsData = subjectsFileHandler.readFile(); // read the file
 
-        if(subjectsData != ""){ // if the file is not empty
+        if (subjectsData != "") { // if the file is not empty
 
             String[] subjects = subjectsData.split("\n"); // split the data into lines
 
             for (String line : subjects) { // loop through the lines
 
-                if(line.matches("\\d+,[A-z]+,\\w+-\\d+")){ // if the line matches the pattern (id-subjectName)
+                if (line.matches("\\d+,[A-z]+,\\w+-\\d+")) { // if the line matches the pattern (id-subjectName)
 
                     String[] data = line.split(","); // split the line into id, subjectName
-                    Subject subject1 = new Subject(data[1],data[2]); // create a new subject object (subjectName)
+                    Subject subject1 = new Subject(data[1], data[2]); // create a new subject object (subjectName)
                     SubjectManagement.addSubject(subject1); // add the subject to the array
 
                 }
@@ -87,20 +80,15 @@ public class Main {
         }
 
 
-
-
-
-
-
-
         String username, password;
         int roleNum;
         boolean isLoggedin = false;
         boolean isAuth = false;
+        boolean worngAuth = false;
 
         System.out.println("---- welcome to our system ----");
-        
-        while (!isLoggedin) {
+
+        while (true) { //!isLoggedin
 
             System.out.println("1=> Admin\n2=> Lecturer\n3=> Student\n0=> exit");
 
@@ -118,7 +106,7 @@ public class Main {
                 }
 
             }
-            while (!isAuth) {
+            while (true) {  //!isAuth
                 System.out.print("Enter Username: ");
                 username = input.nextLine().toLowerCase();
 
@@ -137,20 +125,12 @@ public class Main {
                         Admin admin1 = new Admin(username, password); // will be the admin that returns from the file
 
                         AdminRole.adminRole();
-                        isLoggedin = true;
+                        break; // ttshal b3den
+//                        isLoggedin = true;
 
 
                     } else {
-                        System.out.println("\nyou are not Authenticated\n 1=> try again\n 0=> logout");
-                        int answer = Functions.readInt();
-                        if (answer == 0)
-                            break;
-                        else if (answer == 1)
-                            isAuth = false;
-                        else {
-                            System.out.println("\ninvalid input\n");
-                            break;
-                        }
+                        worngAuth = true;
                     }
 
                 } else if (roleNum == 2) { // lecturer role
@@ -160,32 +140,39 @@ public class Main {
                         System.out.println("login Success");
                         System.out.println("---------------------------\n");
 
-                        Lecturer lecturer = new Lecturer(username, password); 
+                        Lecturer lecturer = new Lecturer(username, password);
 
                         LecturerRole.lecturerRolee(lecturer);
                         isLoggedin = true;
 
+                    } else {
+                        worngAuth = true;
                     }
-                    else{
-                        System.out.println("\nyou are not Authenticated\n 1=> try again\n 0=> logout");
-                        int answer = Functions.readInt();
-                        if (answer == 0)
-                            break;
-                        else if (answer == 1)
-                            isAuth = false;
-                        else {
-                            System.out.println("\ninvalid input\n");
-                            break;
-                        }
+
+                } else if (roleNum == 3) { // student role
+
+                    if (Authentication.studentLogin(username, password)) {
+                        StudentRole.studentRole(new Student(username, password));
+                    } else {
+                        worngAuth = true;
                     }
-                    
-                } else { // student role
-                    System.out.println("student section coming soon...");
-                    System.exit(0);
                 }
+
+                if (worngAuth) {
+                    System.out.println("\nyou are not Authenticated\n 1=> try again\n 0=> logout");
+                    int answer = Functions.readInt();
+                    if (answer == 0)
+                        break;
+                    else if (answer == 1)
+                        isAuth = false;
+                    else {
+                        System.out.println("\ninvalid input\n");
+                        break;
+                    }
+                }
+
             }
 
         }
-
     }
 }

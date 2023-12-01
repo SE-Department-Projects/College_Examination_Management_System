@@ -9,7 +9,7 @@ public class Lecturer extends Person {
     private final int ID;
     private FileHandler fileHandler;
     private ArrayList<Exam> exams;
-    public StudentManagement studentManager = new StudentManagement();
+//    public StudentManagement studentManager = new StudentManagement();
 
         //TODO remove the subject later 
     public Lecturer(String userName, String password) {

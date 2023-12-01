@@ -7,7 +7,7 @@ public class Exam {
     // Attributes
     private static int numOfExam = 0;
     private int examID;
-    private String subjectName;
+    private String subjectName;   // subject id
     private int duration;
     private ArrayList<Question> questions;
     private FileHandler examFile;
@@ -59,6 +59,11 @@ public class Exam {
 
     public ArrayList<Question> getQuestions() {
         return new ArrayList<>(questions);
+    }
+
+    boolean examIsFound(int subjID)
+    {
+        return  true;
     }
 
     

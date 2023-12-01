@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class LecturerRole {
 
+
     static public void lecturerRolee(Lecturer lecturer){
         Scanner input = new Scanner(System.in);
 
