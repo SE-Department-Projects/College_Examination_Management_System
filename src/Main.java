@@ -18,7 +18,7 @@ public class Main {
 
         // lecturer file handler
 
-        FileHandler lecturerFileHandler = new FileHandler("Files/lecturers.txt");  
+        FileHandler lecturerFileHandler = new FileHandler("src/Files/lecturers.txt");
 
         lecturerFileHandler.createFile(); // create the file if it doesn't exist
 
@@ -42,7 +42,7 @@ public class Main {
 
         // student file handler
 
-        FileHandler studentFileHandler = new FileHandler("Files/students.txt"); 
+        FileHandler studentFileHandler = new FileHandler("src/Files/students.txt");
 
         studentFileHandler.createFile(); // create the file if it doesn't exist
 
@@ -69,7 +69,7 @@ public class Main {
 
         // subjects file handler
 
-        FileHandler subjectsFileHandler = new FileHandler("Files/subjects.txt"); 
+        FileHandler subjectsFileHandler = new FileHandler("src/Files/subjects.txt");
 
         subjectsFileHandler.createFile(); // create the file if it doesn't exist
 
@@ -97,7 +97,7 @@ public class Main {
 
         for (Student student : StudentManagement.getStudentArray()) { // loop through the students
 
-            FileHandler stdSubjFileHandler = new FileHandler("Files/StudentsCourses/std_"+student.getID()+"_subjects.txt"); 
+            FileHandler stdSubjFileHandler = new FileHandler("src/Files/StudentsCourses/std_"+student.getID()+"_subjects.txt");
 
             stdSubjFileHandler.createFile(); // create the file if it doesn't exist
 
@@ -146,7 +146,7 @@ public class Main {
 
         for (Lecturer lecturer : LecturerManagement.getLecturersArr()) { // loop through the lecturers
 
-            FileHandler lecSubjFileHandler = new FileHandler("Files/LecturersCourses/lec_"+lecturer.getID()+"_subjects.txt"); 
+            FileHandler lecSubjFileHandler = new FileHandler("src/Files/LecturersCourses/lec_"+lecturer.getID()+"_subjects.txt");
 
             lecSubjFileHandler.createFile(); // create the file if it doesn't exist
 
@@ -183,7 +183,7 @@ public class Main {
         //TODO validation 
         for (Subject subject : SubjectManagement.getSubjectArrayList()) { // loop through the subjects
 
-            FileHandler subExamFileHandler = new FileHandler("Files/Exams/sub_"+subject.getSubjID()+"_exam.txt"); 
+            FileHandler subExamFileHandler = new FileHandler("src/Files/Exams/sub_"+subject.getSubjID()+"_exam.txt");
 
             subExamFileHandler.createFile(); // create the file if it doesn't exist
 
@@ -217,7 +217,7 @@ public class Main {
 
         System.out.println("---- welcome to our system ----");
         
-        while (isLoggedin) { //!isLoggedin
+        while (!isLoggedin) { //!isLoggedin
 
             System.out.println("1=> Admin\n2=> Lecturer\n3=> Student\n0=> exit");
 
@@ -279,8 +279,15 @@ public class Main {
 
                 } else if (roleNum == 3) { // student role
 
-                    if (Authentication.studentLogin(username, password)) {
-                        StudentRole.studentRole(new Student(username, password));
+                    int studentID = Authentication.studentLogin(username, password);
+                    if (studentID!= -1) {
+                        isAuth = true;
+                        isLoggedin = true;
+                        System.out.println("login Success");
+                        System.out.println("---------------------------\n");
+
+                        StudentRole.studentRole(studentID);
+                        isLoggedin = true;
                     } else {
                         worngAuth = true;
                     }

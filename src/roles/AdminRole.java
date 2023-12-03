@@ -520,7 +520,7 @@ public class AdminRole {
             //! write to files
 
             //lecturers info 
-            FileHandler lecturerFileHandler = new FileHandler("Files/lecturers.txt");
+            FileHandler lecturerFileHandler = new FileHandler("src/Files/lecturers.txt");
 
             lecturerFileHandler.createFile();
             lecturerFileHandler.emptyFile();
@@ -530,7 +530,7 @@ public class AdminRole {
 
             
             //student info
-            FileHandler studentFileHandler = new FileHandler("Files/students.txt");
+            FileHandler studentFileHandler = new FileHandler("src/Files/students.txt");
 
             studentFileHandler.createFile();
             studentFileHandler.emptyFile();
@@ -540,7 +540,7 @@ public class AdminRole {
 
 
             //subjects info
-            FileHandler subjectsFileHandler = new FileHandler("Files/subjects.txt");
+            FileHandler subjectsFileHandler = new FileHandler("src/Files/subjects.txt");
 
             subjectsFileHandler.createFile();
             subjectsFileHandler.emptyFile();
@@ -551,7 +551,7 @@ public class AdminRole {
             //subjects of students
             for(Student std : StudentManagement.getStudentArray()){
 
-                FileHandler stdSubjFileHandler = new FileHandler("Files/StudentsCourses/std_"+std.getID()+"_subjects.txt"); 
+                FileHandler stdSubjFileHandler = new FileHandler("src/Files/StudentsCourses/std_"+std.getID()+"_subjects.txt");
                 stdSubjFileHandler.createFile();
                 stdSubjFileHandler.emptyFile();
                 for (int i = 0; i < std.getSubjects().size(); i++) {
@@ -569,7 +569,7 @@ public class AdminRole {
             //subjects of lecturers
             for(Lecturer lec : LecturerManagement.getLecturersArr()){
 
-                FileHandler lecSubjFileHandler = new FileHandler("Files/LecturersCourses/lec_"+lec.getID()+"_subjects.txt"); 
+                FileHandler lecSubjFileHandler = new FileHandler("src/Files/LecturersCourses/lec_"+lec.getID()+"_subjects.txt");
                 lecSubjFileHandler.createFile();
                 lecSubjFileHandler.emptyFile();
                 for (int i = 0; i < lec.getLecturerSubjects().size(); i++) {
