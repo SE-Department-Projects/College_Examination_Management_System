@@ -14,11 +14,14 @@ public class Exam {
     private FileHandler examFile;
     
     // Constructors
-    public Exam(){
-        this.examID = ++numOfExam;
-        this.questions = new ArrayList<>();
-        this.examFile = new FileHandler("exam_" + this.examID + ".txt");
-    }
+//    public Exam(){
+//        this.examID = ++numOfExam;
+//        this.questions = new ArrayList<>();
+//        this.examFile = new FileHandler("exam_" + this.examID + ".txt");
+//    }
+
+
+
     
     public Exam(Subject subject, int duration, int subjID) {
         this.subjectName = subject.getSubjectName();
@@ -60,13 +63,16 @@ public class Exam {
     }
 
     public ArrayList<Question> getQuestions() {
-        return new ArrayList<>(questions);
+        return questions;
     }
 
-    boolean examIsFound(int subjID)
-    {
-        return  true;
-    }
+//    boolean examIsFound(int subjID)
+//    {
+//        return  true;
+//    }
 
-    
+//    public  int numberOfQuestionInExam()
+//    {
+//        return  questions.size();
+//    }
 }

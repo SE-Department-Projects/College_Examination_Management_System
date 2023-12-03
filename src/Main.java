@@ -88,7 +88,7 @@ public class Main {
 
         System.out.println("---- welcome to our system ----");
 
-        while (true) { //!isLoggedin
+        while (!isLoggedin) {
 
             System.out.println("1=> Admin\n2=> Lecturer\n3=> Student\n0=> exit");
 
@@ -106,7 +106,7 @@ public class Main {
                 }
 
             }
-            while (true) {  //!isAuth
+            while (!isAuth) {
                 System.out.print("Enter Username: ");
                 username = input.nextLine().toLowerCase();
 
@@ -142,7 +142,7 @@ public class Main {
 
                         Lecturer lecturer = new Lecturer(username, password);
 
-                        LecturerRole.lecturerRolee(lecturer);
+                        LecturerRole.lecturerRole(lecturer);
                         isLoggedin = true;
 
                     } else {

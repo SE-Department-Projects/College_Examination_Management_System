@@ -7,7 +7,8 @@ public class Subject {
     private String subjectCode;
     private String subjectName;
     private ArrayList<Integer> LecturersID;
-    private Exam exam;
+    private Exam exam ;
+
 
 
     public Subject(String name, String subjectCode) {
@@ -78,11 +79,15 @@ public class Subject {
         return subjectCode;
     }
 
-    public void setExam(Exam exam) {
+    public void setExam(Exam exam) {  // create the exam object
         this.exam = exam;
     }
 
     public Exam getExam() {
+        exam.addQuestion(new Question("void is data type in java","false"));
+        exam.addQuestion(new Question("type true","true"));
+        exam.addQuestion(new Question("type false","false"));
+
         return exam;
     }
 
