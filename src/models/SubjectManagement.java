@@ -25,6 +25,18 @@ public class SubjectManagement {
         subjectArrayList.add(sub);
     }
 
+    public static void addSubject(String subjectName, String subjectCode) { // adds new subject to the list
+        for (int i = 0; i < subjectArrayList.size(); i++) { // loop through the array of subjects
+            if (subjectArrayList.get(i).getSubjectName().equals("empty") && subjectArrayList.get(i).getSubjectCode().equals("empty-0")) { // if the subject name and code are empty
+                int subID = subjectArrayList.get(i).getSubjID(); // get the id of the subject
+                subjectArrayList.remove(i); // remove the subject
+                subjectArrayList.add(i,new Subject(subID,subjectName,subjectCode));  // add the subject with the new subject name and code with the same id as the old subject (the empty one)
+                return; // return
+            }
+        }
+        subjectArrayList.add(new Subject(subjectName,subjectCode)); // if there is no empty subjects, add a new subject with the subject name and code
+    }
+
     //---------------FIND SUBJECT INDEX----------------------------------------------
 
     public static int findSubjIndex(int id) {
@@ -50,11 +62,13 @@ public class SubjectManagement {
     public static boolean deleteSubject(int id) {
         int index = findSubjIndex(id); // returns the index of the subject if it exist , else returns -1
         if (index != -1) {
-            Subject sub = searchSubject(index); // if the subejct exists it returns the subject object
-            subjectArrayList.remove(sub); // remove the subject
+            Subject sub = searchSubject(index); 
+            int subID = sub.getSubjID();
+            subjectArrayList.remove(sub);
+            subjectArrayList.add(index,new Subject(subID,"empty","empty-0"));
             return true;
-        } else // if it doesn't exist it returns false
-            return false;
+        } 
+        return false;
     }
 
 
@@ -67,6 +81,9 @@ public class SubjectManagement {
                 boolean status = student.addSubject(sub); // and assign the subject
                 if (!status)
                     return false;
+                else{
+                    student.addGrade(-1);
+                }
             return true; // true if the subject assigned successfully
         }
         return false; // false if the subject didn't assign successfully
@@ -96,9 +113,13 @@ public class SubjectManagement {
             int index = StudentManagement.findStdIndex(idOfUser);
             if (index != -1) {
                 Student student = StudentManagement.searchStd(index);
+                int indexOfSub = student.findSubjIndex(sub.getSubjID());
                 boolean status = student.delSubject(sub);
                 if (!status)
                     return false;
+                else{
+                    student.delGrade(indexOfSub);
+                }
             }
             return true;
         }

@@ -7,9 +7,10 @@ public class Student extends Person{
     
     // Attributes
     private static int numOfStudents = 0;
-    private int degree;
+    private int finalDegree;
     private final int ID;
     private ArrayList<Subject> registeredSubjects ;
+    private ArrayList<Integer> grades ;
     
 
     // Constructor
@@ -17,26 +18,40 @@ public class Student extends Person{
         super(username, password, "student");   
         this.ID = ++numOfStudents;
         this.registeredSubjects = new ArrayList<>();
-        registeredSubjects.add(new Subject("Ai","Ai-201"));
-        registeredSubjects.add(new Subject("Is","Is-201"));
-        registeredSubjects.add(new Subject("IT","IT-201"));
+        this.grades = new ArrayList<>();
+        // registeredSubjects.add(new Subject("Ai","Ai-201"));
+        // registeredSubjects.add(new Subject("Is","Is-201"));
+        // registeredSubjects.add(new Subject("IT","IT-201"));
 
     }
     public Student(int ID,String username, String password) {
         super(username, password, "student");
         this.ID = ID;
         this.registeredSubjects = new ArrayList<>();
+        this.grades = new ArrayList<>();
     }
 
 
 
     // Setters 
-    public void setDegree(int degree) {
-        this.degree = degree;
+    public void setFinalDegree(int degree) {
+        this.finalDegree = degree;
     }
 
     public void setIsExamed () {
         // To do implementation
+    }
+
+    public void addGrade(int grade) {
+        this.grades.add(grade);
+    }
+
+    public void delGrade(int index) {
+        this.grades.remove(index);
+    }
+
+    public ArrayList<Integer> getGrades() {
+        return this.grades;
     }
 
 
@@ -65,8 +80,8 @@ public class Student extends Person{
     
 
     // Getters
-    public int getDegree() {
-        return this.degree;
+    public int getFinalDegree() {
+        return this.finalDegree;
     }
 
     public boolean getIsExamed() {

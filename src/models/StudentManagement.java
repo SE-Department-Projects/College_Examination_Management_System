@@ -25,9 +25,25 @@ public class StudentManagement {
 
     //--------------- ADD STUDENT----------------------------------------------
 
-    public static void addStd(Student student) { // Method explaination in SubjectManagement.java
+    public static void addStd(Student student) { 
         studentArray.add(student);
     }
+
+    public static void addStd(String userName, String password) { // takes username and pass
+        for (int i = 0; i < studentArray.size(); i++) { // loop through the array of students
+            if (studentArray.get(i).getUserName().equals("empty") && studentArray.get(i).getPassword().equals("empty")) { // if the username and password are empty
+                int stdID = studentArray.get(i).getID(); // get the id of the student
+                studentArray.remove(i); // remove the student
+                studentArray.add(i,new Student(stdID,userName,password));  // add the student with the new username and password with the same id as the old student (the empty one)
+                return; // return
+            }
+        }
+        studentArray.add(new Student(userName,password)); // if there is no empty students, add a new student with the username and password
+        
+    }
+
+
+
 
 
     //-----------------FIND STUDENT INDEX------------------------------------------
@@ -60,11 +76,30 @@ public class StudentManagement {
     public static boolean deleteStd(int id) {   // Method explaination in SubjectManagement.java
         int index = findStdIndex(id);
         if (index != -1) {
-            studentArray.remove(studentArray.get(index));
+            Student student = studentArray.get(index);
+            int stdID = student.getID();
+            studentArray.remove(student);
+            studentArray.add(index,new Student(stdID,"empty","empty"));
             return true;
         }
         return false;
     }
+
+
+    /*    public static boolean deleteLecturer(int ID) {  // Method explaination in SubjectManagement.java
+
+        int index = findLecIndex(ID);
+
+        if (index != -1) {
+            Lecturer lecturer = lecturersArr.get(index);
+            int lecID = lecturer.getID();
+            lecturersArr.remove(lecturer);
+            lecturersArr.add(index,new Lecturer(lecID,"empty","empty"));
+            return true;  // done
+        }
+        return false; // D.N.E
+    } */
+
 
 
     //-------------------UPDATE STUDENT USERNAME---------------------------------

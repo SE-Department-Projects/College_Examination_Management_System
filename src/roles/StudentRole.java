@@ -3,7 +3,6 @@ package roles;
 import helpers.Functions;
 import models.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -44,50 +43,15 @@ public class StudentRole {
 
 
                         if (subjID == subj.getSubjID()) {
+                            System.out.println("ssaaaaaaah");
                             correctSubjectID = true;
-
-                            subj.setExam(new Exam(subj, 30, 5));
-                            Exam exam = subj.getExam();
-
-                            ArrayList<Question> questions = exam.getQuestions();
-                            int numberOfQuestions = questions.size();
-                            int trueAnswers = 0;
-
-                            System.out.println("\n----------------------------------------------------------------------");
-                            System.out.println("------- subject: " + exam.getSubjectName() +
-                                    "\t\tduration: " + exam.getDuration() + "min" +
-                                    "\t\t" + "number of questions: " + numberOfQuestions);
-
-                            System.out.println("------- for true answer =>  enter true or t\n------- for false Answer => enter false or f");
-                            System.out.println("-----------------------------------------------------------------------");
-
-                            for (int i = 1; i <= numberOfQuestions; i++) {
-                                System.out.println("\nQ" + i + "- " + questions.get(i - 1).getQuestionText());
-                                System.out.print("Answer: ");
-                                String studentAnswer = input.nextLine().toLowerCase().trim();
-                                String questionAnswer = questions.get(i - 1).getQuestionAnswer();
-
-                                if (studentAnswer.equals(questionAnswer) || studentAnswer.equals(questionAnswer.charAt(0) + "")) {
-                                    trueAnswers++;
-                                }
-                            }
-
-                            System.out.println("\nyou got: " + trueAnswers + " out of " + numberOfQuestions);
-
-                            System.out.println("\nthe corrected exam answer: ");
-
-                            for (int i = 1; i <= numberOfQuestions; i++) {
-                                System.out.println("\nQ" + i + "- " + questions.get(i - 1).getQuestionText() + " => " + questions.get(i-1).getQuestionAnswer());
-
-                            }
-
                             break;
 
                         }
 
                     }
 
-                    if (!correctSubjectID) {
+                    if (!correctSubjectID ) {
                         System.out.println("this ID is wrong enter a valid ID or 0 to back");
 
                     }

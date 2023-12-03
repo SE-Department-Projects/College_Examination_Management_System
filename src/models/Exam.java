@@ -14,21 +14,20 @@ public class Exam {
     private FileHandler examFile;
     
     // Constructors
-//    public Exam(){
-//        this.examID = ++numOfExam;
-//        this.questions = new ArrayList<>();
-//        this.examFile = new FileHandler("exam_" + this.examID + ".txt");
-//    }
+    public Exam(){
+        this.examID = ++numOfExam;
+        this.questions = new ArrayList<>();
+        // this.examFile = new FileHandler("exam_" + this.examID + ".txt");
+    }
 
-
-
+    //TODO delete duration in exam
     
     public Exam(Subject subject, int duration, int subjID) {
         this.subjectName = subject.getSubjectName();
         this.duration = duration;
         this.questions = new ArrayList<>();
         this.examID = ++numOfExam;
-        this.examFile = new FileHandler("exam_" + this.examID + ".txt");
+        // this.examFile = new FileHandler("exam_" + this.examID + ".txt");
         this.subjID = subjID;
     }
 
@@ -63,16 +62,8 @@ public class Exam {
     }
 
     public ArrayList<Question> getQuestions() {
-        return questions;
+        return new ArrayList<>(questions);
     }
 
-//    boolean examIsFound(int subjID)
-//    {
-//        return  true;
-//    }
-
-//    public  int numberOfQuestionInExam()
-//    {
-//        return  questions.size();
-//    }
+    
 }

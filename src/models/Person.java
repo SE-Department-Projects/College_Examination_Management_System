@@ -18,27 +18,22 @@ public abstract class Person {
     // Setters
 
     public boolean setUserName(String userName) {
-
-            // validation (username must be atleast 6 characters)
-        if (userName.length() >= 6) {
+        //TODO validation for change username (no two users can have the same username)
             this.userName = userName;
             return true;
-        } 
-        else {
-            return false;
-        }
     }
 
     public boolean setPassword(String password) {
 
+        //TODO validation for change password 
             // validation (password must be atleast 8 characters and has atleast 1 alphabet letter)
-        if (password.length() >= 8 && password.matches(".*[a-zA-Z]+.*")) {
+        // if (password.length() >= 8 && password.matches(".*[a-zA-Z]+.*")) {
             this.password = password;
             return true;
-        }
-        else {
-            return false;
-        }
+        // }
+        // else {
+        //     return false;
+        // }
         
     }
 

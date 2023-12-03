@@ -8,21 +8,18 @@ public class Lecturer extends Person {
     private final int ID;
     private FileHandler fileHandler;
     private ArrayList<Subject> subjects;
-    // private ArrayList<Exam> exams;
     public StudentManagement studentManager = new StudentManagement();
 
 
     public Lecturer(String userName, String password) {
         super(userName, password, "lecturer");
         this.ID = ++numOfLecturer;
-        // this.exams = new ArrayList<>();
         this.subjects = new ArrayList<>();
     }
 
     public Lecturer(int ID, String userName, String password) {
         super(userName, password, "lecturer");
         this.ID = ID;
-        // this.exams = new ArrayList<>();
         this.subjects = new ArrayList<>();
     }
 
@@ -69,6 +66,7 @@ public class Lecturer extends Person {
     public boolean deleteExam(Subject subject) {
         if(subject.getExam() != null) {
             subject.setExam(null);
+            subject.setIsExamCreated(false);
             return true;
         }
         return false;
@@ -78,64 +76,12 @@ public class Lecturer extends Person {
     public boolean addExam(Exam exam, Subject subject) {
         if (subject.getExam() == null) {
             subject.setExam(exam);
+            subject.setIsExamCreated(true);
             return true;
         }
         return false;
     }
 
-    // public ArrayList<Exam> getExams() {
-    //     return this.exams;
-    // }
-
-
-    // public boolean updateExam(int examID, Exam updatedExam) {
-    //     int index = findExamIndex(examID);
-    //     if (index != -1 && updatedExam != null) {
-    //     Exam existingExam = exams.get(index);
-    //     existingExam.setSubjectName(updatedExam.getSubjectName());
-    //     existingExam.setDuration(updatedExam.getDuration());
-    //     existingExam.setQuestions(updatedExam.getQuestions());
-    //     return true;
-    //     }
-    //     return false;
-    // }
-
-
-    // public ArrayList<String> listExams() {
-    //     ArrayList<String> formattedExams = new ArrayList<>();
-
-    //     for (Exam exam : exams) {
-    //         String formattedExam = String.format("%-10s%-16s%-25s",exam.getExamID(),exam.getSubjectName(),exam.getDuration());
-    //         formattedExams.add(formattedExam);
-    //     }
-    //     return formattedExams;
-    // }
-
-
-
-
-    
-        //Other Methods 
-        // private Exam findExam(int examID) {
-        //     for (Exam exam : exams) {
-        //         if (exam.getExamID() == examID) {
-        //             return exam;
-        //         }
-        //     }
-        //     return null;
-        // }
-        
-        // public int findExamIndex(int examID) {
-        //     if (examID <= 0) {
-        //         return -1;
-        //     }
-        //     for (int i = 0; i < exams.size(); i++) {
-        //         if (examID == exams.get(i).getExamID()) {
-        //             return i;
-        //         }
-        //     }
-        //     return -1;
-        // }
 
         public String getSubjectsAsString() {
             String subjectsString = "";

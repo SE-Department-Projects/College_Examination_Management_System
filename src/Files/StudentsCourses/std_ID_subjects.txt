@@ -1,0 +1,8 @@
+format:
+
+Course1_ID
+grade OR -1 if he is not Examed yet
+Course2_ID
+grade OR -1 if he is not Examed yet
+Course3_ID
+grade OR -1 if he is not Examed yet

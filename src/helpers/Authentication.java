@@ -1,28 +1,32 @@
 package helpers;
+import models.*;
 
 public class Authentication {
 
     public static boolean adminLogin(String username, String password) // ba3den nb2a nhadel el files
     {
-        if(username.equals("username") && password.equals("password"))
+        if(username.equals("a") && password.equals("aa"))
         {
                 return  true;
         }
         return false;
     }
 
-    public static boolean lecturerLogin(String username, String password) // ba3den nb2a nhadel el files
+    public static int lecturerLogin(String username, String password) 
     {
-        if(username.equals("lusername") && password.equals("lpassword"))
+        for(Lecturer lecturer : LecturerManagement.getLecturersArr())
         {
-                return  true;
+            if(lecturer.getUserName().equals(username) && lecturer.getPassword().equals(password))
+            {
+                return  lecturer.getID();
+            }
         }
-        return false;
+        return -1;
     }
 
     public static boolean studentLogin(String username, String password) // ba3den nb2a nhadel el files
     {
-        if(username.equals("susername") && password.equals("spassword"))
+        if(username.equals("d") && password.equals("dd"))
         {
             return  true;
         }

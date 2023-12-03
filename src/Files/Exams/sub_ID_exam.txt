@@ -1,6 +1,6 @@
 format:
-
-question 
+Status-----> 1 means subject has an exam || -1 means subject doesn't have an exam
+question
 true/false
 question
 true/false

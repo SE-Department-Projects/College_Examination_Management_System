@@ -3,6 +3,7 @@ import models.*;
 import roles.*;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -13,9 +14,11 @@ public class Main {
     public static void main(String[] args) {
         LecturerManagement lec = new LecturerManagement();
 
-        // File handeling (filling the arrays with the data from the file)
+        //!  read from files
 
-        FileHandler lecturerFileHandler = new FileHandler("Files/lecturers.txt");  // lecturer file handler
+        // lecturer file handler
+
+        FileHandler lecturerFileHandler = new FileHandler("Files/lecturers.txt");  
 
         lecturerFileHandler.createFile(); // create the file if it doesn't exist
 
@@ -25,59 +28,185 @@ public class Main {
 
             String[] lecturers = lecturersData.split("\n"); // split the data into lines
             for (String line : lecturers) { // loop through the lines
-                if (line.matches("\\d+-[A-z]+-\\w+")) { // if the line matches the pattern (id-username-password)
+                if(line.matches("\\d+-[A-z]+-\\w+")){ // if the line matches the pattern (id-username-password)
                     String[] data = line.split("-"); // split the line into id, username, password
-                    Lecturer lecturer1 = new Lecturer(data[1], data[2]); // create a new lecturer object (username, password)
+                     Lecturer lecturer1 = new Lecturer(Integer.parseInt(data[0]),data[1],data[2]); // create a new lecturer object (username, password)
                     LecturerManagement.addLecturer(lecturer1); // add the lecturer to the array
+                    Lecturer.setNumOfLecturer(Integer.parseInt(data[0]));
                 }
             }
         }
 
 
-        FileHandler studentFileHandler = new FileHandler("Files/students.txt"); // student file handler
+
+
+        // student file handler
+
+        FileHandler studentFileHandler = new FileHandler("Files/students.txt"); 
 
         studentFileHandler.createFile(); // create the file if it doesn't exist
 
         String studentsData = studentFileHandler.readFile(); // read the file
 
-        if (studentsData != "") { // if the file is not empty
+        if(studentsData != ""){ // if the file is not empty
 
             String[] students = studentsData.split("\n"); // split the data into lines
 
             for (String line : students) { // loop through the lines
 
-                if (line.matches("\\d+-[A-z]+-\\w+")) { // if the line matches the pattern (id-username-password)
+                if(line.matches("\\d+-[A-z]+-\\w+")){ // if the line matches the pattern (id-username-password)
 
                     String[] data = line.split("-"); // split the line into id, username, password
-                    Student student1 = new Student(data[1], data[2]); // create a new student object (username, password)
+                    Student student1 = new Student(Integer.parseInt(data[0]),data[1],data[2]); // create a new student object (username, password)
                     StudentManagement.addStd(student1); // add the student to the array
-
+                    Student.setNumOfStudents(Integer.parseInt(data[0]));
                 }
             }
         }
 
 
-        FileHandler subjectsFileHandler = new FileHandler("Files/subjects.txt"); // subjects file handler
+
+
+        // subjects file handler
+
+        FileHandler subjectsFileHandler = new FileHandler("Files/subjects.txt"); 
 
         subjectsFileHandler.createFile(); // create the file if it doesn't exist
 
         String subjectsData = subjectsFileHandler.readFile(); // read the file
 
-        if (subjectsData != "") { // if the file is not empty
+        if(subjectsData != ""){ // if the file is not empty
 
             String[] subjects = subjectsData.split("\n"); // split the data into lines
 
             for (String line : subjects) { // loop through the lines
 
-                if (line.matches("\\d+,[A-z]+,\\w+-\\d+")) { // if the line matches the pattern (id-subjectName)
+                if(line.matches("\\d+,[A-z]+,\\w+-\\d+")){ // if the line matches the pattern (id-subjectName)
 
                     String[] data = line.split(","); // split the line into id, subjectName
-                    Subject subject1 = new Subject(data[1], data[2]); // create a new subject object (subjectName)
+                    Subject subject1 = new Subject(Integer.parseInt(data[0]),data[1],data[2]); // create a new subject object (subjectName)
                     SubjectManagement.addSubject(subject1); // add the subject to the array
-
+                    Subject.setNumOfSubjects(Integer.parseInt(data[0]));
                 }
             }
         }
+
+
+
+        // std_ID_subject read
+
+        for (Student student : StudentManagement.getStudentArray()) { // loop through the students
+
+            FileHandler stdSubjFileHandler = new FileHandler("Files/StudentsCourses/std_"+student.getID()+"_subjects.txt"); 
+
+            stdSubjFileHandler.createFile(); // create the file if it doesn't exist
+
+            String stdSubjData = stdSubjFileHandler.readFile(); // read the file
+
+            if(stdSubjData != ""){ // if the file is not empty
+
+                String[] stdSubjs = stdSubjData.split("\n"); // split the data into lines
+
+                boolean skip = false;
+                for (int i = 0 ; i < stdSubjs.length ; i++ ) { // loop through the lines
+                    
+                    if (skip){
+                        skip = false;
+                        continue;
+                    }
+                    else{
+                        if(stdSubjs[i].matches("-*\\d+")){ // if the line matches the pattern (subjectID)
+                            if(i%2 == 0){
+                                int index = SubjectManagement.findSubjIndex(Integer.parseInt(stdSubjs[i])); // find the index of the subject
+                                if (index != -1){ // if the subject exists
+                                    student.addSubject(SubjectManagement.searchSubject(index)); // add the subject to the student
+                                }
+                                else{
+                                    
+                                    skip = true;
+                                }
+                            }
+                            else{
+                                student.addGrade(Integer.parseInt(stdSubjs[i])); // add the grade to the student
+                            }
+                        }
+                        else if (i %2 == 0){
+                            skip = true;
+                        }
+                    }
+                }
+                
+            }
+        }
+
+
+
+
+        // lec_ID_subject read
+
+        for (Lecturer lecturer : LecturerManagement.getLecturersArr()) { // loop through the lecturers
+
+            FileHandler lecSubjFileHandler = new FileHandler("Files/LecturersCourses/lec_"+lecturer.getID()+"_subjects.txt"); 
+
+            lecSubjFileHandler.createFile(); // create the file if it doesn't exist
+
+            String lecSubjData = lecSubjFileHandler.readFile(); // read the file
+
+            if(lecSubjData != ""){ // if the file is not empty
+
+                String[] lecSubjs = lecSubjData.split("\n"); // split the data into lines
+
+                for (String line : lecSubjs) { // loop through the lines
+
+                    if(line.matches("\\d+")){ // if the line matches the pattern (subjectID)
+
+                        int index = SubjectManagement.findSubjIndex(Integer.parseInt(line)); // find the index of the subject
+
+                        if (index != -1){ // if the subject exists
+                            Subject subject = SubjectManagement.searchSubject(index);
+                            lecturer.addSubject(subject); // add the subject to the lecturer
+                            subject.addLecturerID(lecturer.getID());
+
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+
+
+        // sub_ID_exam read
+
+        //TODO validation 
+        for (Subject subject : SubjectManagement.getSubjectArrayList()) { // loop through the subjects
+
+            FileHandler subExamFileHandler = new FileHandler("Files/Exams/sub_"+subject.getSubjID()+"_exam.txt"); 
+
+            subExamFileHandler.createFile(); // create the file if it doesn't exist
+
+            String subExamData = subExamFileHandler.readFile(); // read the file
+
+            if(subExamData != ""){ // if the file is not empty
+
+                String[] subExams = subExamData.split("\n"); // split the data into lines
+                if (subExams[0].equals("-1")){
+                    // System.out.println("empty");
+                    break;
+                }
+                subject.setExam(new Exam());
+                for(int i = 1 ; i < subExams.length ; i+=2){
+                    Question question = new Question(subExams[i],subExams[i+1]);
+                    subject.getExam().addQuestion(question);
+                }
+                subject.setIsExamCreated(true);
+            }
+        }
+
+
+
 
 
         String username, password;
@@ -87,13 +216,14 @@ public class Main {
         boolean worngAuth = false;
 
         System.out.println("---- welcome to our system ----");
-
-        while (!isLoggedin) {
+        
+        while (isLoggedin) { //!isLoggedin
 
             System.out.println("1=> Admin\n2=> Lecturer\n3=> Student\n0=> exit");
 
             System.out.print("enter the num of the role: ");
             roleNum = Functions.readInt();
+            
             if (roleNum == 0) {
                 System.exit(0);
             }
@@ -125,8 +255,7 @@ public class Main {
                         Admin admin1 = new Admin(username, password); // will be the admin that returns from the file
 
                         AdminRole.adminRole();
-                        break; // ttshal b3den
-//                        isLoggedin = true;
+                        isLoggedin = true;
 
 
                     } else {
@@ -134,15 +263,14 @@ public class Main {
                     }
 
                 } else if (roleNum == 2) { // lecturer role
-                    if (Authentication.lecturerLogin(username, password)) {
+                    int lecturerID = Authentication.lecturerLogin(username, password);
+                    if (lecturerID != -1) {
                         isAuth = true;
                         isLoggedin = true;
                         System.out.println("login Success");
                         System.out.println("---------------------------\n");
 
-                        Lecturer lecturer = new Lecturer(username, password);
-
-                        LecturerRole.lecturerRole(lecturer);
+                        LecturerRole.lecturerRole(lecturerID);
                         isLoggedin = true;
 
                     } else {
@@ -159,20 +287,21 @@ public class Main {
                 }
 
                 if (worngAuth) {
-                    System.out.println("\nyou are not Authenticated\n 1=> try again\n 0=> logout");
-                    int answer = Functions.readInt();
-                    if (answer == 0)
-                        break;
-                    else if (answer == 1)
-                        isAuth = false;
-                    else {
-                        System.out.println("\ninvalid input\n");
-                        break;
+                        System.out.println("\nyou are not Authenticated\n 1=> try again\n 0=> logout");
+                        int answer = Functions.readInt();
+                        if (answer == 0)
+                            break;
+                        else if (answer == 1)
+                            isAuth = false;
+                        else {
+                            System.out.println("\ninvalid input\n");
+                            break;
+                        }
                     }
-                }
-
-            }
+                    
+                            }
 
         }
+
     }
 }

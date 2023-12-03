@@ -20,6 +20,18 @@ public class LecturerManagement {
         lecturersArr.add(lecturer);
 }
 
+    public static void addLecturer(String userName, String password) {  // Method explaination in SubjectManagement.java
+        for (int i = 0; i < lecturersArr.size(); i++) {
+            if (lecturersArr.get(i).getUserName().equals("empty") && lecturersArr.get(i).getPassword().equals("empty")) {
+                int lecID = lecturersArr.get(i).getID();
+                lecturersArr.remove(i);
+                lecturersArr.add(i,new Lecturer(lecID,userName,password));
+                return;
+            }
+        }
+        lecturersArr.add(new Lecturer(userName,password));
+}
+
 
     //-----------------FIND LECTURER INDEX------------------------------------------
 
@@ -58,8 +70,21 @@ public class LecturerManagement {
         int index = findLecIndex(ID);
 
         if (index != -1) {
-            lecturersArr.remove(lecturersArr.get(index));
-
+            Lecturer lecturer = lecturersArr.get(index);
+            for(Subject subject : SubjectManagement.getSubjectArrayList()){
+                int removeIndex = -1;
+                for(int i = 0 ; i < subject.getLecturersID().size() ; i++){
+                    if(subject.getLecturersID().get(i) == ID){
+                        removeIndex = i;
+                    }
+                }
+                if(removeIndex != -1){
+                    subject.getLecturersID().remove(removeIndex);
+                }
+            }
+                int lecID = lecturer.getID();
+                lecturersArr.remove(lecturer);
+                lecturersArr.add(index,new Lecturer(lecID,"empty","empty"));
             return true;  // done
         }
         return false; // D.N.E

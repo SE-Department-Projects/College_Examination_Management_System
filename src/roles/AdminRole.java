@@ -49,7 +49,7 @@ public class AdminRole {
                                     String LecPassword = input.nextLine();
 
 
-                                    LecturerManagement.addLecturer(new Lecturer(LecUsername, LecPassword));
+                                    LecturerManagement.addLecturer(LecUsername, LecPassword);
                                     System.out.println("\n---- lecturer added successfully ----\n");
                                     break;
 
@@ -69,6 +69,10 @@ public class AdminRole {
                                         System.out.println("\n------the lecturer not found----\n");
                                     } else {
                                         Lecturer lecturer = LecturerManagement.searchLecturer(index);
+                                        if(lecturer.getUserName().equals("empty") && lecturer.getPassword().equals("empty")){
+                                            System.out.println("\n------the lecturer not found----\n");
+                                            break;
+                                        }
                                         // System.out.println(lecturer.getID() + "   " + lecturer.getUserName() + "   " + lecturer.getPassword());
                                         // System.out.println("\n-------------------");
                                         System.out.printf("%-10s%-16s%-25s%-30s\n", "ID", "username", "password", "subject");
@@ -83,6 +87,9 @@ public class AdminRole {
                                 case 4: // lecturer list
                                     System.out.printf("%-10s%-16s%-25s%-30s\n", "id", "name", "password","subject");
                                     for (Lecturer lec : LecturerManagement.getLecturersArr()) {
+                                        if(lec.getUserName().equals("empty") && lec.getPassword().equals("empty")){
+                                            continue;
+                                        }
                                         if (lec.getLecturerSubjects().isEmpty())
                                             System.out.printf("\n%-10s%-16s%-25s%-30s", lec.getID(), lec.getUserName(), lec.getPassword(),"No Subject Assigned");
                                         else
@@ -232,7 +239,7 @@ public class AdminRole {
                                 String stdPassword = input.nextLine();
 
 
-                                StudentManagement.addStd(new Student(stdUsername, stdPassword));
+                                StudentManagement.addStd(stdUsername, stdPassword);
                                 System.out.println("\n---- student added successfully ----\n");
                                 break;
 
@@ -253,6 +260,10 @@ public class AdminRole {
                                     System.out.println("\n------the Student not found----\n");
                                 } else {
                                     Student student = StudentManagement.searchStd(index);
+                                    if(student.getUserName().equals("empty") && student.getPassword().equals("empty")){
+                                            System.out.println("\n------the student not found----\n");
+                                            break;
+                                        }
                                     System.out.printf("%-10s%-16s%-25s%-30s\n", "ID", "username", "password", "subject(s)");
                                     if (student.getSubjects().isEmpty())
                                         System.out.printf("%-10s%-16s%-25s%-30s\n", student.getID(), student.getUserName(), student.getPassword(),"No Subject Assigned");
@@ -271,6 +282,9 @@ public class AdminRole {
                                 System.out.println("--- students in the system --- ");
                                 System.out.printf("%-10s%-16s%-25s%-30s\n", "id", "name", "password","subject(s)");
                                 for (Student std : StudentManagement.getStudentArray()) {
+                                    if(std.getUserName().equals("empty") && std.getPassword().equals("empty")){
+                                        continue;
+                                    }
                                     if (std.getSubjects().isEmpty())
                                         System.out.printf("%-10s%-16s%-25s%-30s\n", std.getID(), std.getUserName(), std.getPassword(),"No Subject Assigned");
                                     else{
@@ -420,7 +434,7 @@ public class AdminRole {
                                 System.out.print("enter subject code: ");
                                 String subjectCode = input.nextLine();
 
-                                SubjectManagement.addSubject(new Subject(subjectName, subjectCode));
+                                SubjectManagement.addSubject(subjectName, subjectCode);
                                 System.out.println("\n---- subject added successfully ----\n");
                                 break;
 
@@ -440,6 +454,10 @@ public class AdminRole {
                                     System.out.println("\n------ the Subject not found ----\n");
                                 } else {
                                     Subject subject = SubjectManagement.searchSubject(index);
+                                    if(subject.getSubjectName().equals("empty") && subject.getSubjectCode().equals("empty-0")){
+                                            System.out.println("\n------the subject not found----\n");
+                                            break;
+                                        }
                                     System.out.printf("%-10s%-16s%-25s%-30s\n", "ID", "name", "subject code", "lecturer ID");
                                     if (subject.getLecturersID().isEmpty())
                                         System.out.printf("%-10s%-16s%-25s%-30s\n", subject.getSubjID(), subject.getSubjectName(), subject.getSubjectCode(),"No Lecturer Assigned");
@@ -455,6 +473,9 @@ public class AdminRole {
                                 System.out.println("--- the count of subjects in the system is: " + Subject.getSubjectCounter()+ " ---");
                                 System.out.printf("%-10s%-16s%-25s%-30s\n", "id", "subject name", "subject code", "lecturer ID");
                                 for (Subject sub : SubjectManagement.getSubjectArrayList()) {
+                                    if(sub.getSubjectName().equals("empty") && sub.getSubjectCode().equals("empty-0")){
+                                            continue;
+                                        }
                                     if (sub.getLecturersID().isEmpty())
                                         System.out.printf("%-10s%-16s%-25s%-30s\n",sub.getSubjID(), sub.getSubjectName(), sub.getSubjectCode(),"No Lecturer Assigned");
                                     else
@@ -495,28 +516,66 @@ public class AdminRole {
                     isStillOperating = false;
             }
 
+
+            //! write to files
+
+            //lecturers info 
             FileHandler lecturerFileHandler = new FileHandler("Files/lecturers.txt");
 
             lecturerFileHandler.createFile();
-            lecturerFileHandler.writeFile("", false);
+            lecturerFileHandler.emptyFile();
             for (Lecturer lecturer1 : LecturerManagement.getLecturersArr()) {
                 lecturerFileHandler.writeFile(lecturer1.getID()+ "-" + lecturer1.getUserName() + "-" + lecturer1.getPassword(), true);
             }
+
             
+            //student info
             FileHandler studentFileHandler = new FileHandler("Files/students.txt");
 
             studentFileHandler.createFile();
-            studentFileHandler.writeFile("", false);
+            studentFileHandler.emptyFile();
             for (Student student1 : StudentManagement.getStudentArray()) {
                 studentFileHandler.writeFile(student1.getID()+ "-" + student1.getUserName() + "-" + student1.getPassword(), true);
             }
 
+
+            //subjects info
             FileHandler subjectsFileHandler = new FileHandler("Files/subjects.txt");
 
             subjectsFileHandler.createFile();
-            subjectsFileHandler.writeFile("", false);
+            subjectsFileHandler.emptyFile();
             for (Subject subject1 : SubjectManagement.getSubjectArrayList()) {
                 subjectsFileHandler.writeFile(subject1.getSubjID()+ "," + subject1.getSubjectName() + "," + subject1.getSubjectCode(), true);
+            }
+
+            //subjects of students
+            for(Student std : StudentManagement.getStudentArray()){
+
+                FileHandler stdSubjFileHandler = new FileHandler("Files/StudentsCourses/std_"+std.getID()+"_subjects.txt"); 
+                stdSubjFileHandler.createFile();
+                stdSubjFileHandler.emptyFile();
+                for (int i = 0; i < std.getSubjects().size(); i++) {
+                    stdSubjFileHandler.writeFile(Integer.toString(std.getSubjects().get(i).getSubjID()),true );
+                    if(i < std.getGrades().size() ){
+                        stdSubjFileHandler.writeFile(Integer.toString(std.getGrades().get(i)),true );
+                    }
+                    else{
+                        stdSubjFileHandler.writeFile("-1",true );
+                    }
+
+                }
+            }
+
+            //subjects of lecturers
+            for(Lecturer lec : LecturerManagement.getLecturersArr()){
+
+                FileHandler lecSubjFileHandler = new FileHandler("Files/LecturersCourses/lec_"+lec.getID()+"_subjects.txt"); 
+                lecSubjFileHandler.createFile();
+                lecSubjFileHandler.emptyFile();
+                for (int i = 0; i < lec.getLecturerSubjects().size(); i++) {
+                    lecSubjFileHandler.writeFile(Integer.toString(lec.getLecturerSubjects().get(i).getSubjID()),true );
+                }
+
             }
     }
 }

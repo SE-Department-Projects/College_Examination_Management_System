@@ -7,8 +7,8 @@ public class Subject {
     private String subjectCode;
     private String subjectName;
     private ArrayList<Integer> LecturersID;
-    private Exam exam ;
-
+    private Exam exam;
+    private boolean isExamCreated;
 
 
     public Subject(String name, String subjectCode) {
@@ -16,6 +16,8 @@ public class Subject {
         this.subjectName = name;
         this.subjectCode = subjectCode;
         this.LecturersID = new ArrayList<>();
+        this.isExamCreated = false;
+        // this.exam = new Exam();
     }
 
     public Subject(int ID, String name, String subjectCode) {
@@ -23,10 +25,20 @@ public class Subject {
         this.subjectName = name;
         this.subjectCode = subjectCode;
         this.LecturersID = new ArrayList<>();
+        this.isExamCreated = false;
+        // this.exam = new Exam();
     }
 
     public int getSubjID() {
         return SubjID;
+    }
+
+    public void setIsExamCreated(boolean isExamCreated) {
+        this.isExamCreated = isExamCreated;
+    }
+
+    public boolean isExamCreated() {
+        return isExamCreated;
     }
 
     public String getSubjectName() {
@@ -79,15 +91,11 @@ public class Subject {
         return subjectCode;
     }
 
-    public void setExam(Exam exam) {  // create the exam object
+    public void setExam(Exam exam) {
         this.exam = exam;
     }
 
     public Exam getExam() {
-        exam.addQuestion(new Question("void is data type in java","false"));
-        exam.addQuestion(new Question("type true","true"));
-        exam.addQuestion(new Question("type false","false"));
-
         return exam;
     }
 

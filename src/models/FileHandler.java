@@ -10,6 +10,17 @@ public class FileHandler {
     public FileHandler(String pathName){
         file = new File(pathName);
     }
+
+    public void emptyFile(){
+        try {
+            FileWriter fw = new FileWriter(this.file);
+            fw.write("");
+            fw.close();
+        } 
+        catch (IOException ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+    }
     
     
     public int createFile(){
