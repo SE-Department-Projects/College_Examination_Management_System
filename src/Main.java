@@ -15,14 +15,14 @@ public class Main {
 
         // lecturer file reader
 
-        Files.lecturersFileReader();
+        // Files.lecturersFileReader();
 
 
 
 
         // student file handler
 
-        Files.studentsFileReader();
+        // Files.studentsFileReader();
 
 
 
