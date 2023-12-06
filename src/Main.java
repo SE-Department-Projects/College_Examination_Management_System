@@ -15,14 +15,14 @@ public class Main {
 
         // lecturer file reader
 
-        // Files.lecturersFileReader();
+        Files.lecturersFileReader();
 
 
 
 
         // student file handler
 
-        // Files.studentsFileReader();
+        Files.studentsFileReader();
 
 
 
@@ -93,7 +93,6 @@ public class Main {
                 password = input.nextLine().toLowerCase();
 
                 if (roleNum == 1) { // admin role
-
                     if (Authentication.adminLogin(username, password)) {
                         isAuth = true;
                         isLoggedin = true;
@@ -111,7 +110,7 @@ public class Main {
                     }
 
                 } else if (roleNum == 2) { // lecturer role
-                    Files.lecturersFileReader();
+                    
                     int lecturerID = Authentication.lecturerLogin(username, password);
                     if (lecturerID != -1) {
                         isAuth = true;
@@ -127,7 +126,7 @@ public class Main {
                     }
 
                 } else if (roleNum == 3) { // student role
-                    Files.studentsFileReader();
+                    
                     int studentID = Authentication.studentLogin(username, password);
                     if (studentID!= -1) {
                         isAuth = true;
