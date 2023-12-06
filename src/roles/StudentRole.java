@@ -1,6 +1,7 @@
 package roles;
 
 import helpers.Functions;
+import helpers.Menus;
 import models.*;
 
 import java.util.ArrayList;
@@ -20,10 +21,7 @@ public class StudentRole {
         int subjID;
 
         do {
-            System.out.println("choose only one option to manage: ");
-            System.out.println("1=> See Registered Subjects\n2=> get Exam(s)\n0=> exit");
-            System.out.print("Enter your answer: ");
-            op = Functions.readInt();
+          op =   Menus.studentMenu();
 
             if (op == 1) {
                 System.out.println("\nThe Registered Subjects\n");
