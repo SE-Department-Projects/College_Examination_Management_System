@@ -1,1 +1,9 @@
--1
+1
+is mizo a man 
+false
+enter true
+true
+enter false
+false
+enter t
+true

@@ -2,8 +2,6 @@ import helpers.*;
 import models.*;
 import roles.*;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -12,13 +10,12 @@ public class Main {
     public static boolean isBack = true;
 
     public static void main(String[] args) {
-        LecturerManagement lec = new LecturerManagement();
 
         //!  read from files
 
         // lecturer file handler
 
-        FileHandler lecturerFileHandler = new FileHandler("src/Files/lecturers.txt");
+        FileHandler lecturerFileHandler = new FileHandler(Paths.lecturersPath);
 
         lecturerFileHandler.createFile(); // create the file if it doesn't exist
 
@@ -42,7 +39,7 @@ public class Main {
 
         // student file handler
 
-        FileHandler studentFileHandler = new FileHandler("src/Files/students.txt");
+        FileHandler studentFileHandler = new FileHandler(Paths.studentsPath);
 
         studentFileHandler.createFile(); // create the file if it doesn't exist
 
@@ -69,7 +66,7 @@ public class Main {
 
         // subjects file handler
 
-        FileHandler subjectsFileHandler = new FileHandler("src/Files/subjects.txt");
+        FileHandler subjectsFileHandler = new FileHandler(Paths.subjectsPath);
 
         subjectsFileHandler.createFile(); // create the file if it doesn't exist
 
@@ -97,7 +94,7 @@ public class Main {
 
         for (Student student : StudentManagement.getStudentArray()) { // loop through the students
 
-            FileHandler stdSubjFileHandler = new FileHandler("src/Files/StudentsCourses/std_"+student.getID()+"_subjects.txt");
+            FileHandler stdSubjFileHandler = new FileHandler(Paths.studentCoursesPath +student.getID()+"_subjects.txt");
 
             stdSubjFileHandler.createFile(); // create the file if it doesn't exist
 
@@ -146,7 +143,7 @@ public class Main {
 
         for (Lecturer lecturer : LecturerManagement.getLecturersArr()) { // loop through the lecturers
 
-            FileHandler lecSubjFileHandler = new FileHandler("src/Files/LecturersCourses/lec_"+lecturer.getID()+"_subjects.txt");
+            FileHandler lecSubjFileHandler = new FileHandler(Paths.lecturerCoursesPath +lecturer.getID()+"_subjects.txt");
 
             lecSubjFileHandler.createFile(); // create the file if it doesn't exist
 
@@ -183,7 +180,7 @@ public class Main {
         //TODO validation 
         for (Subject subject : SubjectManagement.getSubjectArrayList()) { // loop through the subjects
 
-            FileHandler subExamFileHandler = new FileHandler("src/Files/Exams/sub_"+subject.getSubjID()+"_exam.txt");
+            FileHandler subExamFileHandler = new FileHandler(Paths.examPath+subject.getSubjID()+"_exam.txt");
 
             subExamFileHandler.createFile(); // create the file if it doesn't exist
 
@@ -310,5 +307,15 @@ public class Main {
 
         }
 
+
+        for(Student std : StudentManagement.getStudentArray()){
+            FileHandler stdIdSubjects = new FileHandler("src/Files/StudentsCourses/std_"+std.getID()+"_subjects.txt");
+
+            stdIdSubjects.emptyFile();
+            for(int i = 0 ; i < std.getSubjects().size() ; i++){
+                stdIdSubjects.writeFile(std.getSubjects().get(i).getSubjID()+"",true);
+                stdIdSubjects.writeFile(std.getGrades().get(i)+"",true);
+            }
+        }
     }
 }

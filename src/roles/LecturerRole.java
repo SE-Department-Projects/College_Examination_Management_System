@@ -1,6 +1,7 @@
 package roles;
 
 import helpers.Functions;
+import helpers.Paths;
 import models.*;
 
 import java.util.ArrayList;
@@ -229,7 +230,7 @@ public class LecturerRole {
         // write in the file (sub_ID_exam)
 
         for (Subject subject : lecturer.getLecturerSubjects()) {
-            FileHandler examFile = new FileHandler("src/Files/Exams/sub_" + subject.getSubjID() + "_exam.txt");
+            FileHandler examFile = new FileHandler(Paths.examPath+ subject.getSubjID() + "_exam.txt");
             if(subject.isExamCreated()){
                 examFile.writeFile("1",false);
                 for (Question question : subject.getExam().getQuestions()) {
@@ -243,7 +244,7 @@ public class LecturerRole {
         }
 
         // lecturers info
-        FileHandler lecturerFileHandler = new FileHandler("src/Files/lecturers.txt");
+        FileHandler lecturerFileHandler = new FileHandler(Paths.lecturersPath);
 
         lecturerFileHandler.createFile();
         lecturerFileHandler.emptyFile();

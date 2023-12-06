@@ -19,10 +19,6 @@ public class Student extends Person{
         this.ID = ++numOfStudents;
         this.registeredSubjects = new ArrayList<>();
         this.grades = new ArrayList<>();
-        // registeredSubjects.add(new Subject("Ai","Ai-201"));
-        // registeredSubjects.add(new Subject("Is","Is-201"));
-        // registeredSubjects.add(new Subject("IT","IT-201"));
-
     }
     public Student(int ID,String username, String password) {
         super(username, password, "student");

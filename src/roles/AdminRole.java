@@ -1,8 +1,10 @@
 package roles;
 
 import helpers.Functions;
+import helpers.Paths;
 import models.*;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -520,7 +522,7 @@ public class AdminRole {
             //! write to files
 
             //lecturers info 
-            FileHandler lecturerFileHandler = new FileHandler("src/Files/lecturers.txt");
+            FileHandler lecturerFileHandler = new FileHandler(Paths.lecturersPath);
 
             lecturerFileHandler.createFile();
             lecturerFileHandler.emptyFile();
@@ -530,7 +532,7 @@ public class AdminRole {
 
             
             //student info
-            FileHandler studentFileHandler = new FileHandler("src/Files/students.txt");
+            FileHandler studentFileHandler = new FileHandler(Paths.studentsPath);
 
             studentFileHandler.createFile();
             studentFileHandler.emptyFile();
@@ -540,7 +542,7 @@ public class AdminRole {
 
 
             //subjects info
-            FileHandler subjectsFileHandler = new FileHandler("src/Files/subjects.txt");
+            FileHandler subjectsFileHandler = new FileHandler(Paths.subjectsPath);
 
             subjectsFileHandler.createFile();
             subjectsFileHandler.emptyFile();
@@ -551,7 +553,7 @@ public class AdminRole {
             //subjects of students
             for(Student std : StudentManagement.getStudentArray()){
 
-                FileHandler stdSubjFileHandler = new FileHandler("src/Files/StudentsCourses/std_"+std.getID()+"_subjects.txt");
+                FileHandler stdSubjFileHandler = new FileHandler(Paths.studentCoursesPath+std.getID()+"_subjects.txt");
                 stdSubjFileHandler.createFile();
                 stdSubjFileHandler.emptyFile();
                 for (int i = 0; i < std.getSubjects().size(); i++) {
@@ -569,7 +571,7 @@ public class AdminRole {
             //subjects of lecturers
             for(Lecturer lec : LecturerManagement.getLecturersArr()){
 
-                FileHandler lecSubjFileHandler = new FileHandler("src/Files/LecturersCourses/lec_"+lec.getID()+"_subjects.txt");
+                FileHandler lecSubjFileHandler = new FileHandler(Paths.lecturerCoursesPath+lec.getID()+"_subjects.txt");
                 lecSubjFileHandler.createFile();
                 lecSubjFileHandler.emptyFile();
                 for (int i = 0; i < lec.getLecturerSubjects().size(); i++) {
