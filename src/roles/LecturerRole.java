@@ -1,7 +1,6 @@
 package roles;
 
-import helpers.Functions;
-import helpers.Paths;
+import helpers.*;
 import models.*;
 
 import java.util.ArrayList;
@@ -14,6 +13,11 @@ public class LecturerRole {
         int LecIndex = LecturerManagement.findLecIndex(LecId);
         Lecturer lecturer = LecturerManagement.searchLecturer(LecIndex);
         Scanner input = new Scanner(System.in);
+        boolean isMakeReportChosenBefore = false;
+
+        // read from files
+        Files.lecturerIdSubjectFileReader(); // this is used in every choice so we read it here
+        Files.subjectIdExamFileReader(); // this is used in every choice so we read it here
 
         int op;
         boolean isStillOperating = true;
@@ -143,8 +147,14 @@ public class LecturerRole {
                         
                     }while (op != 0 && op != 6);
 
+                    Files.lecturersFileWriter();
+                    Files.subjectIdExamFileWriter(lecturer);
                 }
                 else if (optionsAnswer == 2) {
+                    if(isMakeReportChosenBefore == false){
+                        isMakeReportChosenBefore = true;
+                        Files.studentIdSubjectFileReader();
+                    }
                     if(lecturer.getLecturerSubjects().isEmpty()){
                         System.out.println("\nYou don't have subjects to Make Reports\n");
                         break;
@@ -165,12 +175,6 @@ public class LecturerRole {
                     System.out.printf("%-10s%-16s%-25s\n","ID","Name","Degree");
                     System.out.println("\n");
                     ArrayList<Student> students = StudentManagement.getStudentArray();
-                    // for(Student std : students){
-                    //     if (std.getSubjects().contains(subject)){
-                    //         System.out.printf("%-10s%-16s%-25s",std.getID(),std.getUserName(),std.getFinalDegree());
-                    //         System.out.print("\n");
-                    //     }
-                    // }
                     for(int i = 0 ; i < students.size() ; i++){
                         if (students.get(i).getSubjects().contains(subject)){
                             index = students.get(i).getSubjects().indexOf(subject);
@@ -196,13 +200,13 @@ public class LecturerRole {
                     System.out.print("Enter your answer: ");
                     int updateAnswer = Functions.readPositiveInt();
                     if(updateAnswer == 1){
-                        System.out.println("Enter new username: ");
+                        System.out.print("Enter new username: ");
                         String newUsername = input.nextLine();
                         lecturer.setUserName(newUsername);
                         System.out.println("Username updated successfully");
                     }
                     else if(updateAnswer == 2){
-                        System.out.println("Enter new password: ");
+                        System.out.print("Enter new password: ");
                         String newPassword = input.nextLine();
                         lecturer.setPassword(newPassword);
                         System.out.println("Password updated successfully");
@@ -214,6 +218,7 @@ public class LecturerRole {
                     else{
                         System.out.println("Invalid input");
                     }
+                    Files.lecturersFileWriter();
                 }
                 else {
                     System.out.print("enter valid option to manage or 0 to exit: ");
@@ -223,33 +228,6 @@ public class LecturerRole {
             if (optionsAnswer == 0) {
                 isStillOperating = false;
             }
-        }
-
-        //! file handeling
-        
-        // write in the file (sub_ID_exam)
-
-        for (Subject subject : lecturer.getLecturerSubjects()) {
-            FileHandler examFile = new FileHandler(Paths.examPath+ subject.getSubjID() + "_exam.txt");
-            if(subject.isExamCreated()){
-                examFile.writeFile("1",false);
-                for (Question question : subject.getExam().getQuestions()) {
-                    examFile.writeFile(question.getQuestionText(),true);
-                    examFile.writeFile(question.getQuestionAnswer(),true);
-                }
-            }
-            else{
-                examFile.writeFile("-1", false);
-            }
-        }
-
-        // lecturers info
-        FileHandler lecturerFileHandler = new FileHandler(Paths.lecturersPath);
-
-        lecturerFileHandler.createFile();
-        lecturerFileHandler.emptyFile();
-        for (Lecturer lecturer1 : LecturerManagement.getLecturersArr()) {
-            lecturerFileHandler.writeFile(lecturer1.getID()+ "-" + lecturer1.getUserName() + "-" + lecturer1.getPassword(), true);
         }
     }
 }

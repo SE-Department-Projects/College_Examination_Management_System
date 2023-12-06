@@ -1,10 +1,8 @@
 package roles;
 
-import helpers.Functions;
-import helpers.Paths;
+import helpers.*;
 import models.*;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,7 +14,8 @@ public class AdminRole {
             int op;
             int lecID, stdID, subID;
             boolean isStillOperating = true;
-
+            boolean isLecturersRead = false;
+            boolean isStudentsRead = false;
 
             while (isStillOperating) {
                 boolean isBackChosen = false; // to check if the user chose back option or not
@@ -28,6 +27,10 @@ public class AdminRole {
 
                 while (optionsAnswer != 0 && !isBackChosen) { // the isBackChosen mustt be false in order to enter the loop
                     if (optionsAnswer == 1) {
+                        if(!isLecturersRead){
+                            isLecturersRead = true;
+                            Files.lecturerIdSubjectFileReader();
+                        }
                         do {
 
                             System.out.println("\nYou are now managing Lecturers");
@@ -219,7 +222,13 @@ public class AdminRole {
                             }
 
                         } while (!isBackChosen);
+                        Files.lecturersFileWriter();
+                        Files.lecturerIdSubjectFileWriter();
                     } else if (optionsAnswer == 2) { //manage student section
+                        if(!isStudentsRead){
+                            isStudentsRead = true;
+                            Files.studentIdSubjectFileReader();
+                        }
                         System.out.println("\nYou are now managing Students");
                         System.out.println("\n\nSelect operation");
                         System.out.println("1=> Add\n2=> Delete\n3=> Search\n4=> List\n5=> Update\n6=> Assign Subject\n7=> Un-assign Subject\n8=> Back\n0=> exit");
@@ -414,7 +423,8 @@ public class AdminRole {
 
                         }
 
-
+                        Files.studentsFileWriter();
+                        Files.studentIdSubjectFileWriter();
                     } else if (optionsAnswer == 3) {  // subject management
                         System.out.println("\nYou are now managing Subjects");
                         System.out.println("\n\nSelect operation");
@@ -508,7 +518,7 @@ public class AdminRole {
 
                         }
 
-
+                        Files.subjectsFileWriter();
                     } else {
                         System.out.print("enter valid option to manage or 0 to exit: ");
                         optionsAnswer = Functions.readInt();
@@ -516,68 +526,6 @@ public class AdminRole {
                 }
                 if (optionsAnswer == 0)
                     isStillOperating = false;
-            }
-
-
-            //! write to files
-
-            //lecturers info 
-            FileHandler lecturerFileHandler = new FileHandler(Paths.lecturersPath);
-
-            lecturerFileHandler.createFile();
-            lecturerFileHandler.emptyFile();
-            for (Lecturer lecturer1 : LecturerManagement.getLecturersArr()) {
-                lecturerFileHandler.writeFile(lecturer1.getID()+ "-" + lecturer1.getUserName() + "-" + lecturer1.getPassword(), true);
-            }
-
-            
-            //student info
-            FileHandler studentFileHandler = new FileHandler(Paths.studentsPath);
-
-            studentFileHandler.createFile();
-            studentFileHandler.emptyFile();
-            for (Student student1 : StudentManagement.getStudentArray()) {
-                studentFileHandler.writeFile(student1.getID()+ "-" + student1.getUserName() + "-" + student1.getPassword(), true);
-            }
-
-
-            //subjects info
-            FileHandler subjectsFileHandler = new FileHandler(Paths.subjectsPath);
-
-            subjectsFileHandler.createFile();
-            subjectsFileHandler.emptyFile();
-            for (Subject subject1 : SubjectManagement.getSubjectArrayList()) {
-                subjectsFileHandler.writeFile(subject1.getSubjID()+ "," + subject1.getSubjectName() + "," + subject1.getSubjectCode(), true);
-            }
-
-            //subjects of students
-            for(Student std : StudentManagement.getStudentArray()){
-
-                FileHandler stdSubjFileHandler = new FileHandler(Paths.studentCoursesPath+std.getID()+"_subjects.txt");
-                stdSubjFileHandler.createFile();
-                stdSubjFileHandler.emptyFile();
-                for (int i = 0; i < std.getSubjects().size(); i++) {
-                    stdSubjFileHandler.writeFile(Integer.toString(std.getSubjects().get(i).getSubjID()),true );
-                    if(i < std.getGrades().size() ){
-                        stdSubjFileHandler.writeFile(Integer.toString(std.getGrades().get(i)),true );
-                    }
-                    else{
-                        stdSubjFileHandler.writeFile("-1",true );
-                    }
-
-                }
-            }
-
-            //subjects of lecturers
-            for(Lecturer lec : LecturerManagement.getLecturersArr()){
-
-                FileHandler lecSubjFileHandler = new FileHandler(Paths.lecturerCoursesPath+lec.getID()+"_subjects.txt");
-                lecSubjFileHandler.createFile();
-                lecSubjFileHandler.emptyFile();
-                for (int i = 0; i < lec.getLecturerSubjects().size(); i++) {
-                    lecSubjFileHandler.writeFile(Integer.toString(lec.getLecturerSubjects().get(i).getSubjID()),true );
-                }
-
             }
     }
 }

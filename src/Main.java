@@ -13,163 +13,37 @@ public class Main {
 
         //!  read from files
 
-        // lecturer file handler
+        // lecturer file reader
 
-        FileHandler lecturerFileHandler = new FileHandler(Paths.lecturersPath);
-
-        lecturerFileHandler.createFile(); // create the file if it doesn't exist
-
-        String lecturersData = lecturerFileHandler.readFile(); // read the file
-
-        if (lecturersData != "") { // if the file is not empty
-
-            String[] lecturers = lecturersData.split("\n"); // split the data into lines
-            for (String line : lecturers) { // loop through the lines
-                if(line.matches("\\d+-[A-z]+-\\w+")){ // if the line matches the pattern (id-username-password)
-                    String[] data = line.split("-"); // split the line into id, username, password
-                     Lecturer lecturer1 = new Lecturer(Integer.parseInt(data[0]),data[1],data[2]); // create a new lecturer object (username, password)
-                    LecturerManagement.addLecturer(lecturer1); // add the lecturer to the array
-                    Lecturer.setNumOfLecturer(Integer.parseInt(data[0]));
-                }
-            }
-        }
+        Files.lecturersFileReader();
 
 
 
 
         // student file handler
 
-        FileHandler studentFileHandler = new FileHandler(Paths.studentsPath);
-
-        studentFileHandler.createFile(); // create the file if it doesn't exist
-
-        String studentsData = studentFileHandler.readFile(); // read the file
-
-        if(studentsData != ""){ // if the file is not empty
-
-            String[] students = studentsData.split("\n"); // split the data into lines
-
-            for (String line : students) { // loop through the lines
-
-                if(line.matches("\\d+-[A-z]+-\\w+")){ // if the line matches the pattern (id-username-password)
-
-                    String[] data = line.split("-"); // split the line into id, username, password
-                    Student student1 = new Student(Integer.parseInt(data[0]),data[1],data[2]); // create a new student object (username, password)
-                    StudentManagement.addStd(student1); // add the student to the array
-                    Student.setNumOfStudents(Integer.parseInt(data[0]));
-                }
-            }
-        }
+        Files.studentsFileReader();
 
 
 
 
         // subjects file handler
 
-        FileHandler subjectsFileHandler = new FileHandler(Paths.subjectsPath);
 
-        subjectsFileHandler.createFile(); // create the file if it doesn't exist
-
-        String subjectsData = subjectsFileHandler.readFile(); // read the file
-
-        if(subjectsData != ""){ // if the file is not empty
-
-            String[] subjects = subjectsData.split("\n"); // split the data into lines
-
-            for (String line : subjects) { // loop through the lines
-
-                if(line.matches("\\d+,[A-z]+,\\w+-\\d+")){ // if the line matches the pattern (id-subjectName)
-
-                    String[] data = line.split(","); // split the line into id, subjectName
-                    Subject subject1 = new Subject(Integer.parseInt(data[0]),data[1],data[2]); // create a new subject object (subjectName)
-                    SubjectManagement.addSubject(subject1); // add the subject to the array
-                    Subject.setNumOfSubjects(Integer.parseInt(data[0]));
-                }
-            }
-        }
-
+        Files.subjectsFileReader();
 
 
         // std_ID_subject read
 
-        for (Student student : StudentManagement.getStudentArray()) { // loop through the students
 
-            FileHandler stdSubjFileHandler = new FileHandler(Paths.studentCoursesPath +student.getID()+"_subjects.txt");
-
-            stdSubjFileHandler.createFile(); // create the file if it doesn't exist
-
-            String stdSubjData = stdSubjFileHandler.readFile(); // read the file
-
-            if(stdSubjData != ""){ // if the file is not empty
-
-                String[] stdSubjs = stdSubjData.split("\n"); // split the data into lines
-
-                boolean skip = false;
-                for (int i = 0 ; i < stdSubjs.length ; i++ ) { // loop through the lines
-                    
-                    if (skip){
-                        skip = false;
-                        continue;
-                    }
-                    else{
-                        if(stdSubjs[i].matches("-*\\d+")){ // if the line matches the pattern (subjectID)
-                            if(i%2 == 0){
-                                int index = SubjectManagement.findSubjIndex(Integer.parseInt(stdSubjs[i])); // find the index of the subject
-                                if (index != -1){ // if the subject exists
-                                    student.addSubject(SubjectManagement.searchSubject(index)); // add the subject to the student
-                                }
-                                else{
-                                    
-                                    skip = true;
-                                }
-                            }
-                            else{
-                                student.addGrade(Integer.parseInt(stdSubjs[i])); // add the grade to the student
-                            }
-                        }
-                        else if (i %2 == 0){
-                            skip = true;
-                        }
-                    }
-                }
-                
-            }
-        }
-
+        // Files.studentIdSubjectFileReader();
 
 
 
         // lec_ID_subject read
 
-        for (Lecturer lecturer : LecturerManagement.getLecturersArr()) { // loop through the lecturers
 
-            FileHandler lecSubjFileHandler = new FileHandler(Paths.lecturerCoursesPath +lecturer.getID()+"_subjects.txt");
-
-            lecSubjFileHandler.createFile(); // create the file if it doesn't exist
-
-            String lecSubjData = lecSubjFileHandler.readFile(); // read the file
-
-            if(lecSubjData != ""){ // if the file is not empty
-
-                String[] lecSubjs = lecSubjData.split("\n"); // split the data into lines
-
-                for (String line : lecSubjs) { // loop through the lines
-
-                    if(line.matches("\\d+")){ // if the line matches the pattern (subjectID)
-
-                        int index = SubjectManagement.findSubjIndex(Integer.parseInt(line)); // find the index of the subject
-
-                        if (index != -1){ // if the subject exists
-                            Subject subject = SubjectManagement.searchSubject(index);
-                            lecturer.addSubject(subject); // add the subject to the lecturer
-                            subject.addLecturerID(lecturer.getID());
-
-                        }
-                    }
-                }
-            }
-        }
-
+        // Files.lecturerIdSubjectFileReader();
 
 
 
@@ -177,31 +51,8 @@ public class Main {
 
         // sub_ID_exam read
 
-        //TODO validation 
-        for (Subject subject : SubjectManagement.getSubjectArrayList()) { // loop through the subjects
 
-            FileHandler subExamFileHandler = new FileHandler(Paths.examPath+subject.getSubjID()+"_exam.txt");
-
-            subExamFileHandler.createFile(); // create the file if it doesn't exist
-
-            String subExamData = subExamFileHandler.readFile(); // read the file
-
-            if(subExamData != ""){ // if the file is not empty
-
-                String[] subExams = subExamData.split("\n"); // split the data into lines
-                if (subExams[0].equals("-1")){
-                    // System.out.println("empty");
-                    break;
-                }
-                subject.setExam(new Exam());
-                for(int i = 1 ; i < subExams.length ; i+=2){
-                    Question question = new Question(subExams[i],subExams[i+1]);
-                    subject.getExam().addQuestion(question);
-                }
-                subject.setIsExamCreated(true);
-            }
-        }
-
+        // Files.subjectIdExamFileReader();
 
 
 
@@ -260,6 +111,7 @@ public class Main {
                     }
 
                 } else if (roleNum == 2) { // lecturer role
+                    Files.lecturersFileReader();
                     int lecturerID = Authentication.lecturerLogin(username, password);
                     if (lecturerID != -1) {
                         isAuth = true;
@@ -275,7 +127,7 @@ public class Main {
                     }
 
                 } else if (roleNum == 3) { // student role
-
+                    Files.studentsFileReader();
                     int studentID = Authentication.studentLogin(username, password);
                     if (studentID!= -1) {
                         isAuth = true;
@@ -308,14 +160,6 @@ public class Main {
         }
 
 
-        for(Student std : StudentManagement.getStudentArray()){
-            FileHandler stdIdSubjects = new FileHandler("src/Files/StudentsCourses/std_"+std.getID()+"_subjects.txt");
 
-            stdIdSubjects.emptyFile();
-            for(int i = 0 ; i < std.getSubjects().size() ; i++){
-                stdIdSubjects.writeFile(std.getSubjects().get(i).getSubjID()+"",true);
-                stdIdSubjects.writeFile(std.getGrades().get(i)+"",true);
-            }
-        }
     }
 }
