@@ -2,3 +2,4 @@
 2,mizo,mizo-101
 3,DB,db-103
 4,ai,ai-101
+5,it,it-125

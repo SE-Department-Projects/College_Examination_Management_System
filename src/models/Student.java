@@ -50,6 +50,18 @@ public class Student extends Person{
         return this.grades;
     }
 
+    public int getExamGrade(int subjectID)
+    {
+        int index =    findSubjIndex(subjectID);
+
+        if(grades.get(index) != -1)
+        {
+            return -1;                  // not take the exam yet
+        }
+
+        return grades.get(index);
+    }
+
 
 
     public boolean addSubject(Subject subj) {
@@ -104,10 +116,10 @@ public class Student extends Person{
         return subjects;
     }
 
-    public int findSubjIndex(int id) {
+    public int findSubjIndex(int subjID) {
 
         for (int i = 0; i < registeredSubjects.size(); i++) { // loop on the list of subjects
-            if (registeredSubjects.get(i).getSubjID() == id) // if the id of the subject equals the id we entered
+            if (registeredSubjects.get(i).getSubjID() == subjID) // if the id of the subject equals the id we entered
                 return i; // returns the index of the subject (index not id)
         }
         return -1; // else it returns -1
@@ -136,5 +148,39 @@ public class Student extends Person{
     public static void setNumOfStudents(int numOfStudents) {
         Student.numOfStudents = numOfStudents;
     }
+
+    public  String getTheAvailableExams()
+    {
+        String availableExams = "";
+        for(int i = 0; i < registeredSubjects.size(); i++)
+        {
+
+            if(getGrades().get(i) == -1)  // not take the subject exam yet
+            {
+                 availableExams +=  registeredSubjects.get(i).getSubjID()+"=> "
+                        + registeredSubjects.get(i).getSubjectName() + '\n';
+            }
+        }
+
+        return availableExams;
+    }
+
+    public  String getTheFinishedExams()
+    {
+        String TheFinishedExams = "";
+        for(int i = 0; i < registeredSubjects.size(); i++)
+        {
+
+            if(getGrades().get(i) != -1)  // not take the subject exam yet
+            {
+                TheFinishedExams +=  registeredSubjects.get(i).getSubjID()+"=> "
+                        + registeredSubjects.get(i).getSubjectName() + '\n';
+            }
+        }
+
+        return TheFinishedExams;
+    }
+
+
 }
 

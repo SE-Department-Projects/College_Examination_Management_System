@@ -11,8 +11,7 @@ public class Exam {
     private int subjID;
     private int duration;
     private ArrayList<Question> questions;
-    private FileHandler examFile;
-    
+
     // Constructors
     public Exam(){
         this.examID = ++numOfExam;
@@ -63,6 +62,11 @@ public class Exam {
 
     public ArrayList<Question> getQuestions() {
         return new ArrayList<>(questions);
+    }
+
+    public  int  numOfQuestions()
+    {
+        return questions.size();
     }
 
     

@@ -15,18 +15,18 @@ public class ExamManager {
     // }
     
     
-    public static void addQuestionsToExam(Exam exam) {
-        
-        System.out.print("Enter the number of questions in the exam: ");
-        int numQuestions = input.nextInt();
-        input.nextLine();
-        
-        for (int i = 1; i <= numQuestions; i++) {
-            System.out.println("Question " + i + ":");
-            Question question = createQuestion();
-            exam.addQuestion(question);
-        }
-    }
+//    public static void addQuestionsToExam(Exam exam) {
+//
+//        System.out.print("Enter the number of questions in the exam: ");
+//        int numQuestions = input.nextInt();
+//        input.nextLine();
+//
+//        for (int i = 1; i <= numQuestions; i++) {
+//            System.out.println("Question " + i + ":");
+//            Question question = createQuestion();
+//            exam.addQuestion(question);
+//        }
+//    }
 
     
     public static Question createQuestion(){
