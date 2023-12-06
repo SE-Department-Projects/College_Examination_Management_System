@@ -1,0 +1,9 @@
+        for(Student std : StudentManagement.getStudentArray()){
+            FileHandler stdIdSubjects = new FileHandler("std_"+std.getID()+"_subjects.txt");
+
+            stdIdSubjects.emptyFile();
+            for(int i = 0; i < std.getSubjects().size(); i++){
+                stdIdSubjects.writeFile(std.getSubjects().get(i).getSubjID()+"",true);
+                stdIdSubjects.writeFile(std.getGrades().get(i)+"",true);
+            }
+        }
