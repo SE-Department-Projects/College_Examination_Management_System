@@ -14,7 +14,7 @@ public class Authentication {
 
     public static int lecturerLogin(String username, String password) {
         for (Lecturer lecturer : LecturerManagement.getLecturersArr()) {
-            if (lecturer.getUserName().equals(username) && lecturer.getPassword().equals(password)) {
+            if ( lecturer.login(username,password)) {
                 return lecturer.getID();
             }
         }
@@ -24,7 +24,7 @@ public class Authentication {
     public static int studentLogin(String username, String password) // ba3den nb2a nhadel el files
     {
         for (Student student : StudentManagement.getStudentArray()) {
-            if (student.getUserName().equals(username) && student.getPassword().equals(password)) {
+            if (student.login(username, password)) {
                 return student.getID();
             }
         }

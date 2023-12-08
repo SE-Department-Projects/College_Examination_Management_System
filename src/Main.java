@@ -69,6 +69,8 @@ public class Main {
 
                 } else if (roleNum == 2) { // lecturer role
 
+
+
                     int lecturerID = Authentication.lecturerLogin(username, password);
                     if (lecturerID != -1) {
                         isAuth = true;

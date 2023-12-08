@@ -94,8 +94,7 @@ public abstract class Person {
     // login method
 
     public boolean login(String userName, String password) {
-        // TODO: implement this method later
-        return true;
+        return this.userName.equals(userName) && this.password.equals(password);
     }
 
     // logout method

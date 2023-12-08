@@ -35,22 +35,22 @@ public class StudentRole {
                 boolean isSuccessfullyExamed = false;
                 do {
                     System.out.println("Select the subject ID to enter the exam");
-    
+
                     System.out.println("The available Exams:\n" + student.getTheAvailableExamsAsString());
                     System.out.println("0 => Back");
-                    
+
                     System.out.print("Enter your answer: ");
                     subjID = Functions.readPositiveORZeroInt();
-                    
+
                     if (subjID == 0) {
                         break;
                     }
                     subjectIndex = student.findSubjIndex(subjID);
-                    
+
                     if (subjectIndex != -1) { // this subject is found
                         boolean didStudentTakeExam = student.getGrades().get(subjectIndex) != -1;
                         boolean doesSubjecthaveExam = student.getSubjects().get(subjectIndex).isExamCreated();
-                        if( !doesSubjecthaveExam || didStudentTakeExam ){
+                        if (!doesSubjecthaveExam || didStudentTakeExam) {
                             isSuccessfullyExamed = false;
                             System.out.println("exam doesn't exist or already taken");
                             continue;
@@ -90,9 +90,7 @@ public class StudentRole {
                                     }
 
                                     correctAnswerFormat = true;
-                                }
-
-                                else {
+                                } else {
                                     System.out.println("enter correct answer format (true / false)");
                                 }
 
@@ -150,52 +148,49 @@ public class StudentRole {
                             isFinishedExamsDone = false;
                             continue;
                         }
-                    }
-                    else{ // subjID = 0
+                    } else { // subjID = 0
                         break;
                     }
                 }
-            }
-
-            else if (op == 4){
+            } else if (op == 4) {
                 System.out.println(student.toString());
-                // System.out.println("hello " + student.getEmailToString() + " your info is: ");
-            }
-
-            else if (op == 5){
+            } else if (op == 5) {
                 int updateOp = Menus.updatePersonalInfo();
-                if (updateOp == 1){
+                if (updateOp == 1) {
                     System.out.print("Enter new username: ");
                     String newUsername = input.nextLine();
                     student.setUserName(newUsername);
                     System.out.println("Username updated successfully");
-                }
-                else if (updateOp == 2){
+                } else if (updateOp == 2) {
                     System.out.print("Enter new password: ");
                     String newPassword = input.nextLine();
                     student.setPassword(newPassword);
                     System.out.println("Password updated successfully");
-                }
-                else if (updateOp == 3){
+                } else if (updateOp == 3) {
                     System.out.print("Enter new email: ");
                     String newEmail = input.nextLine();
                     student.setEmail(newEmail);
                     System.out.println("Email updated successfully");
-                }
-                else if (updateOp == 4){
+                } else if (updateOp == 4) {
                     System.out.print("Enter new phone: ");
                     String newPhone = input.nextLine();
                     student.setPhone(newPhone);
                     System.out.println("Phone updated successfully");
-                }
-                else if (updateOp == 0){
+                } else if (updateOp == 0) {
                     System.out.println("back to the main menu");
                 }
-            }
-            else if (op == 0) {
+            } else if (op == 0) {
                 System.out.println("log out from the system");
 
             }
+
+            if(op != 0)
+            {
+                System.out.println("==========================================\n");
+
+            }
+
+
         } while (op != 0);
 
         Files.studentIdSubjectFileWriter();
