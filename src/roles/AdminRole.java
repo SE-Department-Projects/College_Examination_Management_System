@@ -16,6 +16,7 @@ public class AdminRole {
         boolean isStillOperating = true;
         boolean isLecturersRead = false;
         boolean isStudentsRead = false;
+        boolean isSubjectsRead = false;
 
         while (isStillOperating) {
             boolean isBackChosen = false; // to check if the user chose back option or not
@@ -398,6 +399,10 @@ public class AdminRole {
                     Files.studentsFileWriter();
                     Files.studentIdSubjectFileWriter();
                 } else if (optionsAnswer == 3) {  // subject management
+                    if (!isSubjectsRead && !isLecturersRead) {
+                        isSubjectsRead = true;
+                        Files.lecturerIdSubjectFileReader();
+                    }
                     System.out.println("\nYou are now managing Subjects");
                     System.out.println("\n\nSelect operation");
                     System.out.println("1=> add\n2=> delete\n3=> search\n4=> list\n5=> update\n6=> Back\n0=> exit");
@@ -487,12 +492,11 @@ public class AdminRole {
 
                         default:
                             System.out.println("can not find the operation");
-
                     }
 
                     Files.subjectsFileWriter();
                 } else if (optionsAnswer == 4) {// see personal info
-                    System.out.println(admin.toString());
+                    System.out.println("\n\n"+admin.toString()+"\n\n");
                     break;
                 } else if (optionsAnswer == 5) //Update personal info
                 {

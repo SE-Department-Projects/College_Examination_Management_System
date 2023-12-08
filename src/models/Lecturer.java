@@ -98,5 +98,15 @@ public class Lecturer extends Person {
         public static void setNumOfLecturer(int numOfLecturer) {
             Lecturer.numOfLecturer = numOfLecturer;
         }
+
+        public String toString() {
+            return "Lecturer{" +
+                    "ID=" + this.ID +
+                    ", userName='" + this.getUserName() + '\'' +
+                    ", password='" + this.getPassword() + '\'' +
+                    ", role='" + this.getRole() + '\'' +
+                    ", subjects=" + getSubjectsAsString() +
+                    '}';
+        }
 }
 

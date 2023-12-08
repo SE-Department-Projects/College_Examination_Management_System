@@ -2,39 +2,36 @@ package models;
 
 import java.util.ArrayList;
 
-public class Student extends Person{
+public class Student extends Person {
 
-    
     // Attributes
     private static int numOfStudents = 0;
     private int finalDegree;
     private final int ID;
-    private ArrayList<Subject> registeredSubjects ;
-    private ArrayList<Integer> grades ;
-    
+    private ArrayList<Subject> registeredSubjects;
+    private ArrayList<Integer> grades;
 
     // Constructor
     public Student(String username, String password) {
-        super(username, password, "student");   
+        super(username, password, "student");
         this.ID = ++numOfStudents;
         this.registeredSubjects = new ArrayList<>();
         this.grades = new ArrayList<>();
     }
-    public Student(int ID,String username, String password) {
+
+    public Student(int ID, String username, String password) {
         super(username, password, "student");
         this.ID = ID;
         this.registeredSubjects = new ArrayList<>();
         this.grades = new ArrayList<>();
     }
 
-
-
-    // Setters 
+    // Setters
     public void setFinalDegree(int degree) {
         this.finalDegree = degree;
     }
 
-    public void setIsExamed () {
+    public void setIsExamed() {
         // To do implementation
     }
 
@@ -50,42 +47,33 @@ public class Student extends Person{
         return this.grades;
     }
 
-    public int getExamGrade(int subjectID)
-    {
-        int index =    findSubjIndex(subjectID);
+    public int getExamGrade(int subjectID) {
+        int index = findSubjIndex(subjectID);
 
-        if(grades.get(index) != -1)
-        {
-            return -1;                  // not take the exam yet
+        if (grades.get(index) != -1) {
+            return -1; // not take the exam yet
         }
 
         return grades.get(index);
     }
 
-
-
     public boolean addSubject(Subject subj) {
-        if (this.registeredSubjects.contains(subj)){ // not add the sub to the array
+        if (this.registeredSubjects.contains(subj)) { // not add the sub to the array
             return false;
-        }
-        else{
+        } else {
             this.registeredSubjects.add(subj);
             return true;
         }
     }
 
-
-
     public boolean delSubject(Subject subj) {
-        if (this.registeredSubjects.contains(subj)){
+        if (this.registeredSubjects.contains(subj)) {
             this.registeredSubjects.remove(subj);
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
-    
 
     // Getters
     public int getFinalDegree() {
@@ -103,12 +91,10 @@ public class Student extends Person{
 
     public String getSubjectsAsString() {
         String subjects = "";
-        for(int i = 0; i < registeredSubjects.size();i++)
-        {
+        for (int i = 0; i < registeredSubjects.size(); i++) {
             subjects += registeredSubjects.get(i).getSubjectName();
 
-            if(i != registeredSubjects.size() -1)
-            {
+            if (i != registeredSubjects.size() - 1) {
                 subjects += ", ";
 
             }
@@ -126,14 +112,13 @@ public class Student extends Person{
     }
 
     public Subject getSubject(int index) { // check that index is not -1
-            return registeredSubjects.get(index);
+        return registeredSubjects.get(index);
     }
-
 
     public void enterExam() {
         // for (Subject subject : registeredSubjects) {
-        //     System.out.println("Your accessable Exams: ");
-        //     // loop for accessable exams for std
+        // System.out.println("Your accessable Exams: ");
+        // // loop for accessable exams for std
         // }
     }
 
@@ -149,15 +134,13 @@ public class Student extends Person{
         Student.numOfStudents = numOfStudents;
     }
 
-    public  String getTheAvailableExams()
-    {
+    public String getTheAvailableExamsAsString() {
         String availableExams = "";
-        for(int i = 0; i < registeredSubjects.size(); i++)
-        {
+        for (int i = 0; i < registeredSubjects.size(); i++) {
 
-            if(getGrades().get(i) == -1)  // not take the subject exam yet
+            if (getGrades().get(i) == -1 && getSubjects().get(i).isExamCreated()) // not take the subject exam yet
             {
-                 availableExams +=  registeredSubjects.get(i).getSubjID()+"=> "
+                availableExams += registeredSubjects.get(i).getSubjID() + "=> "
                         + registeredSubjects.get(i).getSubjectName() + '\n';
             }
         }
@@ -165,15 +148,13 @@ public class Student extends Person{
         return availableExams;
     }
 
-    public  String getTheFinishedExams()
-    {
+    public String getTheFinishedExamsAsString() {
         String TheFinishedExams = "";
-        for(int i = 0; i < registeredSubjects.size(); i++)
-        {
+        for (int i = 0; i < registeredSubjects.size(); i++) {
 
-            if(getGrades().get(i) != -1)  // not take the subject exam yet
+            if (getGrades().get(i) != -1) // not take the subject exam yet
             {
-                TheFinishedExams +=  registeredSubjects.get(i).getSubjID()+"=> "
+                TheFinishedExams += registeredSubjects.get(i).getSubjID() + "=> "
                         + registeredSubjects.get(i).getSubjectName() + '\n';
             }
         }
@@ -181,6 +162,4 @@ public class Student extends Person{
         return TheFinishedExams;
     }
 
-
 }
-

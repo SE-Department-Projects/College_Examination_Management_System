@@ -10,7 +10,31 @@ public class Files {
 
     //! read from files 
 
+    // read from admin file
+    public static Admin adminFileReader(){
+        FileHandler adminFileHandler = new FileHandler(Paths.adminPath);
 
+        adminFileHandler.createFile();
+
+        String adminData = adminFileHandler.readFile();
+
+        if (adminData != ""){
+            if(adminData.matches("\\w+-\\w+")){
+                String[] admin = adminData.split("-");
+                Admin admin1 = new Admin(admin[0],admin[1]);
+                return admin1;
+            }
+        }
+        return new Admin("empty", "empty");
+    }
+
+
+
+
+
+
+
+    //read from lecturer file
     public static void lecturersFileReader() {
 
         FileHandler lecturerFileHandler = new FileHandler(Paths.lecturersPath);
@@ -33,7 +57,7 @@ public class Files {
         }
     }
 
-// 1119222211111700
+
 
     // function that reads the student file
     public static void studentsFileReader() {
@@ -176,7 +200,7 @@ public class Files {
 
 
 
-
+    // read from subj_ID_Exam 
     public static void subjectIdExamFileReader(){
         //TODO validation 
         for (Subject subject : SubjectManagement.getSubjectArrayList()) { // loop through the subjects
@@ -191,8 +215,8 @@ public class Files {
 
                 String[] subExams = subExamData.split("\n"); // split the data into lines
                 if (subExams[0].equals("-1")){
-                    // System.out.println("empty");
-                    break;
+                    subject.setIsExamCreated(false);
+                    continue;
                 }
                 subject.setExam(new Exam());
                 for(int i = 1 ; i < subExams.length ; i+=2){
@@ -206,7 +230,19 @@ public class Files {
 
 
 
+
     //! write in files
+
+    //function the writes in the admin file
+    public static void adminFileWriter(Admin admin){
+        FileHandler adminFileHandler = new FileHandler(Paths.adminPath);
+
+        adminFileHandler.createFile();
+
+        adminFileHandler.writeFile(admin.getUserName()+"-"+admin.getPassword(),false);
+    }
+
+
 
     //function that writes in the lecturers file
     public static void lecturersFileWriter(){
@@ -219,6 +255,8 @@ public class Files {
         }
     }
 
+
+
     //function that writes in the students file
     public static void studentsFileWriter(){
         FileHandler studentFileHandler = new FileHandler(Paths.studentsPath);
@@ -229,6 +267,8 @@ public class Files {
             studentFileHandler.writeFile(student1.getID()+ "-" + student1.getUserName() + "-" + student1.getPassword(), true);
         }
     }
+
+
 
     //function that writes in the subjects file
     public static void subjectsFileWriter(){
@@ -241,6 +281,8 @@ public class Files {
         }
     }
 
+
+
     //function that writes in the std_ID_Subject file
     public static void studentIdSubjectFileWriter(){
         for(Student std : StudentManagement.getStudentArray()){
@@ -251,8 +293,10 @@ public class Files {
                 stdIdSubjects.writeFile(std.getSubjects().get(i).getSubjID()+"",true);
                 stdIdSubjects.writeFile(std.getGrades().get(i)+"",true);
             }
-        } 
+        }
     }
+
+
 
     //function that writes in the lec_ID_Subject file
     public static void lecturerIdSubjectFileWriter(){
@@ -268,8 +312,9 @@ public class Files {
         }
     }
 
-    //function that writes in the subj_ID_Exam file
 
+
+    //function that writes in the subj_ID_Exam file
     public static void subjectIdExamFileWriter(Lecturer lecturer){
         for (Subject subject : lecturer.getLecturerSubjects()) {
             FileHandler examFile = new FileHandler(Paths.examPath+ subject.getSubjID() + "_exam.txt");

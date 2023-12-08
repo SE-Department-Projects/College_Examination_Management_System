@@ -3,9 +3,9 @@ package helpers;
 // the paths for all the files
 public class Paths {
 
-    static private final String base = "src/Files";  // if there is an error delete src/
+    static private final String base = "Files";  // if there is an error delete src/
 
-    static public String adminPath;
+    static public String adminPath = base + "/admin.txt";
 
     static public String lecturersPath = base + "/lecturers.txt";
 

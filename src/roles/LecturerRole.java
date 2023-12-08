@@ -191,12 +191,12 @@ public class LecturerRole {
                     break;
                 }
                 else if (optionsAnswer == 3){
-                    // TODO show personal info with toString
+                    System.out.println("\n\n"+lecturer.toString()+"\n\n");
                     break;
 
                 }
                 else if (optionsAnswer == 4){ // update personal info 
-                    System.out.println("1=> Update username\n2=> Update password\n3=> Back");
+                    System.out.println("\n1=> Update username\n2=> Update password\n3=> Back");
                     System.out.print("Enter your answer: ");
                     int updateAnswer = Functions.readPositiveInt();
                     if(updateAnswer == 1){
