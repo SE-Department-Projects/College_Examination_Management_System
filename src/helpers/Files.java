@@ -19,13 +19,14 @@ public class Files {
         String adminData = adminFileHandler.readFile();
 
         if (adminData != ""){
-            if(adminData.matches("\\w+-\\w+")){
-                String[] admin = adminData.split("-");
-                Admin admin1 = new Admin(admin[0],admin[1]);
-                return admin1;
+            adminData = adminData.trim();
+            if(adminData.matches("\\w+-\\w+-.+-.+")){
+                String[] data = adminData.split("-");
+                Admin admin = new Admin(data[0],data[1],data[2],data[3]);
+                return admin;
             }
         }
-        return new Admin("empty", "empty");
+        return new Admin("empty", "empty","empty","empty");
     }
 
 
@@ -47,9 +48,9 @@ public class Files {
 
             String[] lecturers = lecturersData.split("\n"); // split the data into lines
             for (String line : lecturers) { // loop through the lines
-                if(line.matches("\\d+-[A-z]+-\\w+")){ // if the line matches the pattern (id-username-password)
+                if(line.matches("\\d+-\\w+-\\w+-.+-.+")){ // if the line matches the pattern (id-username-password)
                     String[] data = line.split("-"); // split the line into id, username, password
-                     Lecturer lecturer1 = new Lecturer(Integer.parseInt(data[0]),data[1],data[2]); // create a new lecturer object (username, password)
+                     Lecturer lecturer1 = new Lecturer(Integer.parseInt(data[0]),data[1],data[2],data[3],data[4]); // create a new lecturer object (username, password)
                     LecturerManagement.addLecturer(lecturer1); // add the lecturer to the array
                     Lecturer.setNumOfLecturer(Integer.parseInt(data[0]));
                 }
@@ -74,10 +75,10 @@ public class Files {
 
             for (String line : students) { // loop through the lines
 
-                if(line.matches("\\d+-[A-z]+-\\w+")){ // if the line matches the pattern (id-username-password)
+                if(line.matches("\\d+-\\w+-\\w+-.+-.+")){ // if the line matches the pattern (id-username-password)
 
                     String[] data = line.split("-"); // split the line into id, username, password
-                    Student student1 = new Student(Integer.parseInt(data[0]),data[1],data[2]); // create a new student object (username, password)
+                    Student student1 = new Student(Integer.parseInt(data[0]),data[1],data[2],data[3],data[4]); // create a new student object (username, password)
                     StudentManagement.addStd(student1); // add the student to the array
                     Student.setNumOfStudents(Integer.parseInt(data[0]));
                 }
@@ -239,7 +240,7 @@ public class Files {
 
         adminFileHandler.createFile();
 
-        adminFileHandler.writeFile(admin.getUserName()+"-"+admin.getPassword(),false);
+        adminFileHandler.writeFile(admin.getUserName()+"-"+admin.getPassword()+"-"+admin.getEmail()+"-"+admin.getPhone(),false);
     }
 
 
@@ -251,7 +252,7 @@ public class Files {
         lecturerFileHandler.createFile();
         lecturerFileHandler.emptyFile();
         for (Lecturer lecturer1 : LecturerManagement.getLecturersArr()) {
-            lecturerFileHandler.writeFile(lecturer1.getID()+ "-" + lecturer1.getUserName() + "-" + lecturer1.getPassword(), true);
+            lecturerFileHandler.writeFile(lecturer1.getID()+ "-" + lecturer1.getUserName() + "-" + lecturer1.getPassword()+"-"+lecturer1.getEmail()+"-"+lecturer1.getPhone(), true);
         }
     }
 
@@ -264,7 +265,7 @@ public class Files {
         studentFileHandler.createFile();
         studentFileHandler.emptyFile();
         for (Student student1 : StudentManagement.getStudentArray()) {
-            studentFileHandler.writeFile(student1.getID()+ "-" + student1.getUserName() + "-" + student1.getPassword(), true);
+            studentFileHandler.writeFile(student1.getID()+ "-" + student1.getUserName() + "-" + student1.getPassword()+"-"+student1.getEmail()+"-"+student1.getPhone(), true);
         }
     }
 

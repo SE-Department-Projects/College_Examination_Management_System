@@ -12,15 +12,15 @@ public class Student extends Person {
     private ArrayList<Integer> grades;
 
     // Constructor
-    public Student(String username, String password) {
-        super(username, password, "student");
+    public Student(String username, String password, String email, String phone) { // email phone
+        super(username, password, "student", email, phone);
         this.ID = ++numOfStudents;
         this.registeredSubjects = new ArrayList<>();
         this.grades = new ArrayList<>();
     }
 
-    public Student(int ID, String username, String password) {
-        super(username, password, "student");
+    public Student(int ID, String username, String password, String email, String phone) {
+        super(username, password, "student", email, phone);
         this.ID = ID;
         this.registeredSubjects = new ArrayList<>();
         this.grades = new ArrayList<>();
@@ -77,7 +77,7 @@ public class Student extends Person {
 
     // Getters
     public int getFinalDegree() {
-        return this.finalDegree;
+        return calculateFinalDegree();
     }
 
     public boolean getIsExamed() {
@@ -91,6 +91,8 @@ public class Student extends Person {
 
     public String getSubjectsAsString() {
         String subjects = "";
+        if(registeredSubjects.size() == 0)
+            return "No subjects registered yet";
         for (int i = 0; i < registeredSubjects.size(); i++) {
             subjects += registeredSubjects.get(i).getSubjectName();
 
@@ -160,6 +162,28 @@ public class Student extends Person {
         }
 
         return TheFinishedExams;
+    }
+
+    public int calculateFinalDegree() {
+        int finalDegree = 0;
+        for (int i = 0; i < registeredSubjects.size(); i++) {
+            if(grades.get(i) != -1)
+                finalDegree += grades.get(i);
+        }
+        return finalDegree;
+    }
+
+
+    public String toString() {
+        return "Student{" +
+                "ID=" + this.ID +
+                ", username='" + this.getUserName() + '\'' +
+                ", password='" + this.getPassword() + '\'' +
+                ", Email='" + this.getEmailToString() + '\'' +
+                ", Phone='" + this.getPhoneToString() + '\'' +
+                ", registeredSubjects =" + this.getSubjectsAsString() + '\'' +
+                ", finalDegree=" + this.getFinalDegree() + '\''+
+                '}';
     }
 
 }

@@ -6,22 +6,27 @@ public class Lecturer extends Person {
 
     static int numOfLecturer = 0;
     private final int ID;
-    private FileHandler fileHandler;
     private ArrayList<Subject> subjects;
     public StudentManagement studentManager = new StudentManagement();
 
 
-    public Lecturer(String userName, String password) {
-        super(userName, password, "lecturer");
+    public Lecturer(String userName, String password,String email,String phone) {
+        super(userName, password, "lecturer",email,phone);
         this.ID = ++numOfLecturer;
         this.subjects = new ArrayList<>();
     }
 
-    public Lecturer(int ID, String userName, String password) {
-        super(userName, password, "lecturer");
+    public Lecturer(int ID, String userName, String password,String email,String phone) {
+        super(userName, password, "lecturer",email,phone);
         this.ID = ID;
         this.subjects = new ArrayList<>();
     }
+    // public Lecturer(int ID, String userName, String password) {
+    //     super(userName, password, "lecturer");
+    //     this.ID = ID;
+    //     this.subjects = new ArrayList<>();
+    // }
+
 
 
     public int getID() {
@@ -99,12 +104,17 @@ public class Lecturer extends Person {
             Lecturer.numOfLecturer = numOfLecturer;
         }
 
+        
+
+
+        @Override
         public String toString() {
             return "Lecturer{" +
                     "ID=" + this.ID +
                     ", userName='" + this.getUserName() + '\'' +
                     ", password='" + this.getPassword() + '\'' +
-                    ", role='" + this.getRole() + '\'' +
+                    ", email='" + this.getEmailToString() + '\'' +
+                    ", phone='" + this.getPhoneToString() + '\'' +
                     ", subjects=" + getSubjectsAsString() +
                     '}';
         }

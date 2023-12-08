@@ -195,23 +195,34 @@ public class LecturerRole {
                     break;
 
                 }
-                else if (optionsAnswer == 4){ // update personal info 
-                    System.out.println("\n1=> Update username\n2=> Update password\n3=> Back");
-                    System.out.print("Enter your answer: ");
-                    int updateAnswer = Functions.readPositiveInt();
-                    if(updateAnswer == 1){
+                else if (optionsAnswer == 4){ // update personal info  
+                    
+                    int updateAnswer = Menus.updatePersonalInfo();
+                    if(updateAnswer == 1){ // update username
                         System.out.print("Enter new username: ");
                         String newUsername = input.nextLine();
                         lecturer.setUserName(newUsername);
                         System.out.println("Username updated successfully");
                     }
-                    else if(updateAnswer == 2){
+                    else if(updateAnswer == 2){ // update password
                         System.out.print("Enter new password: ");
                         String newPassword = input.nextLine();
                         lecturer.setPassword(newPassword);
                         System.out.println("Password updated successfully");
                     }
-                    else if(updateAnswer == 3){
+                    else if(updateAnswer == 3){ // update email
+                        System.out.print("Enter new email: ");
+                        String newEmail = input.nextLine();
+                        lecturer.setEmail(newEmail);
+                        System.out.println("Email updated successfully");
+                    }
+                    else if(updateAnswer == 4){ // update phone
+                        System.out.print("Enter new phone: ");
+                        String newPhone = input.nextLine();
+                        lecturer.setPhone(newPhone);
+                        System.out.println("Phone updated successfully");
+                    }
+                    else if(updateAnswer == 0){
                         isBackChosen = true;
                         break;
                     }

@@ -111,7 +111,7 @@ public class StudentRole {
 
                 } while (subjID != 0 && !isSuccessfullyExamed);
 
-            } else if (op == 3) { 
+            } else if (op == 3) {
                 boolean isFinishedExamsDone = false;
                 while (!isFinishedExamsDone) {
                     System.out.println("The Finished Exams:\n" + student.getTheFinishedExamsAsString());
@@ -121,7 +121,6 @@ public class StudentRole {
                     subjID = Functions.readPositiveORZeroInt();
                     if (subjID != 0) {
                         subjectIndex = SubjectManagement.findSubjIndex(subjID);
-
                         if (subjectIndex != -1) {
                             subject = SubjectManagement.searchSubject(subjectIndex);
                             int stdSubjIndex = student.findSubjIndex(subjID);
@@ -158,6 +157,41 @@ public class StudentRole {
                 }
             }
 
+            else if (op == 4){
+                System.out.println(student.toString());
+                // System.out.println("hello " + student.getEmailToString() + " your info is: ");
+            }
+
+            else if (op == 5){
+                int updateOp = Menus.updatePersonalInfo();
+                if (updateOp == 1){
+                    System.out.print("Enter new username: ");
+                    String newUsername = input.nextLine();
+                    student.setUserName(newUsername);
+                    System.out.println("Username updated successfully");
+                }
+                else if (updateOp == 2){
+                    System.out.print("Enter new password: ");
+                    String newPassword = input.nextLine();
+                    student.setPassword(newPassword);
+                    System.out.println("Password updated successfully");
+                }
+                else if (updateOp == 3){
+                    System.out.print("Enter new email: ");
+                    String newEmail = input.nextLine();
+                    student.setEmail(newEmail);
+                    System.out.println("Email updated successfully");
+                }
+                else if (updateOp == 4){
+                    System.out.print("Enter new phone: ");
+                    String newPhone = input.nextLine();
+                    student.setPhone(newPhone);
+                    System.out.println("Phone updated successfully");
+                }
+                else if (updateOp == 0){
+                    System.out.println("back to the main menu");
+                }
+            }
             else if (op == 0) {
                 System.out.println("log out from the system");
 

@@ -34,11 +34,11 @@ public class StudentManagement {
             if (studentArray.get(i).getUserName().equals("empty") && studentArray.get(i).getPassword().equals("empty")) { // if the username and password are empty
                 int stdID = studentArray.get(i).getID(); // get the id of the student
                 studentArray.remove(i); // remove the student
-                studentArray.add(i,new Student(stdID,userName,password));  // add the student with the new username and password with the same id as the old student (the empty one)
+                studentArray.add(i,new Student(stdID,userName,password,"@","0"));  // add the student with the new username and password with the same id as the old student (the empty one)
                 return; // return
             }
         }
-        studentArray.add(new Student(userName,password)); // if there is no empty students, add a new student with the username and password
+        studentArray.add(new Student(userName,password,"@","0")); // if there is no empty students, add a new student with the username and password
         
     }
 
@@ -79,7 +79,7 @@ public class StudentManagement {
             Student student = studentArray.get(index);
             int stdID = student.getID();
             studentArray.remove(student);
-            studentArray.add(index,new Student(stdID,"empty","empty"));
+            studentArray.add(index,new Student(stdID,"empty","empty","empty","empty"));
             return true;
         }
         return false;

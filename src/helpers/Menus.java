@@ -64,23 +64,27 @@ public class Menus {
         op = Functions.readPositiveORZeroInt();
         return  op;
     }
-public static int updateAdminUsernamePassword ()
-{
+    
+    public static int updatePersonalInfo ()
+    {
 
-    System.out.println("1=> update username");
-    System.out.println("2=> update password");
-    System.out.print("Enter your answer: ");
-    op = Functions.readPositiveORZeroInt();
+        System.out.println("1=> update Username");
+        System.out.println("2=> update Password");
+        System.out.println("3=> Update Email");
+        System.out.println("4=> Update Phone");
+        System.out.println("0=> Back");
+        System.out.print("Enter your answer: ");
+        op = Functions.readPositiveORZeroInt();
 
-    return op;
-}
+        return op;
+    }
     public static int studentMenu() {
         System.out.println("Choose only one option to do: ");
         System.out.println("1=> See Registered Subjects");
         System.out.println("2=> Get Exam(s)");
         System.out.println("3=> See Finished Exams");
         System.out.println("4=> See personal information");
-        System.out.println("5=> Update profile");
+        System.out.println("5=> Update Personal Information");
         System.out.println("0=> Exit");
         System.out.print("Enter your answer: ");
         op = Functions.readPositiveORZeroInt();

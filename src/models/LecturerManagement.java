@@ -25,11 +25,11 @@ public class LecturerManagement {
             if (lecturersArr.get(i).getUserName().equals("empty") && lecturersArr.get(i).getPassword().equals("empty")) {
                 int lecID = lecturersArr.get(i).getID();
                 lecturersArr.remove(i);
-                lecturersArr.add(i,new Lecturer(lecID,userName,password));
+                lecturersArr.add(i,new Lecturer(lecID,userName,password,"@","0"));
                 return;
             }
         }
-        lecturersArr.add(new Lecturer(userName,password));
+        lecturersArr.add(new Lecturer(userName,password,"@","0"));
 }
 
 
@@ -84,7 +84,7 @@ public class LecturerManagement {
             }
                 int lecID = lecturer.getID();
                 lecturersArr.remove(lecturer);
-                lecturersArr.add(index,new Lecturer(lecID,"empty","empty"));
+                lecturersArr.add(index,new Lecturer(lecID,"empty","empty","empty","empty"));
             return true;  // done
         }
         return false; // D.N.E

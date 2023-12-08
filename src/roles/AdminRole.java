@@ -134,11 +134,10 @@ public class AdminRole {
                                         System.out.println("\nlecturer not found");
                                         break;
                                     } else {
-                                        Lecturer lecturer = LecturerManagement.searchLecturer(lecIndex);
+                                        // Lecturer lecturer = LecturerManagement.searchLecturer(lecIndex);
                                         System.out.println("Here are the list of subjects");
                                         for (Subject subjects : SubjectManagement.getSubjectArrayList()) {
                                             System.out.println(subjects.getSubjID() + "=> " + subjects.getSubjectName());
-
                                         }
                                         System.out.print("enter subject ID: ");
                                         subID = Functions.readPositiveInt();
@@ -180,7 +179,7 @@ public class AdminRole {
                                             System.out.println("\n Select subject to unassign or 0 to exit: ");
                                             int answer = Functions.readPositiveORZeroInt();
                                             int subIndex = lecturer.findSubjIndex(answer);
-                                            if (subIndex != -1) { //TODO solve the problem of removing element and the other elements doesn't shift
+                                            if (subIndex != -1) { 
                                                 Subject subjToRemove = lecturer.getSubject(subIndex);
                                                 boolean isUnassigned = SubjectManagement.unassignSubjOfLecturer(subjToRemove, lecID);
                                                 System.out.println(isUnassigned ? "\nsubject unassigned successfully" : "\nfailure to unassign subject");
@@ -324,11 +323,10 @@ public class AdminRole {
                                     System.out.println("\nstudent not found");
                                     break;
                                 } else {
-                                    Student student = StudentManagement.searchStd(stdIndex);
+                                    // Student student = StudentManagement.searchStd(stdIndex);
                                     System.out.println("Here are the list of subjects");
                                     for (Subject subjects : SubjectManagement.getSubjectArrayList()) {
                                         System.out.println(subjects.getSubjID() + "=> " + subjects.getSubjectName());
-
                                     }
                                     System.out.print("enter subject ID: ");
                                     subID = Functions.readPositiveInt();
@@ -370,7 +368,7 @@ public class AdminRole {
                                         System.out.println("\n Select subject to unassign or 0 to exit: ");
                                         int answer = Functions.readPositiveORZeroInt();
                                         int subIndex = student.findSubjIndex(answer);
-                                        if (subIndex != -1) { //TODO solve the problem of removing element and the other elements doesn't shift
+                                        if (subIndex != -1) { 
                                             Subject subjToRemove = student.getSubject(subIndex);
                                             boolean isUnassigned = SubjectManagement.unassignSubjOfStudent(subjToRemove, stdID);
                                             System.out.println(isUnassigned ? "\nsubject unassigned successfully" : "\nfailure to unassign subject");
@@ -498,25 +496,40 @@ public class AdminRole {
                 } else if (optionsAnswer == 4) {// see personal info
                     System.out.println("\n\n"+admin.toString()+"\n\n");
                     break;
-                } else if (optionsAnswer == 5) //Update personal info
-                {
-                    int updateChoice = Menus.updateAdminUsernamePassword();
-                    if (updateChoice == 1) // update username
-                    {
+                } else if (optionsAnswer == 5){ //Update personal info
+                    //TODO while loop here if he entered invalid option
+                    int updateChoice = Menus.updatePersonalInfo();
+                    if (updateChoice == 1) {// update username
                         System.out.print("enter new username: ");
                         String newUsername = input.nextLine();
-
                         System.out.println(admin.setPassword(newUsername) ? "username updated successfully" : "some thing went wrong");
-
-                    } else if (updateChoice == 2) {  //update password
+                    } 
+                    else if (updateChoice == 2) {  //update password
                         System.out.print("enter new password: ");
                         String newPassword = input.nextLine();
-
                         System.out.println(admin.setPassword(newPassword) ? "password updated successfully" : "some thing went wrong");
-                    } else {
-                        System.out.println("this choice DNE");
                     }
-                } else {
+                    else if (updateChoice == 3) { //update email
+                        System.out.print("enter new email: ");
+                        String newEmail = input.nextLine();
+                        System.out.println(admin.setEmail(newEmail) ? "email updated successfully" : "some thing went wrong");
+                    }
+                    else if (updateChoice == 4) { //update phone
+                        System.out.print("enter new phone: ");
+                        String newPhone = input.nextLine();
+                        System.out.println(admin.setPhone(newPhone) ? "phone updated successfully" : "some thing went wrong");
+                    }
+                    else if (updateChoice == 0) {
+                        System.out.println("logout successfully");
+                        isBackChosen = true;
+                        isStillOperating = false;
+                        break;
+                    }
+                    else {
+                        System.out.println("Enter a valid option");
+                    }
+                }
+                else {
                     System.out.print("enter valid option to manage or 0 to exit: ");
                     optionsAnswer = Functions.readInt();
                 }
@@ -527,5 +540,7 @@ public class AdminRole {
             if (optionsAnswer == 0)
                 isStillOperating = false;
         }
+    input.close();
+    Files.adminFileWriter(admin);
     }
 }

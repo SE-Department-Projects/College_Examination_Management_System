@@ -52,13 +52,19 @@ public class Main {
                 password = input.nextLine().toLowerCase();
 
                 if (roleNum == 1) { // admin role
+                    Admin admin = Files.adminFileReader();
+                    if (admin.getUserName().equals("empty")) {
+                        System.out.println("there is no admin in the system");
+                        System.out.println(admin.getUserName() + " " + admin.getPassword());
+                        isLoggedin = true; // he is not logged in but in order to not enter the while loop again we need to make it true
+                        break;
+                    }
                     if (Authentication.adminLogin(username, password)) {
                         isAuth = true;
                         isLoggedin = true;
                         System.out.println("login Success");
                         System.out.println("---------------------------\n");
-                        Admin admin1 = new Admin(username, password);
-                        AdminRole.adminRole(admin1);
+                        AdminRole.adminRole(admin);
 
                     } else {
                         worngAuth = true;
