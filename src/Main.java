@@ -53,19 +53,16 @@ public class Main {
 
                 if (roleNum == 1) { // admin role
                     Admin admin = Files.adminFileReader();
-                    if (admin.getUserName().equals("empty")) {
-                        System.out.println("there is no admin in the system");
-                        System.out.println(admin.getUserName() + " " + admin.getPassword());
-                        isLoggedin = true; // he is not logged in but in order to not enter the while loop again we need to make it true
-                        break;
+                    // if the file was empty (or didn't satisfy the pattern) the method will return an admin object with userName = "empty" 
+                    if (admin.getUserName().equals("empty")) { 
+                        worngAuth = true;
                     }
-                    if (Authentication.adminLogin(username, password)) {
+                    else if (Authentication.adminLogin(username, password)) {
                         isAuth = true;
                         isLoggedin = true;
                         System.out.println("login Success");
                         System.out.println("---------------------------\n");
                         AdminRole.adminRole(admin);
-
                     } else {
                         worngAuth = true;
                     }
