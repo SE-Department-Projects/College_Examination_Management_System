@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class LecturerManagement {
 
-    //    private Lecturer[] lecturersArr = new Lecturer[10];
     private static ArrayList<Lecturer> lecturersArr = new ArrayList<>();
 
     //---------------CONSTRUCTOR----------------------------------------------

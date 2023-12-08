@@ -61,7 +61,7 @@ public class Main {
                         isAuth = true;
                         isLoggedin = true;
                         System.out.println("login Success");
-                        System.out.println("---------------------------\n");
+                        System.out.println("==========================================\n");
                         AdminRole.adminRole(admin);
                     } else {
                         worngAuth = true;
@@ -74,7 +74,7 @@ public class Main {
                         isAuth = true;
                         isLoggedin = true;
                         System.out.println("login Success");
-                        System.out.println("---------------------------\n");
+                        System.out.println("==========================================\n");
 
                         LecturerRole.lecturerRole(lecturerID);
                         isLoggedin = true;
@@ -90,7 +90,8 @@ public class Main {
                         isAuth = true;
                         isLoggedin = true;
                         System.out.println("login Success");
-                        System.out.println("---------------------------\n");
+                        System.out.println("==========================================\n");
+
 
                         StudentRole.studentRole(studentID);
                         isLoggedin = true;

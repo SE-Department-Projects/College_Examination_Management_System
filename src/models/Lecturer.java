@@ -10,14 +10,14 @@ public class Lecturer extends Person {
     public StudentManagement studentManager = new StudentManagement();
 
 
-    public Lecturer(String userName, String password,String email,String phone) {
-        super(userName, password, "lecturer",email,phone);
+    public Lecturer(String userName, String password, String email, String phone) {
+        super(userName, password, "lecturer", email, phone);
         this.ID = ++numOfLecturer;
         this.subjects = new ArrayList<>();
     }
 
-    public Lecturer(int ID, String userName, String password,String email,String phone) {
-        super(userName, password, "lecturer",email,phone);
+    public Lecturer(int ID, String userName, String password, String email, String phone) {
+        super(userName, password, "lecturer", email, phone);
         this.ID = ID;
         this.subjects = new ArrayList<>();
     }
@@ -26,7 +26,6 @@ public class Lecturer extends Person {
     //     this.ID = ID;
     //     this.subjects = new ArrayList<>();
     // }
-
 
 
     public int getID() {
@@ -44,7 +43,6 @@ public class Lecturer extends Person {
     public ArrayList<Subject> getLecturerSubjects() {
         return this.subjects;
     }
-
 
 
     public boolean delSubject(Subject subject) {
@@ -65,11 +63,11 @@ public class Lecturer extends Person {
     }
 
     public Subject getSubject(int index) { // check that index is not -1
-            return this.subjects.get(index);
+        return this.subjects.get(index);
     }
 
     public boolean deleteExam(Subject subject) {
-        if(subject.getExam() != null) {
+        if (subject.getExam() != null) {
             subject.setExam(null);
             subject.setIsExamCreated(false);
             return true;
@@ -77,7 +75,7 @@ public class Lecturer extends Person {
         return false;
     }
 
-    
+
     public boolean addExam(Exam exam, Subject subject) {
         if (subject.getExam() == null) {
             subject.setExam(exam);
@@ -88,35 +86,39 @@ public class Lecturer extends Person {
     }
 
 
-        public String getSubjectsAsString() {
-            String subjectsString = "";
-            for (Subject subject : this.subjects) {
-                subjectsString += subject.getSubjectName() + ", ";
+    public String getSubjectsAsString() {
+        String subjectsString = "";
+        int subjectsLength = subjects.size();
+
+        for (int i = 0; i < subjectsLength; i++) {
+            subjectsString += subjects.get(i).getSubjectName();
+
+            if (i != subjectsLength - 1) {
+                subjectsString += ", ";
             }
-            return subjectsString;
         }
+        return subjectsString;
+    }
 
-        public static int getNumOfLecturer() {
-            return numOfLecturer;
-        }
+    public static int getNumOfLecturer() {
+        return numOfLecturer;
+    }
 
-        public static void setNumOfLecturer(int numOfLecturer) {
-            Lecturer.numOfLecturer = numOfLecturer;
-        }
-
-        
+    public static void setNumOfLecturer(int numOfLecturer) {
+        Lecturer.numOfLecturer = numOfLecturer;
+    }
 
 
-        @Override
-        public String toString() {
-            return "Lecturer{" +
-                    "ID=" + this.ID +
-                    ", userName='" + this.getUserName() + '\'' +
-                    ", password='" + this.getPassword() + '\'' +
-                    ", email='" + this.getEmailToString() + '\'' +
-                    ", phone='" + this.getPhoneToString() + '\'' +
-                    ", subjects=" + getSubjectsAsString() +
-                    '}';
-        }
+    @Override
+    public String toString() {
+        return "Lecturer{" +
+                "ID=" + this.ID +
+                ", userName='" + this.getUserName() + '\'' +
+                ", password='" + this.getPassword() + '\'' +
+                ", email='" + this.getEmailToString() + '\'' +
+                ", phone='" + this.getPhoneToString() + '\'' +
+                ", subjects=" + getSubjectsAsString() +
+                '}';
+    }
 }
 

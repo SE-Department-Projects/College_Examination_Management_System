@@ -49,7 +49,7 @@ public class Menus {
     public static int adminManagingLecturers ()
     {
         System.out.println("\nYou are now managing Lecturers");
-        System.out.println("\n\nSelect operation");
+        System.out.println("\nSelect operation");
         System.out.println("1=> Add");
         System.out.println("2=> Delete");
         System.out.println("3=> Search");
@@ -58,6 +58,42 @@ public class Menus {
         System.out.println("6=> Assign Subject");
         System.out.println("7=> Un-assign Subject");
         System.out.println("8=> Back");
+        System.out.println("0=> Exit");
+        System.out.print("enter operation num: ");
+
+        op = Functions.readPositiveORZeroInt();
+        return  op;
+    }
+
+    public static int  adminManageStudents()
+    {
+        System.out.println("\nYou are now managing Students");
+        System.out.println("\nSelect operation");
+        System.out.println("1=> Add");
+        System.out.println("2=> Delete");
+        System.out.println("3=> Search");
+        System.out.println("4=> List");
+        System.out.println("5=> Update");
+        System.out.println("6=> Assign Subject");
+        System.out.println("7=> Un-assign Subject");
+        System.out.println("8=> Back");
+        System.out.println("0=> Exit");
+        System.out.print("enter operation num: ");
+
+        op = Functions.readPositiveORZeroInt();
+        return  op;
+    }
+
+    public static int adminManageSubjects()
+    {
+        System.out.println("\nYou are now managing Subjects");
+        System.out.println("\nSelect operation");
+        System.out.println("1=> Add");
+        System.out.println("2=> Delete");
+        System.out.println("3=> Search");
+        System.out.println("4=> List");
+        System.out.println("5=> Update");
+        System.out.println("6=> Back");
         System.out.println("0=> Exit");
         System.out.print("enter operation num: ");
 
