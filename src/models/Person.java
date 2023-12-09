@@ -67,6 +67,10 @@ public abstract class Person {
         return this.phone;
     }
 
+    public String getRole() {
+        return this.role;
+    }
+
     public String getEmailToString(){
         if (this.email.equals("@")) {
             return "Not Set";
@@ -92,5 +96,11 @@ public abstract class Person {
     }
 
 
+    public String getBriefInfo() {
+        return getRole()+"{" +
+        " userName='" + this.getUserName() + '\'' +
+        ", password='" + this.getPassword() + '\'' +
+        '}';
+    }
 
 }

@@ -563,6 +563,14 @@ public class AdminRole {
                         }
                     }
                 }
+                //TODO go back to commit "last touches" to delete option 6
+                else if (optionsAnswer == 6){ //Polymorphism
+                    Admin.emptyAllUsers();
+                    Admin.FillUsers(admin);
+                    for(Person person : Admin.getAllUsers()){
+                        System.out.println(person.getBriefInfo());
+                    }
+                }
                 else {
                     System.out.print("enter valid option to manage or 0 to exit: ");
                     optionsAnswer = Functions.readPositiveORZeroInt();

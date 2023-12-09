@@ -36,8 +36,9 @@ public class Menus {
         System.out.println("1=> manage Lecturer");
         System.out.println("2=> manage Student");
         System.out.println("3=> manage Subject");
-        System.out.println("4=> see personal info");
+        System.out.println("4=> See personal info");
         System.out.println("5=> Update personal info");
+        System.out.println("6=> List all Users");
         System.out.println("0=> Exit");
         System.out.print("Enter your answer: ");
 
