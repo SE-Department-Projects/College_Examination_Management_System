@@ -45,39 +45,40 @@ public class Main {
             }
             while (!isAuth) {
                 System.out.print("Enter Username: ");
-                username = input.nextLine().toLowerCase();
+                username = input.nextLine().toLowerCase().trim();
 
                 System.out.print("Enter Password: ");
 
-                password = input.nextLine().toLowerCase();
+                password = input.nextLine().trim();
 
                 if (roleNum == 1) { // admin role
                     Admin admin = Files.adminFileReader();
+                    
                     // if the file was empty (or didn't satisfy the pattern) the method will return an admin object with userName = "empty" 
                     if (admin.getUserName().equals("empty")) { 
+                        System.out.println("admin empty");
                         worngAuth = true;
                     }
-                    else if (Authentication.adminLogin(username, password)) {
+                    else if (Authentication.adminLogin(username, password,admin)) {
+                        worngAuth = false;
                         isAuth = true;
                         isLoggedin = true;
                         System.out.println("login Success");
                         System.out.println("==========================================\n");
                         AdminRole.adminRole(admin);
                     } else {
+                        System.out.println("wrong info");
                         worngAuth = true;
                     }
 
                 } else if (roleNum == 2) { // lecturer role
-
-
-
                     int lecturerID = Authentication.lecturerLogin(username, password);
                     if (lecturerID != -1) {
+                        worngAuth = false;
                         isAuth = true;
                         isLoggedin = true;
                         System.out.println("login Success");
                         System.out.println("==========================================\n");
-
                         LecturerRole.lecturerRole(lecturerID);
                         isLoggedin = true;
 
@@ -89,6 +90,7 @@ public class Main {
 
                     int studentID = Authentication.studentLogin(username, password);
                     if (studentID != -1) {
+                        worngAuth = false;
                         isAuth = true;
                         isLoggedin = true;
                         System.out.println("login Success");
@@ -120,6 +122,6 @@ public class Main {
 
         }
 
-
+    System.out.println("Log out successfully");
     }
 }

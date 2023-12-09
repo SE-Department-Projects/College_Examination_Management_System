@@ -22,7 +22,6 @@ public abstract class Person {
     // Setters
 
     public boolean setUserName(String userName) {
-        //TODO validation for change username (no two users can have the same username)
             this.userName = userName;
             return true;
     }

@@ -29,17 +29,22 @@ public class StudentManagement {
         studentArray.add(student);
     }
 
-    public static void addStd(String userName, String password) { // takes username and pass
+    public static int addStd(String userName, String password) { // takes username and pass
+        for (Student student : studentArray) {
+            if(student.getUserName().equals(userName)){
+                return -1; // username already exists
+            }
+        }
         for (int i = 0; i < studentArray.size(); i++) { // loop through the array of students
             if (studentArray.get(i).getUserName().equals("empty") && studentArray.get(i).getPassword().equals("empty")) { // if the username and password are empty
                 int stdID = studentArray.get(i).getID(); // get the id of the student
                 studentArray.remove(i); // remove the student
                 studentArray.add(i,new Student(stdID,userName,password,"@","0"));  // add the student with the new username and password with the same id as the old student (the empty one)
-                return; // return
+                return 1; // return
             }
         }
         studentArray.add(new Student(userName,password,"@","0")); // if there is no empty students, add a new student with the username and password
-        
+        return 1;
     }
 
 

@@ -203,7 +203,7 @@ public class Files {
 
     // read from subj_ID_Exam 
     public static void subjectIdExamFileReader(){
-        //TODO validation 
+        //TODO validation
         for (Subject subject : SubjectManagement.getSubjectArrayList()) { // loop through the subjects
 
             FileHandler subExamFileHandler = new FileHandler(Paths.examPath+subject.getSubjID()+"_exam.txt");

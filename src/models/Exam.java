@@ -6,7 +6,6 @@ public class Exam {
 
     // Attributes
     private static int numOfExam = 0;
-    private int examID;
     private String subjectName;
     private int subjID;
     private int duration;
@@ -14,7 +13,6 @@ public class Exam {
 
     // Constructors
     public Exam(){
-        this.examID = ++numOfExam;
         this.questions = new ArrayList<>();
         // this.examFile = new FileHandler("exam_" + this.examID + ".txt");
     }
@@ -25,8 +23,6 @@ public class Exam {
         this.subjectName = subject.getSubjectName();
         this.duration = duration;
         this.questions = new ArrayList<>();
-        this.examID = ++numOfExam;
-        // this.examFile = new FileHandler("exam_" + this.examID + ".txt");
         this.subjID = subjID;
     }
 
@@ -44,9 +40,6 @@ public class Exam {
     }
     
     //Getter
-    public int getExamID(){
-        return this.examID;
-    }
     
     public String getSubjectName() {
         return this.subjectName;

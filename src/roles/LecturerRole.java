@@ -6,10 +6,9 @@ import models.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 public class LecturerRole {
 
-    static public void lecturerRole(int LecId){
+    static public void lecturerRole(int LecId) {
         int LecIndex = LecturerManagement.findLecIndex(LecId);
         Lecturer lecturer = LecturerManagement.searchLecturer(LecIndex);
         Scanner input = new Scanner(System.in);
@@ -22,20 +21,20 @@ public class LecturerRole {
         int op;
         boolean isStillOperating = true;
 
-        while(isStillOperating){
+        while (isStillOperating) {
             boolean isBackChosen = false;
             System.out.println("choose only one option to manage: ");
-            System.out.println("1=> Manage Exams\n2=> Make Report\n3=> Show personal Info\n4=> Update personal Info\n0=> exit");
+            System.out.println(
+                    "1=> Manage Exams\n2=> Make Report\n3=> Show personal Info\n4=> Update personal Info\n0=> exit");
             System.out.print("Enter your answer: ");
             int optionsAnswer = Functions.readInt();
 
-
             while (optionsAnswer != 0 && isBackChosen == false) {
                 if (optionsAnswer == 1) {
-                    if(lecturer.getLecturerSubjects().isEmpty()){
+                    if (lecturer.getLecturerSubjects().isEmpty()) {
                         System.out.println("\nYou don't have subjects to Manage exams\n");
                         break;
-                        }
+                    }
                     do {
                         System.out.println("\nSelect operation");
                         System.out.println("1=> add\n2=> delete\n3=> list\n4=> Back\n0=> exit");
@@ -43,33 +42,30 @@ public class LecturerRole {
                         System.out.print("enter operation num: ");
                         op = Functions.readInt();
                         if (op == 4) {
-                            isBackChosen = true; // set isBackChosen to true to not enter the outer loop, but we set it to false again when he choose an option so he can enter again
+                            isBackChosen = true; // set isBackChosen to true to not enter the outer loop, but we set it
+                                                 // to false again when he choose an option so he can enter again
                             break; // to exit the inner do while loop
                         }
 
-                        switch (op){
+                        switch (op) {
                             case 1:
-                                for (Subject subject : lecturer.getLecturerSubjects()) {
-                                    System.out.println(subject.getSubjID() + "=>" + subject.getSubjectName());
-                                }
-                                System.out.println("Choose the subject you want to add an exam to or 0 to exit: ");
+                                System.out.println(lecturer.getSubjectstoChooseFrom());
                                 int subjID = Functions.readPositiveORZeroInt();
                                 if (subjID == 0)
                                     break;
-                                int index = SubjectManagement.findSubjIndex(subjID);
-                                if (index == -1){
+                                int index = lecturer.findSubjIndex(subjID);
+                                if (index == -1) {
                                     System.out.println("Subject not found");
                                     break;
                                 }
-                                Subject subject = SubjectManagement.searchSubject(index);
-
-                                //TODO would you like to delete the existing exam and add a new one?
+                                Subject subject = lecturer.getSubject(index);
                                 if (subject.isExamCreated()){
                                     System.out.println("This subject already has an exam, you should delete it first");
                                     break;
                                 }
 
-                                System.out.println("You are now adding an exam to subject: " + subject.getSubjectName()); 
+                                System.out
+                                        .println("You are now adding an exam to subject: " + subject.getSubjectName());
                                 System.out.println("Enter the Exam duration in minutes: ");
                                 int duration = Functions.readPositiveInt();
 
@@ -78,63 +74,59 @@ public class LecturerRole {
                                 System.out.println("Enter number of questions: ");
                                 int questionsNum = Functions.readPositiveInt();
 
-                                for (int i = 1 ; i <= questionsNum ; i++){
+                                for (int i = 1; i <= questionsNum; i++) {
                                     System.out.println("Question " + i + ":");
                                     System.out.println("Enter question text: ");
                                     String questionText = input.nextLine();
                                     boolean isAnswerValid = false;
-                                    while(!isAnswerValid){
+                                    while (!isAnswerValid) {
                                         System.out.println("Enter question Answer(true/false): ");
                                         String questionAnswer = input.nextLine();
-                                        if (questionAnswer.equalsIgnoreCase("true") || questionAnswer.equalsIgnoreCase("false")){
+                                        if (questionAnswer.equalsIgnoreCase("true")
+                                                || questionAnswer.equalsIgnoreCase("false")) {
                                             isAnswerValid = true;
                                             Question question = new Question(questionText, questionAnswer);
                                             exam1.addQuestion(question);
-                                        }
-                                        else{
+                                        } else {
                                             System.out.println("Answer must be true or false");
                                         }
                                     }
                                 }
                                 System.out.println("Exam added successfully");
-                                lecturer.addExam(exam1,subject);
-                                
+                                lecturer.addExam(exam1, subject);
+
                                 break;
 
                             case 2:
-                                for (Subject subject1 : lecturer.getLecturerSubjects()) {
-                                    System.out.println(subject1.getSubjID() + " " + subject1.getSubjectName());
-                                }
-                                System.out.println("Choose the subject you want to delete an exam or 0 to exit: ");
+                                System.out.println("\n"+lecturer.getSubjectsWithExams()+"\n");
+                                System.out.println("0=> Exit");
                                 subjID = Functions.readPositiveORZeroInt();
                                 if (subjID == 0)
                                     break;
-                                index = SubjectManagement.findSubjIndex(subjID);
-                                if (index == -1){
+                                index = lecturer.findSubjIndex(subjID);
+                                if (index == -1) {
                                     System.out.println("Subject not found");
                                     break;
                                 }
-                                subject = SubjectManagement.searchSubject(index);
-                                // System.out.println("You are now deleting the exam from subject" + subject.getSubjectName());
-                                if (lecturer.deleteExam(subject)){
+                                subject = lecturer.getSubject(index);
+                                if (lecturer.deleteExam(subject)) {
                                     System.out.println("Exam deleted successfully");
-                                }
-                                else{
+                                } else {
                                     System.out.println("Exam not found");
                                 }
                                 break;
 
                             case 3:
-                            System.out.println("List of Exams:");
-                            System.out.printf("%-10s%-16s%-25s\n","ID","Subject Name","Duration");
-                            for (Subject subject1 : lecturer.getLecturerSubjects()) {
-                                if(subject1.isExamCreated())
-                                    System.out.printf("%-10s%-16s%-25s\n",subject1.getExam().getExamID(), subject1.getSubjectName(), subject1.getExam().getDuration());
-                            }
+                                System.out.println("List of Exams:");
+                                System.out.printf("%-10s%-16s%-25s\n", "ID", "Subject Name", "Duration");
+                                for (Subject subject1 : lecturer.getLecturerSubjects()) {
+                                    if (subject1.isExamCreated())
+                                        System.out.printf("%-10s%-16s%-25s\n", subject1.getSubjID(),
+                                                subject1.getSubjectName(), subject1.getExam().getDuration());
+                                }
                                 break;
 
                             case 0:
-                                System.out.println("logout successfully");
                                 isBackChosen = true;
                                 isStillOperating = false;
                                 break;
@@ -144,18 +136,16 @@ public class LecturerRole {
 
                         }
 
-                        
-                    }while (op != 0 && op != 6);
-
+                    } while (op != 0 && op != 6);
                     Files.lecturersFileWriter();
                     Files.subjectIdExamFileWriter(lecturer);
-                }
-                else if (optionsAnswer == 2) {
-                    if(isMakeReportChosenBefore == false){
+
+                } else if (optionsAnswer == 2) {
+                    if (isMakeReportChosenBefore == false) {
                         isMakeReportChosenBefore = true;
                         Files.studentIdSubjectFileReader();
                     }
-                    if(lecturer.getLecturerSubjects().isEmpty()){
+                    if (lecturer.getLecturerSubjects().isEmpty()) {
                         System.out.println("\nYou don't have subjects to Make Reports\n");
                         break;
                     }
@@ -167,71 +157,64 @@ public class LecturerRole {
                     if (subjID == 0)
                         break;
                     int index = SubjectManagement.findSubjIndex(subjID);
-                    if (index == -1){
+                    if (index == -1) {
                         System.out.println("Subject not found");
                         break;
                     }
                     Subject subject = SubjectManagement.searchSubject(index);
-                    System.out.printf("%-10s%-16s%-25s\n","ID","Name","Degree");
+                    System.out.printf("%-10s%-16s%-25s\n", "ID", "Name", "Degree");
                     System.out.println("\n");
                     ArrayList<Student> students = StudentManagement.getStudentArray();
-                    for(int i = 0 ; i < students.size() ; i++){
-                        if (students.get(i).getSubjects().contains(subject)){
+                    for (int i = 0; i < students.size(); i++) {
+                        if (students.get(i).getSubjects().contains(subject)) {
                             index = students.get(i).getSubjects().indexOf(subject);
-                            if (students.get(i).getGrades().get(index) == -1){
-                            System.out.printf("%-10s%-16s%-25s",students.get(i).getID(),students.get(i).getUserName()," Not Taken Yet");
-                            System.out.print("\n");
-                            }
-                            else{
-                            System.out.printf("%-10s%-16s%-25s",students.get(i).getID(),students.get(i).getUserName(),students.get(i).getGrades().get(index));
-                            System.out.print("\n");
+                            if (students.get(i).getGrades().get(index) == -1) {
+                                System.out.printf("%-10s%-16s%-25s", students.get(i).getID(),
+                                        students.get(i).getUserName(), " Not Taken Yet");
+                                System.out.print("\n");
+                            } else {
+                                System.out.printf("%-10s%-16s%-25s", students.get(i).getID(),
+                                        students.get(i).getUserName(), students.get(i).getGrades().get(index));
+                                System.out.print("\n");
                             }
                         }
                     }
                     break;
-                }
-                else if (optionsAnswer == 3){
-                    System.out.println("\n\n"+lecturer.toString()+"\n\n");
+                } else if (optionsAnswer == 3) {
+                    System.out.println("\n\n" + lecturer.toString() + "\n\n");
                     break;
 
-                }
-                else if (optionsAnswer == 4){ // update personal info  
-                    
+                } else if (optionsAnswer == 4) { // update personal info
+
                     int updateAnswer = Menus.updatePersonalInfo();
-                    if(updateAnswer == 1){ // update username
+                    if (updateAnswer == 1) { // update username
                         System.out.print("Enter new username: ");
-                        String newUsername = input.nextLine();
+                        String newUsername = input.nextLine().toLowerCase().trim();
                         lecturer.setUserName(newUsername);
                         System.out.println("Username updated successfully");
-                    }
-                    else if(updateAnswer == 2){ // update password
+                    } else if (updateAnswer == 2) { // update password
                         System.out.print("Enter new password: ");
-                        String newPassword = input.nextLine();
+                        String newPassword = input.nextLine().trim();
                         lecturer.setPassword(newPassword);
                         System.out.println("Password updated successfully");
-                    }
-                    else if(updateAnswer == 3){ // update email
+                    } else if (updateAnswer == 3) { // update email
                         System.out.print("Enter new email: ");
-                        String newEmail = input.nextLine();
+                        String newEmail = input.nextLine().trim();
                         lecturer.setEmail(newEmail);
                         System.out.println("Email updated successfully");
-                    }
-                    else if(updateAnswer == 4){ // update phone
+                    } else if (updateAnswer == 4) { // update phone
                         System.out.print("Enter new phone: ");
-                        String newPhone = input.nextLine();
+                        String newPhone = input.nextLine().trim();
                         lecturer.setPhone(newPhone);
                         System.out.println("Phone updated successfully");
-                    }
-                    else if(updateAnswer == 0){
+                    } else if (updateAnswer == 0) {
                         isBackChosen = true;
                         break;
-                    }
-                    else{
+                    } else {
                         System.out.println("Invalid input");
                     }
                     Files.lecturersFileWriter();
-                }
-                else {
+                } else {
                     System.out.print("enter valid option to manage or 0 to exit: ");
                     optionsAnswer = Functions.readInt();
                 }
@@ -240,5 +223,6 @@ public class LecturerRole {
                 isStillOperating = false;
             }
         }
+    input.close();
     }
 }

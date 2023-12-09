@@ -19,16 +19,22 @@ public class LecturerManagement {
         lecturersArr.add(lecturer);
 }
 
-    public static void addLecturer(String userName, String password) {  // Method explaination in SubjectManagement.java
+    public static int addLecturer(String userName, String password) {  // Method explaination in SubjectManagement.java
+        for (Lecturer lecturer : lecturersArr) {
+            if(lecturer.getUserName().equals(userName)){
+                return -1; // username already exists
+            }
+        }
         for (int i = 0; i < lecturersArr.size(); i++) {
             if (lecturersArr.get(i).getUserName().equals("empty") && lecturersArr.get(i).getPassword().equals("empty")) {
                 int lecID = lecturersArr.get(i).getID();
                 lecturersArr.remove(i);
                 lecturersArr.add(i,new Lecturer(lecID,userName,password,"@","0"));
-                return;
+                return 1;
             }
         }
         lecturersArr.add(new Lecturer(userName,password,"@","0"));
+        return 1;
 }
 
 

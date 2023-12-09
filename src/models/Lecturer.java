@@ -85,20 +85,47 @@ public class Lecturer extends Person {
         return false;
     }
 
+    public String getSubjectstoChooseFrom(){
+        String subjectsString = "";
+        if(subjects.size() == 0)
+            return "No Assigned Subjects";
+        int subjectsLength = subjects.size();
+        for (int i = 0; i < subjectsLength; i++) {
+            subjectsString += subjects.get(i).getSubjID()+"=> "+ subjects.get(i).getSubjectName()+"\n";
+        }
+        return subjectsString;
+    }
 
     public String getSubjectsAsString() {
         String subjectsString = "";
+        if(subjects.size() == 0)
+            return "No Assigned Subjects";
         int subjectsLength = subjects.size();
-
         for (int i = 0; i < subjectsLength; i++) {
             subjectsString += subjects.get(i).getSubjectName();
-
             if (i != subjectsLength - 1) {
                 subjectsString += ", ";
             }
         }
         return subjectsString;
     }
+
+
+    public String getSubjectsWithExams(){
+        String subjects = "";
+        for (Subject subject1 : getLecturerSubjects()) {
+            if (subject1.isExamCreated()) {
+                subjects +=  subject1.getSubjID() + "=> " + subject1.getSubjectName() + "\n";
+            }
+        }
+        if (subjects.isEmpty())
+            subjects += "No exams";
+        return subjects;
+    }
+
+
+
+
 
     public static int getNumOfLecturer() {
         return numOfLecturer;
@@ -107,6 +134,7 @@ public class Lecturer extends Person {
     public static void setNumOfLecturer(int numOfLecturer) {
         Lecturer.numOfLecturer = numOfLecturer;
     }
+
 
 
     @Override

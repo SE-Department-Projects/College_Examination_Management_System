@@ -43,13 +43,18 @@ public class AdminRole {
                             case 1: // add
 
                                 System.out.print("Enter lecturer Username: ");
-                                String LecUsername = input.nextLine();
+                                String LecUsername = input.nextLine().toLowerCase().trim();
 
                                 System.out.print("Enter lecturer password: ");
-                                String LecPassword = input.nextLine();
+                                String LecPassword = input.nextLine().trim();
 
-                                LecturerManagement.addLecturer(LecUsername, LecPassword);
+                                int status = LecturerManagement.addLecturer(LecUsername, LecPassword);
+                                if(status != -1){
                                 System.out.println("\n---- lecturer added successfully ----\n");
+                                }
+                                else{
+                                    System.out.println("\n Username already exists \n");
+                                }
                                 break;
 
                             case 2: //delete
@@ -79,13 +84,7 @@ public class AdminRole {
                                     }
                                     System.out.printf("%-10s%-16s%-25s%-30s\n", "ID", "username", "password", "subject");
                                     System.out.printf("%-10s%-16s%-25s", lecturer.getID(), lecturer.getUserName(), lecturer.getPassword());
-                                    if (lecturer.getLecturerSubjects().isEmpty())
-                                        System.out.printf("%-30s\n", "No Subject Assigned");
-//                                        System.out.printf("%-10s%-16s%-25s%-30s\n", lecturer.getID(), lecturer.getUserName(), lecturer.getPassword(), "No Subject Assigned");
-                                    else
-                                        System.out.printf("%-30s\n", lecturer.getSubjectsAsString());
-
-//                                        System.out.printf("%-10s%-16s%-25s%-30s\n", lecturer.getID(), lecturer.getUserName(), lecturer.getPassword(), lecturer.getSubjectsAsString());
+                                    System.out.printf("%-30s\n", lecturer.getSubjectsAsString());
                                 }
                                 break;
 
@@ -101,16 +100,7 @@ public class AdminRole {
                                         if (lec.getUserName().equals("empty") && lec.getPassword().equals("empty")) {
                                             continue;
                                         }
-
                                         System.out.printf("%-10s%-16s%-25s", lec.getID(), lec.getUserName(), lec.getPassword());
-
-
-                                        if (lec.getLecturerSubjects().isEmpty())
-                                            System.out.printf("%-30s\n", "No Subject Assigned");
-
-//                                        System.out.printf("%-10s%-16s%-25s%-30s", lec.getID(), lec.getUserName(), lec.getPassword(), "No Subject Assigned");
-                                        else
-//                                        System.out.printf("%-10s%-16s%-25s%-30s", lec.getID(), lec.getUserName(), lec.getPassword(), lec.getSubjectsAsString());
                                             System.out.printf("%-30s\n", lec.getSubjectsAsString());
                                     }
 
@@ -126,14 +116,14 @@ public class AdminRole {
                                     System.out.print("enter lecID to update username: ");
                                     lecID = Functions.readPositiveInt();
                                     System.out.print("enter the new Username: ");
-                                    String newUsername = input.nextLine();
+                                    String newUsername = input.nextLine().toLowerCase().trim();
                                     boolean update = LecturerManagement.updateLecUsername(lecID, newUsername);
                                     System.out.println(update ? "updated username successfully" : "failure");
                                 } else if (updateOP == 2) {
                                     System.out.print("enter lecID to update password: ");
                                     lecID = Functions.readPositiveInt();
                                     System.out.print("enter the new password: ");
-                                    String newPassword = input.nextLine();
+                                    String newPassword = input.nextLine().trim();
                                     boolean update = LecturerManagement.updateLecPassword(lecID, newPassword);
                                     System.out.println(update ? "updated password successfully" : "failure");
                                 }
@@ -254,13 +244,18 @@ public class AdminRole {
                             case 1: //add
 
                                 System.out.print("Enter Student Username: ");
-                                String stdUsername = input.nextLine();
+                                String stdUsername = input.nextLine().toLowerCase().trim();
 
                                 System.out.print("Enter Student password: ");
-                                String stdPassword = input.nextLine();
+                                String stdPassword = input.nextLine().trim();
 
-                                StudentManagement.addStd(stdUsername, stdPassword);
-                                System.out.println("\n---- student added successfully ----\n");
+                                int status = StudentManagement.addStd(stdUsername, stdPassword);
+                                if(status != -1){
+                                    System.out.println("\n---- student added successfully ----\n");
+                                }
+                                else{
+                                    System.out.println("\n Username already exists \n");
+                                }
                                 break;
 
                             case 2: //delete
@@ -322,14 +317,14 @@ public class AdminRole {
                                     System.out.print("enter StdID to update username: ");
                                     stdID = Functions.readPositiveInt();
                                     System.out.print("enter the new Username: ");
-                                    String newUsername = input.nextLine();
+                                    String newUsername = input.nextLine().toLowerCase().trim();
                                     boolean update = StudentManagement.updateStdUsername(stdID, newUsername);
                                     System.out.println(update ? "updated username successfully" : "failure to update the username");
                                 } else if (updateOP == 2) {
                                     System.out.print("enter stdID to update password: ");
                                     stdID = Functions.readPositiveInt();
                                     System.out.print("enter the new password: ");
-                                    String newPassword = input.nextLine();
+                                    String newPassword = input.nextLine().trim();
                                     boolean update = LecturerManagement.updateLecPassword(stdID, newPassword);
                                     System.out.println(update ? "updated password successfully" : "failure");
                                 } else {
@@ -451,13 +446,18 @@ public class AdminRole {
                             case 1: // add
 
                                 System.out.print("Enter subject name: ");
-                                String subjectName = input.nextLine();
+                                String subjectName = input.nextLine().toLowerCase().trim();
 
                                 System.out.print("enter subject code: ");
-                                String subjectCode = input.nextLine();
+                                String subjectCode = input.nextLine().trim();
 
-                                SubjectManagement.addSubject(subjectName, subjectCode);
-                                System.out.println("\n---- subject added successfully ----\n");
+                                int status = SubjectManagement.addSubject(subjectName, subjectCode);
+                                if(status != -1){
+                                    System.out.println("\n---- subject added successfully ----\n");
+                                }
+                                else{
+                                    System.out.println("\n Subject name already exists \n");
+                                }
                                 break;
 
                             case 2: //delete
@@ -509,16 +509,15 @@ public class AdminRole {
                                 System.out.print("enter subject ID to update the subject: ");
                                 subID = Functions.readPositiveInt();
                                 System.out.print("enter the new subject name: ");
-                                String subNewName = input.nextLine();
+                                String subNewName = input.nextLine().toLowerCase().trim();
                                 System.out.print("enter the new subject code: ");
-                                String subNewCode = input.nextLine();
+                                String subNewCode = input.nextLine().trim();
 
                                 boolean isUpdated = SubjectManagement.updateSubject(subID, subNewName, subNewCode);
                                 System.out.println(isUpdated ? "\nsubject updated successfully" : "\nsubject not exist");
                                 break;
 
                             case 0:
-                                System.out.println("logout successfully");
                                 isBackChosen = true;
                                 isStillOperating = false;
                                 break;
@@ -538,33 +537,33 @@ public class AdminRole {
                     System.out.println("\n" + admin.toString() + "\n");
                     break;
                 } else if (optionsAnswer == 5) { //Update personal info
-                    //TODO while loop here if he entered invalid option
-                    int updateChoice = Menus.updatePersonalInfo();
-                    if (updateChoice == 1) {// update username
-                        System.out.print("enter new username: ");
-                        String newUsername = input.nextLine();
-                        System.out.println(admin.setPassword(newUsername) ? "username updated successfully" : "some thing went wrong");
-                    } else if (updateChoice == 2) {  //update password
-                        System.out.print("enter new password: ");
-                        String newPassword = input.nextLine();
-                        System.out.println(admin.setPassword(newPassword) ? "password updated successfully" : "some thing went wrong");
-                    } else if (updateChoice == 3) { //update email
-                        System.out.print("enter new email: ");
-                        String newEmail = input.nextLine();
-                        System.out.println(admin.setEmail(newEmail) ? "email updated successfully" : "some thing went wrong");
-                    } else if (updateChoice == 4) { //update phone
-                        System.out.print("enter new phone: ");
-                        String newPhone = input.nextLine();
-                        System.out.println(admin.setPhone(newPhone) ? "phone updated successfully" : "some thing went wrong");
-                    } else if (updateChoice == 0) {  // back
-//                        System.out.println("logout successfully");
-                        isBackChosen = true;
-//                        isStillOperating = false;
-                        break;
-                    } else {
-                        System.out.println("Enter a valid option");
+                    while(true){
+                        int updateChoice = Menus.updatePersonalInfo();
+                        if (updateChoice == 1) {// update username
+                            System.out.print("enter new username: ");
+                            String newUsername = input.nextLine().toLowerCase().trim();
+                            System.out.println(admin.setUserName(newUsername) ? "username updated successfully" : "some thing went wrong");
+                        } else if (updateChoice == 2) {  //update password
+                            System.out.print("enter new password: ");
+                            String newPassword = input.nextLine().trim();
+                            System.out.println(admin.setPassword(newPassword) ? "password updated successfully" : "some thing went wrong");
+                        } else if (updateChoice == 3) { //update email
+                            System.out.print("enter new email: ");
+                            String newEmail = input.nextLine().trim();
+                            System.out.println(admin.setEmail(newEmail) ? "email updated successfully" : "some thing went wrong");
+                        } else if (updateChoice == 4) { //update phone
+                            System.out.print("enter new phone: ");
+                            String newPhone = input.nextLine().trim();
+                            System.out.println(admin.setPhone(newPhone) ? "phone updated successfully" : "some thing went wrong");
+                        } else if (updateChoice == 0) {  // back
+                            // isBackChosen = true;
+                            break;
+                        } else {
+                            System.out.println("Enter a valid option");
+                        }
                     }
-                } else {
+                }
+                else {
                     System.out.print("enter valid option to manage or 0 to exit: ");
                     optionsAnswer = Functions.readPositiveORZeroInt();
                 }

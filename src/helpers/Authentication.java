@@ -4,9 +4,9 @@ import models.*;
 
 public class Authentication {
 
-    public static boolean adminLogin(String username, String password) // ba3den nb2a nhadel el files
+    public static boolean adminLogin(String username, String password,Admin admin) // ba3den nb2a nhadel el files
     {
-        if (username.equals("a") && password.equals("aa")) {
+        if (admin.login(username,password)) {
             return true;
         }
         return false;

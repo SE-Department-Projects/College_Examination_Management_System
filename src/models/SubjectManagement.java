@@ -25,16 +25,22 @@ public class SubjectManagement {
         subjectArrayList.add(sub);
     }
 
-    public static void addSubject(String subjectName, String subjectCode) { // adds new subject to the list
+    public static int addSubject(String subjectName, String subjectCode) { // adds new subject to the list
+        for (Subject subject : subjectArrayList) {
+            if(subject.getSubjectName().equals(subjectName)){
+                return -1; // subjName already exists
+            }
+        }
         for (int i = 0; i < subjectArrayList.size(); i++) { // loop through the array of subjects
             if (subjectArrayList.get(i).getSubjectName().equals("empty") && subjectArrayList.get(i).getSubjectCode().equals("empty-0")) { // if the subject name and code are empty
                 int subID = subjectArrayList.get(i).getSubjID(); // get the id of the subject
                 subjectArrayList.remove(i); // remove the subject
                 subjectArrayList.add(i,new Subject(subID,subjectName,subjectCode));  // add the subject with the new subject name and code with the same id as the old subject (the empty one)
-                return; // return
+                return 1; // return
             }
         }
         subjectArrayList.add(new Subject(subjectName,subjectCode)); // if there is no empty subjects, add a new subject with the subject name and code
+        return 1;
     }
 
     //---------------FIND SUBJECT INDEX----------------------------------------------

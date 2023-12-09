@@ -12,7 +12,6 @@ public class Functions {
             try {
                 num = scanner.nextInt();
                 return num;
-
             } catch (Exception exception) {
                 System.out.print("enter a valid int num: ");
                 scanner.nextLine();
@@ -35,7 +34,6 @@ public class Functions {
 
     public static   int readPositiveORZeroInt() {
         int num = 0;
-
         while (true) {
             num = readInt();
             if (num >= 0) {
@@ -45,4 +43,5 @@ public class Functions {
             }
         }
     }
+
 }
