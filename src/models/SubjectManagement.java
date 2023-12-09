@@ -8,17 +8,6 @@ public class SubjectManagement {
 
     private static  ArrayList<Subject> subjectArrayList = new ArrayList<>(); // array of subjects
 
-    //---------------CONSTRUCTOR----------------------------------------------
-    // public SubjectManagement() {
-    //     Subject initialSubject = new Subject("0", "0"); // initial subject
-    //     subjectArrayList.add(initialSubject);
-    // }
-
-
-    // private StudentManagement std = new StudentManagement(); // object from student management class to use its methods
-    // private LecturerManagement lec = new LecturerManagement(); // object from lecturer management class to use its methods
-
-
     //--------------- ADD SUBJECT----------------------------------------------
 
     public static void addSubject(Subject sub) { // adds new subject to the list
@@ -159,7 +148,6 @@ public class SubjectManagement {
     public static boolean updateSubject(int ID, String newSubjectName, String newSubjectcode) {
         int index = findSubjIndex(ID);
         if (index != -1) {
-
             subjectArrayList.get(index).setSubjectName(newSubjectName);
             subjectArrayList.get(index).setSubjectCode(newSubjectcode);
             return true;

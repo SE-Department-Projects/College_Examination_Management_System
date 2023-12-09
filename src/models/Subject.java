@@ -17,7 +17,6 @@ public class Subject {
         this.subjectCode = subjectCode;
         this.LecturersID = new ArrayList<>();
         this.isExamCreated = false;
-        // this.exam = new Exam();
     }
 
     public Subject(int ID, String name, String subjectCode) {
@@ -26,7 +25,6 @@ public class Subject {
         this.subjectCode = subjectCode;
         this.LecturersID = new ArrayList<>();
         this.isExamCreated = false;
-        // this.exam = new Exam();
     }
 
     public int getSubjID() {
@@ -79,10 +77,6 @@ public class Subject {
         return lecturersId;
     }
 
-    public static int getSubjectCounter() {
-        return subjectCounter;
-    }
-
     public void setSubjectCode(String subjectCode) {
         this.subjectCode = subjectCode;
     }
@@ -97,18 +91,6 @@ public class Subject {
 
     public Exam getExam() {
         return exam;
-    }
-
-    public boolean delExam() {
-        if (this.exam != null) {
-            this.exam = null;
-            return true;
-        }
-        return false;
-    }
-
-    public static int getNumOfSubjects() {
-        return subjectCounter;
     }
 
     public static void setNumOfSubjects(int numOfSubjects) {

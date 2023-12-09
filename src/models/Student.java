@@ -27,13 +27,6 @@ public class Student extends Person {
     }
 
     // Setters
-    public void setFinalDegree(int degree) {
-        this.finalDegree = degree;
-    }
-
-    public void setIsExamed() {
-        // To do implementation
-    }
 
     public void addGrade(int grade) {
         this.grades.add(grade);
@@ -45,16 +38,6 @@ public class Student extends Person {
 
     public ArrayList<Integer> getGrades() {
         return this.grades;
-    }
-
-    public int getExamGrade(int subjectID) {
-        int index = findSubjIndex(subjectID);
-
-        if (grades.get(index) != -1) {
-            return -1; // not take the exam yet
-        }
-
-        return grades.get(index);
     }
 
     public boolean addSubject(Subject subj) {
@@ -77,12 +60,8 @@ public class Student extends Person {
 
     // Getters
     public int getFinalDegree() {
-        return calculateFinalDegree();
-    }
-
-    public boolean getIsExamed() {
-        // To do implementation
-        return true;
+        calculateFinalDegree();
+        return this.finalDegree;
     }
 
     public ArrayList<Subject> getSubjects() {
@@ -117,19 +96,8 @@ public class Student extends Person {
         return registeredSubjects.get(index);
     }
 
-    public void enterExam() {
-        // for (Subject subject : registeredSubjects) {
-        // System.out.println("Your accessable Exams: ");
-        // // loop for accessable exams for std
-        // }
-    }
-
     public int getID() {
         return this.ID;
-    }
-
-    public static int getNumOfStudents() {
-        return numOfStudents;
     }
 
     public static void setNumOfStudents(int numOfStudents) {
@@ -164,13 +132,13 @@ public class Student extends Person {
         return TheFinishedExams;
     }
 
-    public int calculateFinalDegree() {
+    public void calculateFinalDegree() {
         int finalDegree = 0;
         for (int i = 0; i < registeredSubjects.size(); i++) {
             if(grades.get(i) != -1)
                 finalDegree += grades.get(i);
         }
-        return finalDegree;
+        this.finalDegree = finalDegree;
     }
 
 

@@ -8,7 +8,6 @@ public abstract class Person {
     private String email;
     private String phone;
     private final String role; // admin, user, lecturer
-    private boolean isLoggedOut = false;
 
     // constructor
     public Person(String userName, String password, String role,String email,String phone) {
@@ -60,10 +59,6 @@ public abstract class Person {
         return this.password;
     }
 
-    public String getRole() {
-        return this.role;
-    }
-
     public String getEmail() {
         return this.email;
     }
@@ -94,12 +89,6 @@ public abstract class Person {
 
     public boolean login(String userName, String password) {
         return this.userName.equals(userName) && this.password.equals(password);
-    }
-
-    // logout method
-
-    public void logout() {
-        this.isLoggedOut = true;
     }
 
 

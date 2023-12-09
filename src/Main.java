@@ -56,7 +56,6 @@ public class Main {
                     
                     // if the file was empty (or didn't satisfy the pattern) the method will return an admin object with userName = "empty" 
                     if (admin.getUserName().equals("empty")) { 
-                        System.out.println("admin empty");
                         worngAuth = true;
                     }
                     else if (Authentication.adminLogin(username, password,admin)) {
@@ -67,7 +66,6 @@ public class Main {
                         System.out.println("==========================================\n");
                         AdminRole.adminRole(admin);
                     } else {
-                        System.out.println("wrong info");
                         worngAuth = true;
                     }
 

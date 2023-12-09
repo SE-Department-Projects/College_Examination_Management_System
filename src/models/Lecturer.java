@@ -21,11 +21,6 @@ public class Lecturer extends Person {
         this.ID = ID;
         this.subjects = new ArrayList<>();
     }
-    // public Lecturer(int ID, String userName, String password) {
-    //     super(userName, password, "lecturer");
-    //     this.ID = ID;
-    //     this.subjects = new ArrayList<>();
-    // }
 
 
     public int getID() {
@@ -85,7 +80,10 @@ public class Lecturer extends Person {
         return false;
     }
 
-    public String getSubjectstoChooseFrom(){
+    //returns subjects like:
+    // 1=> subject1
+    // 2=> subject2
+    public String getSubjectstoChooseFrom(){ 
         String subjectsString = "";
         if(subjects.size() == 0)
             return "No Assigned Subjects";
@@ -96,6 +94,8 @@ public class Lecturer extends Person {
         return subjectsString;
     }
 
+    //returns subjects like:
+    // subject1, subject2
     public String getSubjectsAsString() {
         String subjectsString = "";
         if(subjects.size() == 0)
@@ -110,7 +110,7 @@ public class Lecturer extends Person {
         return subjectsString;
     }
 
-
+    // returns subjects that has exams
     public String getSubjectsWithExams(){
         String subjects = "";
         for (Subject subject1 : getLecturerSubjects()) {
@@ -124,12 +124,6 @@ public class Lecturer extends Person {
     }
 
 
-
-
-
-    public static int getNumOfLecturer() {
-        return numOfLecturer;
-    }
 
     public static void setNumOfLecturer(int numOfLecturer) {
         Lecturer.numOfLecturer = numOfLecturer;

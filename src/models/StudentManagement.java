@@ -4,22 +4,10 @@ import java.util.ArrayList;
 
 public class StudentManagement {
 
-// JUST TEST
 
 //----------DATA FIELDS------------------------------------------------------------------------------------
 
     private static ArrayList<Student> studentArray = new ArrayList<>();
-
-
-//-------------CONSTRUCTOR--------------------------------------------------------------------------------
-
-    // public StudentManagement() {
-    //     Student initialStudent = new Student("0", "0"); // initial student
-    //     studentArray.add(initialStudent);
-    // }
-
-
-//-------------METHODS--------------------------------------------------------------------------------------
 
 
 
@@ -91,21 +79,6 @@ public class StudentManagement {
     }
 
 
-    /*    public static boolean deleteLecturer(int ID) {  // Method explaination in SubjectManagement.java
-
-        int index = findLecIndex(ID);
-
-        if (index != -1) {
-            Lecturer lecturer = lecturersArr.get(index);
-            int lecID = lecturer.getID();
-            lecturersArr.remove(lecturer);
-            lecturersArr.add(index,new Lecturer(lecID,"empty","empty"));
-            return true;  // done
-        }
-        return false; // D.N.E
-    } */
-
-
 
     //-------------------UPDATE STUDENT USERNAME---------------------------------
 
@@ -139,9 +112,5 @@ public class StudentManagement {
 
     public static ArrayList<Student> getStudentArray() {
         return studentArray;
-    }
-
-    public static void setStudentArray(ArrayList<Student> studentArr) {
-        studentArray = studentArr;
     }
 }

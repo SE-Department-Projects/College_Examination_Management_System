@@ -50,6 +50,8 @@ public class LecturerRole {
                         switch (op) {
                             case 1:
                                 System.out.println(lecturer.getSubjectstoChooseFrom());
+                                System.out.println("0=> Back");
+                                System.out.print("Enter your answer: ");
                                 int subjID = Functions.readPositiveORZeroInt();
                                 if (subjID == 0)
                                     break;
@@ -66,21 +68,18 @@ public class LecturerRole {
 
                                 System.out
                                         .println("You are now adding an exam to subject: " + subject.getSubjectName());
-                                System.out.println("Enter the Exam duration in minutes: ");
-                                int duration = Functions.readPositiveInt();
+                                Exam exam1 = new Exam(subject, subjID);
 
-                                Exam exam1 = new Exam(subject, duration, subjID);
-
-                                System.out.println("Enter number of questions: ");
+                                System.out.print("Enter number of questions: ");
                                 int questionsNum = Functions.readPositiveInt();
 
                                 for (int i = 1; i <= questionsNum; i++) {
                                     System.out.println("Question " + i + ":");
-                                    System.out.println("Enter question text: ");
+                                    System.out.print("Enter question text: ");
                                     String questionText = input.nextLine();
                                     boolean isAnswerValid = false;
                                     while (!isAnswerValid) {
-                                        System.out.println("Enter question Answer(true/false): ");
+                                        System.out.print("Enter question Answer(true/false): ");
                                         String questionAnswer = input.nextLine();
                                         if (questionAnswer.equalsIgnoreCase("true")
                                                 || questionAnswer.equalsIgnoreCase("false")) {
@@ -100,6 +99,7 @@ public class LecturerRole {
                             case 2:
                                 System.out.println("\n"+lecturer.getSubjectsWithExams()+"\n");
                                 System.out.println("0=> Exit");
+                                System.out.print("Enter your answer: ");
                                 subjID = Functions.readPositiveORZeroInt();
                                 if (subjID == 0)
                                     break;
@@ -118,11 +118,11 @@ public class LecturerRole {
 
                             case 3:
                                 System.out.println("List of Exams:");
-                                System.out.printf("%-10s%-16s%-25s\n", "ID", "Subject Name", "Duration");
+                                System.out.printf("%-10s%-16s\n", "ID", "Subject Name");
                                 for (Subject subject1 : lecturer.getLecturerSubjects()) {
                                     if (subject1.isExamCreated())
-                                        System.out.printf("%-10s%-16s%-25s\n", subject1.getSubjID(),
-                                                subject1.getSubjectName(), subject1.getExam().getDuration());
+                                        System.out.printf("%-10s%-16s\n", subject1.getSubjID(),
+                                                subject1.getSubjectName());
                                 }
                                 break;
 

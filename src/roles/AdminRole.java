@@ -103,7 +103,6 @@ public class AdminRole {
                                         System.out.printf("%-10s%-16s%-25s", lec.getID(), lec.getUserName(), lec.getPassword());
                                             System.out.printf("%-30s\n", lec.getSubjectsAsString());
                                     }
-
                                 }
 
                                 System.out.println();
@@ -180,12 +179,13 @@ public class AdminRole {
                                             System.out.println("No Subjects Assigned");
                                             break;
                                         } else {
-                                            ArrayList<Subject> lecSubjects = lecturer.getLecturerSubjects();
+                                            ArrayList<Subject> lecSubjects = lecturer.getLecturerSubjects(); // array list of subjects of the lecturer
                                             System.out.println("\nlecturer " + lecturer.getUserName() + " has Subjects: ");
                                             for (Subject subject : lecSubjects) {
                                                 System.out.println(subject.getSubjID() + "=> " + subject.getSubjectName());
                                             }
-                                            System.out.println("\n Select subject to unassign or 0 to exit: ");
+                                            System.out.println("0=> back");
+                                            System.out.print("\n Enter your Answer ");
                                             int answer = Functions.readPositiveORZeroInt();
                                             int subIndex = lecturer.findSubjIndex(answer);
                                             if (subIndex != -1) {
@@ -239,7 +239,6 @@ public class AdminRole {
                             System.out.println("==========================================\n");
                             break; // to exit the inner do while loop
                         }
-
                         switch (op) {
                             case 1: //add
 
@@ -389,7 +388,8 @@ public class AdminRole {
                                             for (Subject subject : stdSubjects) {
                                                 System.out.println(subject.getSubjID() + "=> " + subject.getSubjectName());
                                             }
-                                            System.out.println("\n Select subject to unassign or 0 to exit: ");
+                                            System.out.println("0=> back");
+                                            System.out.print("\n Enter your Answer ");
                                             int answer = Functions.readPositiveORZeroInt();
                                             int subIndex = student.findSubjIndex(answer);
                                             if (subIndex != -1) {

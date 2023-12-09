@@ -202,6 +202,7 @@ public class StudentRole {
 
         Files.studentIdSubjectFileWriter();
         Files.studentsFileWriter();
+    input.close();
     }
 
 }

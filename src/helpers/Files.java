@@ -18,15 +18,15 @@ public class Files {
 
         String adminData = adminFileHandler.readFile();
 
-        if (adminData != ""){
+        if (adminData != ""){ // if the file is not empty
             adminData = adminData.trim();
-            if(adminData.matches("\\w+-\\w+-.+-.+")){
-                String[] data = adminData.split("-");
-                Admin admin = new Admin(data[0],data[1],data[2],data[3]);
+            if(adminData.matches("\\w+-\\w+-.+-.+")){ // pattern to match the format of the file (userName-password-email-phone)
+                String[] data = adminData.split("-"); // split the data into userName, password, email, phone
+                Admin admin = new Admin(data[0],data[1],data[2],data[3]); // create a new admin object (userName, password, email, phone)
                 return admin;
             }
         }
-        return new Admin("empty", "empty","empty","empty");
+        return new Admin("empty", "empty","empty","empty"); // return an empty admin object if the data didnt match the pattern
     }
 
 
@@ -203,7 +203,6 @@ public class Files {
 
     // read from subj_ID_Exam 
     public static void subjectIdExamFileReader(){
-        //TODO validation
         for (Subject subject : SubjectManagement.getSubjectArrayList()) { // loop through the subjects
 
             FileHandler subExamFileHandler = new FileHandler(Paths.examPath+subject.getSubjID()+"_exam.txt");

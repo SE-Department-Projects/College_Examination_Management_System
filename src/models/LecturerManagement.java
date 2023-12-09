@@ -6,20 +6,14 @@ public class LecturerManagement {
 
     private static ArrayList<Lecturer> lecturersArr = new ArrayList<>();
 
-    //---------------CONSTRUCTOR----------------------------------------------
-    // public LecturerManagement() {
-    //     Lecturer initialLecturer = new Lecturer("0", "0"); // initial lecturer
-    //     lecturersArr.add(initialLecturer);
-    // }
-
 
 //--------------- ADD LECTURER----------------------------------------------
 
-    public static void addLecturer(Lecturer lecturer) {  // Method explaination in SubjectManagement.java
+    public static void addLecturer(Lecturer lecturer) {  
         lecturersArr.add(lecturer);
 }
 
-    public static int addLecturer(String userName, String password) {  // Method explaination in SubjectManagement.java
+    public static int addLecturer(String userName, String password) {  
         for (Lecturer lecturer : lecturersArr) {
             if(lecturer.getUserName().equals(userName)){
                 return -1; // username already exists
@@ -40,7 +34,7 @@ public class LecturerManagement {
 
     //-----------------FIND LECTURER INDEX------------------------------------------
 
-    public static int findLecIndex(int ID) {  // Method explaination in SubjectManagement.java
+    public static int findLecIndex(int ID) {  
 
         if (ID <= 0) {
             return -1;
@@ -61,7 +55,7 @@ public class LecturerManagement {
     //-------------------SEARCH LECTURER--------------------------------------------
 
     // before running check if the index is not -1
-    public static Lecturer searchLecturer(int index) {  // Method explaination in SubjectManagement.java
+    public static Lecturer searchLecturer(int index) {  
 
         return  lecturersArr.get(index);
 
@@ -70,7 +64,7 @@ public class LecturerManagement {
 
     //----------------- DELETE LECTURER------------------------------------------
 
-    public static boolean deleteLecturer(int ID) {  // Method explaination in SubjectManagement.java
+    public static boolean deleteLecturer(int ID) {  
 
         int index = findLecIndex(ID);
 
