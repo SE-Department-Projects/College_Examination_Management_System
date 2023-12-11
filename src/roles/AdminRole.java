@@ -40,7 +40,7 @@ public class AdminRole {
                         }
 
                         switch (op) {
-                            case 1: // add
+                            case 1: // add lecturer
 
                                 System.out.print("Enter lecturer Username: ");
                                 String LecUsername = input.nextLine().toLowerCase().trim();
@@ -57,7 +57,7 @@ public class AdminRole {
                                 }
                                 break;
 
-                            case 2: //delete
+                            case 2: //delete lecturer
                                 System.out.print("Enter lecturer id to delete: ");
                                 lecID = Functions.readPositiveInt();
 
@@ -108,8 +108,8 @@ public class AdminRole {
                                 System.out.println();
                                 break;
 
-                            case 5: //update
-                                System.out.println("1=> update username\n2=> password");
+                            case 5: //update lecturer //TODO ask for the id first then ask what to update
+                                System.out.println("1=> update username\n2=> update password");
                                 int updateOP = Functions.readInt();
                                 if (updateOP == 1) {
                                     System.out.print("enter lecID to update username: ");
@@ -143,6 +143,8 @@ public class AdminRole {
                                         System.out.println("\nlecturer not found");
                                         break;
                                     } else {
+                                        Lecturer lecturer = LecturerManagement.searchLecturer(lecIndex);
+                                        System.out.println("You are now adding subject to " + lecturer.getUserName()+"\n");
                                         System.out.println("Here are the list of subjects");
                                         for (Subject subjects : SubjectManagement.getSubjectArrayList()) {
                                             System.out.println(subjects.getSubjID() + "=> " + subjects.getSubjectName());
@@ -153,7 +155,12 @@ public class AdminRole {
                                         if (subIndex == -1) {
                                             System.out.println("subject not found");
                                             break;
-                                        } else {
+                                        }
+                                        // else if(){ //TODO check if the subject is already assigned to the lecturer
+                                        //     System.out.println("this subject is already assigned to this lecturer");
+                                        //     break;
+                                        // }
+                                        else {
                                             boolean isAssigned = SubjectManagement.assignSubjectToLecturer(SubjectManagement.searchSubject(subIndex), lecID);
                                             System.out.println(isAssigned ? "\nsubject assigned successfully" : "\nfailure to assign subject");
                                         }
@@ -185,7 +192,7 @@ public class AdminRole {
                                                 System.out.println(subject.getSubjID() + "=> " + subject.getSubjectName());
                                             }
                                             System.out.println("0=> back");
-                                            System.out.print("\n Enter your Answer ");
+                                            System.out.print("\nEnter your Answer: ");
                                             int answer = Functions.readPositiveORZeroInt();
                                             int subIndex = lecturer.findSubjIndex(answer);
                                             if (subIndex != -1) {
@@ -240,7 +247,7 @@ public class AdminRole {
                             break; // to exit the inner do while loop
                         }
                         switch (op) {
-                            case 1: //add
+                            case 1: //add student
 
                                 System.out.print("Enter Student Username: ");
                                 String stdUsername = input.nextLine().toLowerCase().trim();
@@ -257,7 +264,7 @@ public class AdminRole {
                                 }
                                 break;
 
-                            case 2: //delete
+                            case 2: //delete student
                                 System.out.print("Enter student id to delete: ");
                                 stdID = Functions.readPositiveInt();
 
@@ -309,8 +316,8 @@ public class AdminRole {
                                 }
                                 break;
 
-                            case 5: // update
-                                System.out.println("1=> update username\n2=> password");
+                            case 5: // update (student) //TODO ask for the id first then ask what to update
+                                System.out.println("1=> update username\n2=> update password");
                                 int updateOP = Functions.readInt();
                                 if (updateOP == 1) {
                                     System.out.print("enter StdID to update username: ");
@@ -347,6 +354,8 @@ public class AdminRole {
                                         System.out.println("\nstudent not found");
                                         break;
                                     } else {
+                                        Student student = StudentManagement.searchStd(stdIndex);
+                                        System.out.println("You are now adding subject to " + student.getUserName()+"\n");
                                         System.out.println("Here are the list of subjects");
                                         for (Subject subjects : SubjectManagement.getSubjectArrayList()) {
                                             System.out.println(subjects.getSubjID() + "=> " + subjects.getSubjectName());
@@ -357,7 +366,12 @@ public class AdminRole {
                                         if (subIndex == -1) {
                                             System.out.println("subject not found");
                                             break;
-                                        } else {
+                                        }
+                                        // else if(true){ //TODO check if the subject is already assigned to the student
+                                        //     System.out.println("this subject is already assigned to this student");
+                                        //     break;
+                                        // }
+                                        else {
                                             boolean isAssigned = SubjectManagement.assignSubjectToStudent(SubjectManagement.searchSubject(subIndex), stdID);
                                             System.out.println(isAssigned ? "\nsubject assigned successfully" : "\nfailure to assign subject");
                                         }
@@ -389,7 +403,7 @@ public class AdminRole {
                                                 System.out.println(subject.getSubjID() + "=> " + subject.getSubjectName());
                                             }
                                             System.out.println("0=> back");
-                                            System.out.print("\n Enter your Answer ");
+                                            System.out.print("\nEnter your Answer: ");
                                             int answer = Functions.readPositiveORZeroInt();
                                             int subIndex = student.findSubjIndex(answer);
                                             if (subIndex != -1) {
@@ -429,6 +443,7 @@ public class AdminRole {
                     if (!isSubjectsRead && !isLecturersRead) {
                         isSubjectsRead = true;
                         Files.lecturerIdSubjectFileReader();
+                        Files.subjectIdExamFileReader();
                     }
 
 
@@ -443,7 +458,7 @@ public class AdminRole {
                         }
 
                         switch (op) {
-                            case 1: // add
+                            case 1: // add subject
 
                                 System.out.print("Enter subject name: ");
                                 String subjectName = input.nextLine().toLowerCase().trim();
@@ -460,7 +475,7 @@ public class AdminRole {
                                 }
                                 break;
 
-                            case 2: //delete
+                            case 2: //delete subject
                                 System.out.print("Enter subject id to delete: ");
                                 subID = Functions.readPositiveInt();
 
@@ -505,14 +520,13 @@ public class AdminRole {
                                 }
                                 break;
 
-                            case 5: // update
+                            case 5: // update subject
                                 System.out.print("enter subject ID to update the subject: ");
                                 subID = Functions.readPositiveInt();
                                 System.out.print("enter the new subject name: ");
                                 String subNewName = input.nextLine().toLowerCase().trim();
                                 System.out.print("enter the new subject code: ");
                                 String subNewCode = input.nextLine().trim();
-
                                 boolean isUpdated = SubjectManagement.updateSubject(subID, subNewName, subNewCode);
                                 System.out.println(isUpdated ? "\nsubject updated successfully" : "\nsubject not exist");
                                 break;
@@ -533,6 +547,7 @@ public class AdminRole {
                     } while (!isBackChosen);
 
                     Files.subjectsFileWriter();
+                    Files.allSubjectsIdExamFileWriter();
                 } else if (optionsAnswer == 4) {// see personal info
                     System.out.println("\n" + admin.toString() + "\n");
                     break;
@@ -564,6 +579,7 @@ public class AdminRole {
                     }
                 }
                 //TODO go back to commit "last touches" to delete option 6
+                //TODO maybe print the count of users in the system too !
                 else if (optionsAnswer == 6){ //Polymorphism
                     Admin.emptyAllUsers();
                     Admin.FillUsers(admin);

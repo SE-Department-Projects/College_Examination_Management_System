@@ -48,17 +48,17 @@ public class StudentRole {
                     subjectIndex = student.findSubjIndex(subjID);
 
                     if (subjectIndex != -1) { // this subject is found
+                        //TODO print no exams to take if he has no exams rather than leaving it empty
                         boolean didStudentTakeExam = student.getGrades().get(subjectIndex) != -1;
                         boolean doesSubjecthaveExam = student.getSubjects().get(subjectIndex).isExamCreated();
                         if (!doesSubjecthaveExam || didStudentTakeExam) {
                             isSuccessfullyExamed = false;
-                            System.out.println("exam doesn't exist or already taken");
+                            System.out.println("\nEnter a valid subject ID\n");
                             continue;
                         }
                         subject = student.getSubjects().get(subjectIndex);
-
                         Exam exam = subject.getExam(); // get the exam
-
+                        
                         ArrayList<Question> questions = exam.getQuestions(); // exam questions
                         int numberOfQuestions = questions.size(); // num of questions
                         int trueAnswers = 0; // to count the correct answers
@@ -104,12 +104,13 @@ public class StudentRole {
                         isSuccessfullyExamed = true;
                         // break;
                     } else {
-                        System.out.println("enter a valid subject id");
+                        System.out.println("\nEnter a valid subject id\n");
                     }
 
                 } while (subjID != 0 && !isSuccessfullyExamed);
 
-            } else if (op == 3) {
+            } else if (op == 3) { // Finished exams
+                //TODO print no finished exams if he has no finished exams rather than leaving it empty
                 boolean isFinishedExamsDone = false;
                 while (!isFinishedExamsDone) {
                     System.out.println("The Finished Exams:\n" + student.getTheFinishedExamsAsString());

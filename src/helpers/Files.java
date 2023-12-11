@@ -203,6 +203,7 @@ public class Files {
 
     // read from subj_ID_Exam 
     public static void subjectIdExamFileReader(){
+        //TODO validation (pattern) (some file had a new line charcter only and it caused an error)
         for (Subject subject : SubjectManagement.getSubjectArrayList()) { // loop through the subjects
 
             FileHandler subExamFileHandler = new FileHandler(Paths.examPath+subject.getSubjID()+"_exam.txt");
@@ -315,8 +316,27 @@ public class Files {
 
 
     //function that writes in the subj_ID_Exam file
-    public static void subjectIdExamFileWriter(Lecturer lecturer){
+    public static void subjectIdExamFileWriter(Lecturer lecturer){ 
         for (Subject subject : lecturer.getLecturerSubjects()) {
+            FileHandler examFile = new FileHandler(Paths.examPath+ subject.getSubjID() + "_exam.txt");
+            if(subject.isExamCreated()){
+                examFile.writeFile("1",false);
+                for (Question question : subject.getExam().getQuestions()) {
+                    examFile.writeFile(question.getQuestionText(),true);
+                    examFile.writeFile(question.getQuestionAnswer(),true);
+                }
+            }
+            else{
+                examFile.writeFile("-1", false);
+            }
+        }
+    }
+
+    // same as the one before but for all subjects 
+    // the one before was used in the lecturer role so it edits the exams specific lecturer to save memory and time 
+    // this one is used in the admin role so it edits all the exams (after adding a new subject we call this to create the file)
+    public static void allSubjectsIdExamFileWriter(){ 
+        for (Subject subject : SubjectManagement.getSubjectArrayList()) {
             FileHandler examFile = new FileHandler(Paths.examPath+ subject.getSubjID() + "_exam.txt");
             if(subject.isExamCreated()){
                 examFile.writeFile("1",false);

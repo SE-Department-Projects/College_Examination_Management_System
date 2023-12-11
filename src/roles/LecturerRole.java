@@ -152,7 +152,7 @@ public class LecturerRole {
                     for (Subject subject : lecturer.getLecturerSubjects()) {
                         System.out.println(subject.getSubjID() + " " + subject.getSubjectName());
                     }
-                    System.out.println("Choose the subject you want to make report on or 0 to exit: ");
+                    System.out.print("Choose the subject you want to make report on or 0 to exit: ");
                     int subjID = Functions.readPositiveORZeroInt();
                     if (subjID == 0)
                         break;
