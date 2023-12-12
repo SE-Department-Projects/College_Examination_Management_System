@@ -26,17 +26,8 @@ public abstract class Person {
     }
 
     public boolean setPassword(String password) {
-
-        //TODO validation for change password 
-            // validation (password must be atleast 8 characters and has atleast 1 alphabet letter)
-        // if (password.length() >= 8 && password.matches(".*[a-zA-Z]+.*")) {
             this.password = password;
             return true;
-        // }
-        // else {
-        //     return false;
-        // }
-        
     }
 
     public boolean setEmail(String email) {

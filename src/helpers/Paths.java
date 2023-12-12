@@ -18,4 +18,8 @@ public class Paths {
     static public String lecturerCoursesPath = base + "/LecturersCourses/lec_";
 
     static  public  String  examPath = base +   "/Exams/sub_";
+
+    static public String reportsPath = base + "/reports/report_";
+
+    static public String reportsHeadsPath = base + "/reportsHeads.txt";
 }

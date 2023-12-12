@@ -50,7 +50,7 @@ public class AdminRole {
 
                                 int status = LecturerManagement.addLecturer(LecUsername, LecPassword);
                                 if(status != -1){
-                                System.out.println("\n---- lecturer added successfully ----\n");
+                                    System.out.println("\n---- lecturer added successfully ----\n");
                                 }
                                 else{
                                     System.out.println("\n Username already exists \n");
@@ -156,13 +156,16 @@ public class AdminRole {
                                             System.out.println("subject not found");
                                             break;
                                         }
-                                        // else if(){ //TODO check if the subject is already assigned to the lecturer
-                                        //     System.out.println("this subject is already assigned to this lecturer");
-                                        //     break;
-                                        // }
                                         else {
-                                            boolean isAssigned = SubjectManagement.assignSubjectToLecturer(SubjectManagement.searchSubject(subIndex), lecID);
+                                            Subject subject = SubjectManagement.searchSubject(subIndex);
+                                            if(lecturer.getLecturerSubjects().contains(subject)){
+                                                System.out.println("\nthis subject is already assigned to this lecturer");
+                                                break;
+                                            }
+                                            else{
+                                            boolean isAssigned = SubjectManagement.assignSubjectToStudent(subject, lecID);
                                             System.out.println(isAssigned ? "\nsubject assigned successfully" : "\nfailure to assign subject");
+                                            }
                                         }
                                         break;
                                     }
@@ -367,13 +370,16 @@ public class AdminRole {
                                             System.out.println("subject not found");
                                             break;
                                         }
-                                        // else if(true){ //TODO check if the subject is already assigned to the student
-                                        //     System.out.println("this subject is already assigned to this student");
-                                        //     break;
-                                        // }
                                         else {
-                                            boolean isAssigned = SubjectManagement.assignSubjectToStudent(SubjectManagement.searchSubject(subIndex), stdID);
+                                            Subject subject = SubjectManagement.searchSubject(subIndex);
+                                            if(student.getSubjects().contains(subject)){
+                                                System.out.println("\nthis subject is already assigned to this student");
+                                                break;
+                                            }
+                                            else{
+                                            boolean isAssigned = SubjectManagement.assignSubjectToStudent(subject, stdID);
                                             System.out.println(isAssigned ? "\nsubject assigned successfully" : "\nfailure to assign subject");
+                                            }
                                         }
                                         break;
                                     }
@@ -578,7 +584,6 @@ public class AdminRole {
                         }
                     }
                 }
-                //TODO go back to commit "last touches" to delete option 6
                 //TODO maybe print the count of users in the system too !
                 else if (optionsAnswer == 6){ //Polymorphism
                     Admin.emptyAllUsers();

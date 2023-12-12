@@ -10,6 +10,57 @@ public class Files {
 
     //! read from files 
 
+
+    // read from reports file
+
+
+    public static void reportsHeadFileReader(){
+        FileHandler reportsHeadsFileHandler = new FileHandler(Paths.reportsHeadsPath);
+
+        reportsHeadsFileHandler.createFile();
+
+        String reportsHeadsData = reportsHeadsFileHandler.readFile();
+
+        if (reportsHeadsData != ""){ // if the file is not empty
+            String[] reportsHeads = reportsHeadsData.split("\n"); // split the data into lines
+            for (String line : reportsHeads) { // loop through the lines
+                String[] data = line.split(","); // split the line into reportID, subjectID, date
+                Report report = new Report(Integer.parseInt(data[0]),Integer.parseInt(data[1]),data[2]); // create a new report object (reportID, subjectID, date)
+                LecturerManagement.addReport(report); // add the report to the array
+                Report.setReportsCount(Integer.parseInt(data[0]));
+            }
+        }
+    }
+
+
+    public static Report reportFileReader(int reportID){
+    FileHandler reportFileHandler = new FileHandler(Paths.reportsPath+reportID+".txt");
+
+        reportFileHandler.createFile();
+
+        String reportData = reportFileHandler.readFile();
+
+        if (reportData != ""){ // if the file is not empty
+            String[] report = reportData.split("\n"); // split the data into lines
+            int subjectID = Integer.parseInt(report[0]);
+            String lecName = report[1];
+            String date = report[2];
+            String reportData1 = report[3];
+            if(reportData1.equals("0")){
+                return new Report(reportID,subjectID,lecName,date,"0");
+            }
+            else{
+                return new Report(reportID,subjectID,lecName,date,reportData1);
+            }
+        }
+        return new Report(reportID,0,"0","0","1");
+    }
+
+
+
+
+
+
     // read from admin file
     public static Admin adminFileReader(){
         FileHandler adminFileHandler = new FileHandler(Paths.adminPath);
@@ -203,7 +254,6 @@ public class Files {
 
     // read from subj_ID_Exam 
     public static void subjectIdExamFileReader(){
-        //TODO validation (pattern) (some file had a new line charcter only and it caused an error)
         for (Subject subject : SubjectManagement.getSubjectArrayList()) { // loop through the subjects
 
             FileHandler subExamFileHandler = new FileHandler(Paths.examPath+subject.getSubjID()+"_exam.txt");
@@ -215,24 +265,48 @@ public class Files {
             if(subExamData != ""){ // if the file is not empty
 
                 String[] subExams = subExamData.split("\n"); // split the data into lines
-                if (subExams[0].equals("-1")){
-                    subject.setIsExamCreated(false);
-                    continue;
+                if(subExams[0].matches("-*\\d{1}")){
+                    if (subExams[0].equals("-1")){
+                        subject.setIsExamCreated(false);
+                        continue;
+                    }
+                    subject.setExam(new Exam());
+                    for(int i = 1 ; i < subExams.length ; i+=2){
+                        Question question = new Question(subExams[i],subExams[i+1]);
+                        subject.getExam().addQuestion(question);
+                    }
+                    subject.setIsExamCreated(true);
                 }
-                subject.setExam(new Exam());
-                for(int i = 1 ; i < subExams.length ; i+=2){
-                    Question question = new Question(subExams[i],subExams[i+1]);
-                    subject.getExam().addQuestion(question);
-                }
-                subject.setIsExamCreated(true);
             }
         }
     }
 
 
 
-
     //! write in files
+
+    // function that writes in the reports file
+
+
+
+    public static void reportsFileWriter(Report report){
+        FileHandler reportsFileHandler = new FileHandler(Paths.reportsPath+report.getReportID()+".txt");
+
+        reportsFileHandler.createFile();
+
+        reportsFileHandler.writeFile(report.getSubjectID()+"\n" +report.getLecturerName()+"\n"+report.getDate(),true);
+        reportsFileHandler.writeFile(report.getReportData(),true);
+    }
+
+
+    public static void reportsHeadsFileWriter(Report report){
+        FileHandler reportsHeadsFileHandler = new FileHandler(Paths.reportsHeadsPath);
+
+        reportsHeadsFileHandler.createFile();
+
+        reportsHeadsFileHandler.writeFile(report.getReportID()+","+ report.getSubjectID() +","+report.getDate(),true);
+    }
+
 
     //function the writes in the admin file
     public static void adminFileWriter(Admin admin){

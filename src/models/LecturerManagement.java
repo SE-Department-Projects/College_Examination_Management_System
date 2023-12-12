@@ -5,7 +5,48 @@ import java.util.ArrayList;
 public class LecturerManagement {
 
     private static ArrayList<Lecturer> lecturersArr = new ArrayList<>();
+    private static ArrayList<Report> reportsArr = new ArrayList<>();
 
+    //--------------- ADD REPORT----------------------------------------------
+
+    public static void addReport(Report report) {  
+        reportsArr.add(report);
+    }
+
+
+    public static String getReportsOfSubject(int subjectID) {  
+        String reports = "";
+        for (Report report : reportsArr) {
+            if(report.getSubjectID() == subjectID){
+                reports += report.toString() + "\n";
+            }
+        }
+        if(reports.length() == 0){
+            return "No reports found";
+        }
+        return reports;
+    }
+
+        public static int findReportIndex(int reportID) {  
+
+        if (reportID <= 0) {
+            return -1;
+        }
+
+        for (int i = 0; i < reportsArr.size(); i++) {
+            if (reportID == reportsArr.get(i).getReportID()) {
+                return i;  // return the index of the lecture
+            }
+        }
+
+        return -1;
+    }
+
+    public static Report searchReport(int index) {  
+
+        return  reportsArr.get(index);
+
+    }
 
 //--------------- ADD LECTURER----------------------------------------------
 
