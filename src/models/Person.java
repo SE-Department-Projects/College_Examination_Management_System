@@ -8,6 +8,7 @@ public abstract class Person {
     private String email;
     private String phone;
     private final String role; // admin, user, lecturer
+    private static int usersCount = 0;
 
     // constructor
     public Person(String userName, String password, String role,String email,String phone) {
@@ -16,6 +17,7 @@ public abstract class Person {
         this.email = email;
         this.phone = phone;
         this.role = role;
+        usersCount++;
     }
 
     // Setters
@@ -41,6 +43,10 @@ public abstract class Person {
     }
 
     // Getters
+
+    public static int getUsersCount() {
+        return usersCount;
+    }
 
     public String getUserName() {
         return this.userName;

@@ -470,8 +470,9 @@ public class AdminRole {
                                 String subjectName = input.nextLine().toLowerCase().trim();
 
                                 System.out.print("enter subject code: ");
-                                String subjectCode = input.nextLine().trim();
-
+                                int subjCode = Functions.readPositiveInt();
+                                String subjectCode = subjectName + "-" + subjCode;
+                                // String subjectCode = input.nextLine().trim();
                                 int status = SubjectManagement.addSubject(subjectName, subjectCode);
                                 if(status != -1){
                                     System.out.println("\n---- subject added successfully ----\n");
@@ -532,7 +533,8 @@ public class AdminRole {
                                 System.out.print("enter the new subject name: ");
                                 String subNewName = input.nextLine().toLowerCase().trim();
                                 System.out.print("enter the new subject code: ");
-                                String subNewCode = input.nextLine().trim();
+                                int subjNewCode = Functions.readPositiveInt();
+                                String subNewCode = subNewName + "-" + subjNewCode;
                                 boolean isUpdated = SubjectManagement.updateSubject(subID, subNewName, subNewCode);
                                 System.out.println(isUpdated ? "\nsubject updated successfully" : "\nsubject not exist");
                                 break;
@@ -584,8 +586,9 @@ public class AdminRole {
                         }
                     }
                 }
-                //TODO maybe print the count of users in the system too !
+
                 else if (optionsAnswer == 6){ //Polymorphism
+                    System.out.println("\nSystem has a total of "+Person.getUsersCount()+" users \n");
                     Admin.emptyAllUsers();
                     Admin.FillUsers(admin);
                     for(Person person : Admin.getAllUsers()){
@@ -596,7 +599,6 @@ public class AdminRole {
                     System.out.print("enter valid option to manage or 0 to exit: ");
                     optionsAnswer = Functions.readPositiveORZeroInt();
                 }
-
                 break;
             }
             if (optionsAnswer == 0)
