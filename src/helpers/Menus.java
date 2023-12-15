@@ -4,8 +4,7 @@ public class Menus {
     static private int op;
 
 
-    public static int notAuthenticatedMenu()
-    {
+    public static int notAuthenticatedMenu() {
 
         System.out.println("you are not Authenticated");
         System.out.println("1=> try again");
@@ -17,11 +16,11 @@ public class Menus {
         return op;
     }
 
-    public static int mainMenu()
-    {
+    public static int mainMenu() {
         System.out.println("1=> Admin");
         System.out.println("2=> Lecturer");
         System.out.println("3=> Student");
+        System.out.println("0=> Exit");
 
         System.out.print("enter the num of the role: ");
         op = Functions.readInt();
@@ -30,8 +29,7 @@ public class Menus {
     }
 
 
-    public static int AdminManageMenu()
-    {
+    public static int AdminManageMenu() {
         System.out.println("choose only one option to manage: ");
         System.out.println("1=> manage Lecturer");
         System.out.println("2=> manage Student");
@@ -47,8 +45,7 @@ public class Menus {
         return op;
     }
 
-    public static int adminManagingLecturers ()
-    {
+    public static int adminManagingLecturers() {
         System.out.println("\nYou are now managing Lecturers");
         System.out.println("\nSelect operation");
         System.out.println("1=> Add");
@@ -63,11 +60,10 @@ public class Menus {
         System.out.print("enter operation num: ");
 
         op = Functions.readPositiveORZeroInt();
-        return  op;
+        return op;
     }
 
-    public static int  adminManageStudents()
-    {
+    public static int adminManageStudents() {
         System.out.println("\nYou are now managing Students");
         System.out.println("\nSelect operation");
         System.out.println("1=> Add");
@@ -82,11 +78,10 @@ public class Menus {
         System.out.print("enter operation num: ");
 
         op = Functions.readPositiveORZeroInt();
-        return  op;
+        return op;
     }
 
-    public static int adminManageSubjects()
-    {
+    public static int adminManageSubjects() {
         System.out.println("\nYou are now managing Subjects");
         System.out.println("\nSelect operation");
         System.out.println("1=> Add");
@@ -99,11 +94,19 @@ public class Menus {
         System.out.print("enter operation num: ");
 
         op = Functions.readPositiveORZeroInt();
-        return  op;
+        return op;
     }
-    
-    public static int updatePersonalInfo ()
-    {
+
+    public static int adminUpdateUsersInfo() {
+        System.out.println("1=> update username");
+        System.out.println("2=> update password");
+        System.out.println("0=> back");
+        System.out.print("enter operation num: ");
+        op = Functions.readPositiveORZeroInt();
+        return op;
+    }
+
+    public static int updatePersonalInfo() {
 
         System.out.println("1=> update Username");
         System.out.println("2=> update Password");
@@ -115,6 +118,45 @@ public class Menus {
 
         return op;
     }
+
+    public static int lecturerManageMenu() {
+        System.out.println("choose only one option to manage: ");
+        System.out.println("1=> Manage Exams");
+        System.out.println("2=> Manage Reports");
+        System.out.println("3=> Show personal Info");
+        System.out.println("4=> Update personal Info");
+        System.out.println("0=> exit");
+        System.out.print("Enter your answer: ");
+        op = Functions.readPositiveORZeroInt();
+
+        return op;
+    }
+
+    public static int lecturerManageExamMenu() {
+
+        System.out.println("Select operation");
+        System.out.println("1=> add");
+        System.out.println("2=> delete");
+        System.out.println("3=> list");
+        System.out.println("4=> Back");
+        System.out.println("0=> exit");
+
+        System.out.print("Enter your answer: ");
+        op = Functions.readPositiveORZeroInt();
+
+        return op;
+    }
+
+    public static int lecturerManagerReports() {
+        System.out.println("1=> Generate Report");
+        System.out.println("2=> View Reports");
+        System.out.println("0=> Back");
+
+        System.out.print("Enter your answer: ");
+        op = Functions.readPositiveORZeroInt();
+        return op;
+    }
+
     public static int studentMenu() {
         System.out.println("Choose only one option to do: ");
         System.out.println("1=> See Registered Subjects");
@@ -132,7 +174,8 @@ public class Menus {
     public static int studentFinishedExamMenu() {
         System.out.println("1=> see exam grade");
         System.out.println("2=> see corrected exam answer");
-        System.out.println("3=> back");
+        System.out.println("0=> back");
+        System.out.print("Enter your answer: ");
 
         op = Functions.readPositiveORZeroInt();
         return op;

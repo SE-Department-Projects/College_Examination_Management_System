@@ -23,10 +23,13 @@ public class Main {
         boolean isLoggedin = false;
         boolean isAuth = false;
         boolean worngAuth = false;
+        System.out.println("========================================");
+        System.out.println("College Examination Management System");
+        System.out.println("========================================");
 
         System.out.println("---- welcome to our system ----");
 
-        while (!isLoggedin) { //!isLoggedin
+        while (!isLoggedin) {
 
             roleNum = Menus.mainMenu();
 
@@ -78,13 +81,13 @@ public class Main {
                         System.out.println("login Success");
                         System.out.println("==========================================\n");
                         LecturerRole.lecturerRole(lecturerID);
-                        isLoggedin = true;
+//                        isLoggedin = true;
 
                     } else {
                         worngAuth = true;
                     }
 
-                } else if (roleNum == 3) { // student role
+                } else  { // student role
 
                     int studentID = Authentication.studentLogin(username, password);
                     if (studentID != -1) {
@@ -96,14 +99,13 @@ public class Main {
 
 
                         StudentRole.studentRole(studentID);
-                        isLoggedin = true;
+//                        isLoggedin = true;
                     } else {
                         worngAuth = true;
                     }
                 }
 
                 if (worngAuth) {
-
 
                     int answer = Menus.notAuthenticatedMenu();
                     if (answer == 0)
@@ -115,7 +117,6 @@ public class Main {
                         break;
                     }
                 }
-
             }
 
         }

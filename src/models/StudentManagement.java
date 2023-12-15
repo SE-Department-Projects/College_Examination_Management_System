@@ -55,6 +55,20 @@ public class StudentManagement {
         return -1;
     }
 
+  // -------------------------- find is that the student exist or not ----------------------
+
+    public static boolean isfound(int studentID)
+    {
+        for (Student std : studentArray) {
+            if (std.getID() == studentID)
+            {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
 
 //-------------------SEARCH STUDENT--------------------------------------------
     // before running check if the index is not -1

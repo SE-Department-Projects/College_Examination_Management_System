@@ -9,25 +9,25 @@ public class LecturerManagement {
 
     //--------------- ADD REPORT----------------------------------------------
 
-    public static void addReport(Report report) {  
+    public static void addReport(Report report) {
         reportsArr.add(report);
     }
 
 
-    public static String getReportsOfSubject(int subjectID) {  
+    public static String getReportsOfSubject(int subjectID) {
         String reports = "";
         for (Report report : reportsArr) {
-            if(report.getSubjectID() == subjectID){
+            if (report.getSubjectID() == subjectID) {
                 reports += report.toString() + "\n";
             }
         }
-        if(reports.length() == 0){
+        if (reports.isEmpty()) {
             return "No reports found";
         }
         return reports;
     }
 
-        public static int findReportIndex(int reportID) {  
+    public static int findReportIndex(int reportID) {
 
         if (reportID <= 0) {
             return -1;
@@ -42,21 +42,21 @@ public class LecturerManagement {
         return -1;
     }
 
-    public static Report searchReport(int index) {  
+    public static Report searchReport(int index) {
 
-        return  reportsArr.get(index);
+        return reportsArr.get(index);
 
     }
 
 //--------------- ADD LECTURER----------------------------------------------
 
-    public static void addLecturer(Lecturer lecturer) {  
+    public static void addLecturer(Lecturer lecturer) {
         lecturersArr.add(lecturer);
-}
+    }
 
-    public static int addLecturer(String userName, String password) {  
+    public static int addLecturer(String userName, String password) {
         for (Lecturer lecturer : lecturersArr) {
-            if(lecturer.getUserName().equals(userName)){
+            if (lecturer.getUserName().equals(userName)) {
                 return -1; // username already exists
             }
         }
@@ -64,18 +64,18 @@ public class LecturerManagement {
             if (lecturersArr.get(i).getUserName().equals("empty") && lecturersArr.get(i).getPassword().equals("empty")) {
                 int lecID = lecturersArr.get(i).getID();
                 lecturersArr.remove(i);
-                lecturersArr.add(i,new Lecturer(lecID,userName,password,"@","0"));
+                lecturersArr.add(i, new Lecturer(lecID, userName, password, "@", "0"));
                 return 1;
             }
         }
-        lecturersArr.add(new Lecturer(userName,password,"@","0"));
+        lecturersArr.add(new Lecturer(userName, password, "@", "0"));
         return 1;
-}
+    }
 
 
     //-----------------FIND LECTURER INDEX------------------------------------------
 
-    public static int findLecIndex(int ID) {  
+    public static int findLecIndex(int ID) {
 
         if (ID <= 0) {
             return -1;
@@ -91,46 +91,54 @@ public class LecturerManagement {
         return -1;
     }
 
-    
+    // ------------------------------ check that is the lecturer is found or not ---------------------------------------
+
+    public static  boolean isFound(int lecID)
+    {
+        for (Lecturer lec: lecturersArr) {
+            if(lec.getID() == lecID)
+                return true;
+        }
+        return  false;
+    }
+
 
     //-------------------SEARCH LECTURER--------------------------------------------
 
     // before running check if the index is not -1
-    public static Lecturer searchLecturer(int index) {  
+    public static Lecturer searchLecturer(int index) {
 
-        return  lecturersArr.get(index);
+        return lecturersArr.get(index);
 
     }
 
 
     //----------------- DELETE LECTURER------------------------------------------
 
-    public static boolean deleteLecturer(int ID) {  
+    public static boolean deleteLecturer(int ID) {
 
         int index = findLecIndex(ID);
 
         if (index != -1) {
             Lecturer lecturer = lecturersArr.get(index);
-            for(Subject subject : SubjectManagement.getSubjectArrayList()){
+            for (Subject subject : SubjectManagement.getSubjectArrayList()) {
                 int removeIndex = -1;
-                for(int i = 0 ; i < subject.getLecturersID().size() ; i++){
-                    if(subject.getLecturersID().get(i) == ID){
+                for (int i = 0; i < subject.getLecturersID().size(); i++) {
+                    if (subject.getLecturersID().get(i) == ID) {
                         removeIndex = i;
                     }
                 }
-                if(removeIndex != -1){
+                if (removeIndex != -1) {
                     subject.getLecturersID().remove(removeIndex);
                 }
             }
-                int lecID = lecturer.getID();
-                lecturersArr.remove(lecturer);
-                lecturersArr.add(index,new Lecturer(lecID,"empty","empty","empty","empty"));
+            int lecID = lecturer.getID();
+            lecturersArr.remove(lecturer);
+            lecturersArr.add(index, new Lecturer(lecID, "empty", "empty", "empty", "empty"));
             return true;  // done
         }
         return false; // D.N.E
     }
-
-
 
 
     //---------------UPDATE LECTURER----------------------------------------------
@@ -147,7 +155,6 @@ public class LecturerManagement {
 
     public static boolean updateLecPassword(int ID, String password) {
         int index = findLecIndex(ID);
-
         if (index != -1) {
             lecturersArr.get(index).setPassword(password);
             return true;
@@ -164,8 +171,6 @@ public class LecturerManagement {
     public static void setLecturersArr(ArrayList<Lecturer> lecturersArray) {
         lecturersArr = lecturersArray;
     }
-
-
 
 
 }

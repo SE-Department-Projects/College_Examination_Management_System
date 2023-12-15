@@ -3,8 +3,6 @@ package roles;
 import helpers.*;
 import models.*;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -26,27 +24,21 @@ public class LecturerRole {
 
         while (isStillOperating) {
             boolean isBackChosen = false;
-            System.out.println("choose only one option to manage: ");
-            System.out.println(
-                    "1=> Manage Exams\n2=> Manage Reports\n3=> Show personal Info\n4=> Update personal Info\n0=> exit");
-            System.out.print("Enter your answer: ");
-            int optionsAnswer = Functions.readInt();
+
+            int optionsAnswer = Menus.lecturerManageMenu();
 
             while (optionsAnswer != 0 && isBackChosen == false) {
-                if (optionsAnswer == 1) {
+                if (optionsAnswer == 1) { //Manage Exams
                     if (lecturer.getLecturerSubjects().isEmpty()) {
                         System.out.println("\nYou don't have subjects to Manage exams\n");
                         break;
                     }
                     do {
-                        System.out.println("\nSelect operation");
-                        System.out.println("1=> add\n2=> delete\n3=> list\n4=> Back\n0=> exit");
-                        System.out.println("\n");
-                        System.out.print("enter operation num: ");
-                        op = Functions.readInt();
+
+                        op = Menus.lecturerManageExamMenu();
                         if (op == 4) {
                             isBackChosen = true; // set isBackChosen to true to not enter the outer loop, but we set it
-                                    // to false again when he choose an option so he can enter again
+                            // to false again when he choose an option so he can enter again
                             break; // to exit the inner do while loop
                         }
 
@@ -64,7 +56,7 @@ public class LecturerRole {
                                     break;
                                 }
                                 Subject subject = lecturer.getSubject(index);
-                                if (subject.isExamCreated()){
+                                if (subject.isExamCreated()) {
                                     System.out.println("This subject already has an exam, you should delete it first");
                                     break;
                                 }
@@ -100,7 +92,7 @@ public class LecturerRole {
                                 break;
 
                             case 2:
-                                System.out.println("\n"+lecturer.getSubjectsWithExams()+"\n");
+                                System.out.println("\n" + lecturer.getSubjectsWithExams() + "\n");
                                 System.out.println("0=> Exit");
                                 System.out.print("Enter your answer: ");
                                 subjID = Functions.readPositiveORZeroInt();
@@ -139,24 +131,24 @@ public class LecturerRole {
 
                         }
 
+                        if (op != 0)
+                        {
+                            System.out.println("==========================================\n");
+                        }
+
                     } while (op != 0 && op != 6);
                     Files.lecturersFileWriter();
                     Files.subjectIdExamFileWriter(lecturer);
 
 
-
-
-
                 } else if (optionsAnswer == 2) { // manage reports
-                    while (true){
-                        System.out.println("\n1=> Generate Report\n2=> View Reports\n0=> Back");
-                        System.out.print("Enter your answer: ");
-                        op = Functions.readPositiveORZeroInt();
-                        if (op == 0){
+                    while (true) {
+
+                        op = Menus.lecturerManagerReports();
+                        if (op == 0) {
                             isBackChosen = true;
                             break;
-                        }
-                        else if (op == 1){ // generate report
+                        } else if (op == 1) { // generate report
                             System.out.println(lecturer.getSubjectstoChooseFrom());
                             System.out.println("0=> Back");
                             System.out.print("Enter your answer: ");
@@ -170,20 +162,18 @@ public class LecturerRole {
                             }
                             Subject subject = lecturer.getSubject(index);
 
-                            if (subject.isExamCreated() == false){
+                            if (!subject.isExamCreated()) {
                                 System.out.println("This subject doesn't have an exam to make report on");
                                 break;
                             }
 
-                            Report report = new Report(subjID,lecturer.getUserName(),new Date().toString(),"");
+                            Report report = new Report(subjID, lecturer.getUserName(), new Date().toString(), "");
                             System.out.println(report.makeReport(subject));
                             LecturerManagement.addReport(report);
                             Files.reportsFileWriter(report);
                             Files.reportsHeadsFileWriter(report);
                             break;
-                        }
-
-                        else if(op == 2){ // view reports
+                        } else if (op == 2) { // view reports
                             System.out.println(lecturer.getSubjectstoChooseFrom());
                             System.out.println("0=> Back");
                             System.out.print("Enter your answer: ");
@@ -194,8 +184,7 @@ public class LecturerRole {
                             if (index == -1) {
                                 System.out.println("Subject not found");
                                 break;
-                            }
-                            else{
+                            } else {
                                 System.out.println(LecturerManagement.getReportsOfSubject(subjID));
                                 System.out.println("0=> Back");
                                 System.out.print("Enter your answer: ");
@@ -204,45 +193,38 @@ public class LecturerRole {
                                     break;
                                 index = LecturerManagement.findReportIndex(reportID);
                                 if (index != -1) {
-                                    if(LecturerManagement.searchReport(index).getSubjectID() == subjID){
+                                    if (LecturerManagement.searchReport(index).getSubjectID() == subjID) {
                                         reportID = LecturerManagement.searchReport(index).getReportID();
                                         Report report = Files.reportFileReader(reportID);
                                         String reportData = report.getReportData();
-                                        System.out.println(reportData);
-                                        if (reportData.equals("0") || reportData.equals("1")){
+                                        if (reportData.equals("0") || reportData.equals("1")) {
                                             System.out.println("No data in this report");
-                                        }
-                                        else{
+                                        } else {
                                             System.out.printf("%-10s%-16s%-25s\n", "ID", "Name", "Degree");
                                             System.out.println("\n");
                                             String[] students = reportData.split("/");
                                             for (String student : students) {
                                                 String[] studentData = student.split(",");
-                                                if(studentData[2].equals("-1")){
+                                                if (studentData[2].equals("-1")) {
                                                     studentData[2] = "Not taken yet";
                                                 }
                                                 System.out.printf("%-10s%-16s%-25s\n", studentData[0], studentData[1], studentData[2]);
                                             }
                                         }
-                                    }
-                                    else{
+                                    } else {
                                         System.out.println("Report not found");
-                                        
+
                                     }
-                                }
-                                else{
+                                } else {
                                     System.out.println("Report not found");
-                                    
+
                                 }
                             }
-                        }
-                        else{
+                        } else {
                             System.out.println("Invalid input");
                         }
                     }
-                } 
-
-                else if (optionsAnswer == 3) {
+                } else if (optionsAnswer == 3) {
                     System.out.println("\n\n" + lecturer.toString() + "\n\n");
                     break;
 
@@ -280,11 +262,12 @@ public class LecturerRole {
                     System.out.print("enter valid option to manage or 0 to exit: ");
                     optionsAnswer = Functions.readInt();
                 }
+                System.out.println("==========================================\n");
             }
             if (optionsAnswer == 0) {
                 isStillOperating = false;
             }
         }
-    input.close();
+        input.close();
     }
 }

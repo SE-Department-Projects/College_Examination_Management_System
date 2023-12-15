@@ -70,7 +70,7 @@ public class Student extends Person {
 
     public String getSubjectsAsString() {
         String subjects = "";
-        if(registeredSubjects.size() == 0)
+        if(registeredSubjects.isEmpty())
             return "No subjects registered yet";
         for (int i = 0; i < registeredSubjects.size(); i++) {
             subjects += registeredSubjects.get(i).getSubjectName();
