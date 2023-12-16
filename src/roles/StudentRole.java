@@ -35,18 +35,18 @@ public class StudentRole {
                 do {
 
                     if (student.getTheAvailableExamsAsString().isEmpty()) {
-                        System.out.println("there is not any exams yet");
+                        System.out.println("\nNo available exams\n");
                         break;
                     } else {
                         System.out.println("Select the subject ID to enter the exam");
 
                         System.out.println("The available Exams:\n" + student.getTheAvailableExamsAsString());
-
+                        System.out.println("0=> back");
                         System.out.print("Enter your answer: ");
                         subjID = Functions.readPositiveORZeroInt();
 
                         if (subjID == 0) {
-//                        break;
+                            break;
                         }
                         subjectIndex = student.findSubjIndex(subjID);
 
@@ -56,7 +56,7 @@ public class StudentRole {
                             if (!doesSubjecthaveExam || didStudentTakeExam) {
                                 isSuccessfullyExamed = false;
                                 System.out.println("\nEnter a valid subject ID\n");
-//                            continue;
+                                continue;
                             }
                             subject = student.getSubjects().get(subjectIndex);
                             Exam exam = subject.getExam(); // get the exam
@@ -104,7 +104,6 @@ public class StudentRole {
                             student.getGrades().remove(gradeIndex);
                             student.getGrades().add(gradeIndex, trueAnswers);
                             isSuccessfullyExamed = true;
-                            // break;
                         } else {
                             System.out.println("\nEnter a valid subject id\n");
                         }
@@ -115,13 +114,13 @@ public class StudentRole {
 
             } else if (op == 3) { // Finished exams
                 if ((student.getTheFinishedExamsAsString().isEmpty())) {
-                    System.out.println("there is not any finished exams yet");
+                    System.out.println("\nNo finished exams\n");
 
                 } else {
 
-                    boolean isFinishedExamsDone = false;
                     System.out.println("The Finished Exams:\n" + student.getTheFinishedExamsAsString());
-                    System.out.print("enter subject ID to see the exam details: ");
+                    System.out.println("0=> back");
+                    System.out.print("Enter your answer: ");
                     subjID = Functions.readPositiveORZeroInt();
                     if (subjID != 0) {
                         int stdSubjIndex = student.findSubjIndex(subjID);
@@ -133,16 +132,14 @@ public class StudentRole {
                             } else {
                                 int numOfQues = subject.getExam().getQuestions().size();
 
-
-                                boolean b;
                                 int operation;
                                 do {
                                     operation = Menus.studentFinishedExamMenu();
                                     if (operation == 1) // see exam grade
                                     {
-                                        System.out.println("the grade of  subject: " +
+                                        System.out.println("\nthe grade of  subject: " +
                                                 subject.getSubjectName() + " is " +
-                                                student.getGrades().get(stdSubjIndex) + "/" + numOfQues);
+                                                student.getGrades().get(stdSubjIndex) + "/" + numOfQues+"\n");
 
                                     } else if (operation == 2) // see corrected exam answer
                                     {
@@ -152,6 +149,7 @@ public class StudentRole {
                                             String answer = subject.getExam().getQuestions().get(i - 1).getQuestionAnswer();
                                             System.out.println("\nQ" + i + "- " + text + " => " + answer);
                                         }
+                                        System.out.println("\n");
 
                                     } else if (operation == 0) {
 
@@ -160,10 +158,9 @@ public class StudentRole {
                                     }
                                 } while (operation != 0);
                             }
-//
+
                         } else {
                             System.out.println("\nSubject not found\n");
-                            isFinishedExamsDone = false;
                             continue;
                         }
                     }
@@ -177,8 +174,14 @@ public class StudentRole {
                     if (updateOp == 1) {
                         System.out.print("Enter new username: ");
                         String newUsername = input.nextLine().toLowerCase().trim();
-                        student.setUserName(newUsername);
-                        System.out.println("Username updated successfully");
+                        int update = student.setUserName(newUsername);
+                        if (update == -1) {
+                            System.out.println("\nCan't change username to empty");
+                        } else if (update == -2) {
+                            System.out.println("\nThis username already exists");
+                        } else {
+                            System.out.println("\nUsername updated successfully");
+                        }
                     } else if (updateOp == 2) {
                         System.out.print("Enter new password: ");
                         String newPassword = input.nextLine().trim();

@@ -52,17 +52,17 @@ public class LecturerRole {
                                     break;
                                 int index = lecturer.findSubjIndex(subjID);
                                 if (index == -1) {
-                                    System.out.println("Subject not found");
+                                    System.out.println("\nSubject not found");
                                     break;
                                 }
                                 Subject subject = lecturer.getSubject(index);
                                 if (subject.isExamCreated()) {
-                                    System.out.println("This subject already has an exam, you should delete it first");
+                                    System.out.println("\nThis subject already has an exam");
                                     break;
                                 }
 
                                 System.out
-                                        .println("You are now adding an exam to subject: " + subject.getSubjectName());
+                                        .println("\nYou are now adding an exam to subject: " + subject.getSubjectName());
                                 Exam exam1 = new Exam(subject, subjID);
 
                                 System.out.print("Enter number of questions: ");
@@ -75,13 +75,18 @@ public class LecturerRole {
                                     boolean isAnswerValid = false;
                                     while (!isAnswerValid) {
                                         System.out.print("Enter question Answer(true/false): ");
-                                        String questionAnswer = input.nextLine();
-                                        if (questionAnswer.equalsIgnoreCase("true")
-                                                || questionAnswer.equalsIgnoreCase("false")) {
+                                        String questionAnswer = input.nextLine().toLowerCase().trim();
+                                        if (questionAnswer.equals("true")||questionAnswer.equals("t")) {
                                             isAnswerValid = true;
-                                            Question question = new Question(questionText, questionAnswer);
+                                            Question question = new Question(questionText, "true");
                                             exam1.addQuestion(question);
-                                        } else {
+                                        }
+                                        else if(questionAnswer.equals("false") || questionAnswer.equals("f")){
+                                            isAnswerValid = true;
+                                            Question question = new Question(questionText, "false");
+                                            exam1.addQuestion(question);
+                                        }
+                                        else {
                                             System.out.println("Answer must be true or false");
                                         }
                                     }
@@ -100,7 +105,7 @@ public class LecturerRole {
                                     break;
                                 index = lecturer.findSubjIndex(subjID);
                                 if (index == -1) {
-                                    System.out.println("Subject not found");
+                                    System.out.println("\nSubject not found");
                                     break;
                                 }
                                 subject = lecturer.getSubject(index);
@@ -149,6 +154,7 @@ public class LecturerRole {
                             isBackChosen = true;
                             break;
                         } else if (op == 1) { // generate report
+                            System.out.println("\n");
                             System.out.println(lecturer.getSubjectstoChooseFrom());
                             System.out.println("0=> Back");
                             System.out.print("Enter your answer: ");
@@ -157,13 +163,13 @@ public class LecturerRole {
                                 break;
                             int index = lecturer.findSubjIndex(subjID);
                             if (index == -1) {
-                                System.out.println("Subject not found");
+                                System.out.println("\nSubject not found");
                                 break;
                             }
                             Subject subject = lecturer.getSubject(index);
 
                             if (!subject.isExamCreated()) {
-                                System.out.println("This subject doesn't have an exam to make report on");
+                                System.out.println("\nThis subject doesn't have an exam to make report on");
                                 break;
                             }
 
@@ -182,7 +188,7 @@ public class LecturerRole {
                                 break;
                             int index = lecturer.findSubjIndex(subjID);
                             if (index == -1) {
-                                System.out.println("Subject not found");
+                                System.out.println("\nSubject not found");
                                 break;
                             } else {
                                 System.out.println(LecturerManagement.getReportsOfSubject(subjID));
@@ -198,7 +204,7 @@ public class LecturerRole {
                                         Report report = Files.reportFileReader(reportID);
                                         String reportData = report.getReportData();
                                         if (reportData.equals("0") || reportData.equals("1")) {
-                                            System.out.println("No data in this report");
+                                            System.out.println("\nNo data in this report");
                                         } else {
                                             System.out.printf("%-10s%-16s%-25s\n", "ID", "Name", "Degree");
                                             System.out.println("\n");
@@ -212,16 +218,16 @@ public class LecturerRole {
                                             }
                                         }
                                     } else {
-                                        System.out.println("Report not found");
+                                        System.out.println("\nReport not found");
 
                                     }
                                 } else {
-                                    System.out.println("Report not found");
+                                    System.out.println("\nReport not found");
 
                                 }
                             }
                         } else {
-                            System.out.println("Invalid input");
+                            System.out.println("\nInvalid input");
                         }
                     }
                 } else if (optionsAnswer == 3) {
@@ -234,8 +240,14 @@ public class LecturerRole {
                     if (updateAnswer == 1) { // update username
                         System.out.print("Enter new username: ");
                         String newUsername = input.nextLine().toLowerCase().trim();
-                        lecturer.setUserName(newUsername);
-                        System.out.println("Username updated successfully");
+                        int update = lecturer.setUserName(newUsername);
+                        if (update == -1) {
+                            System.out.println("\nCan't change username to empty");
+                        } else if (update == -2) {
+                            System.out.println("\nThis username already exists");
+                        } else {
+                            System.out.println("\nUsername updated successfully");
+                        }
                     } else if (updateAnswer == 2) { // update password
                         System.out.print("Enter new password: ");
                         String newPassword = input.nextLine().trim();

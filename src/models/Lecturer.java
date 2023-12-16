@@ -86,7 +86,7 @@ public class Lecturer extends Person {
     public String getSubjectstoChooseFrom(){ 
         String subjectsString = "";
         if(subjects.size() == 0)
-            return "No Assigned Subjects";
+            return "\nNo Assigned Subjects";
         int subjectsLength = subjects.size();
         for (int i = 0; i < subjectsLength; i++) {
             subjectsString += subjects.get(i).getSubjID()+"=> "+ subjects.get(i).getSubjectName()+"\n";
@@ -130,6 +130,19 @@ public class Lecturer extends Person {
     }
 
 
+    // override the original setUserName of class Person to check if the username is already taken or no and if it's empty or no
+    @Override
+    public int setUserName(String userName) { 
+        if(userName.equals("empty")){ // if the username is empty return -1
+            return -1;
+        }
+        for(Lecturer student : LecturerManagement.getLecturersArr()) { // loop on the array of Lecturers
+            if(student.getUserName().equals(userName)) // check if the username is already taken
+                return -2; // if yes return -2
+        }
+            super.setUserName(userName); // if no call the original setUserName method in class Person and set the username
+            return 1;
+    }
 
     @Override
     public String toString() {

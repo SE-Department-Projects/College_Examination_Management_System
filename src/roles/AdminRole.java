@@ -44,9 +44,15 @@ public class AdminRole {
 
                                 System.out.print("Enter lecturer Username: ");
                                 String LecUsername = input.nextLine().toLowerCase().trim();
-
+                                
                                 System.out.print("Enter lecturer password: ");
                                 String LecPassword = input.nextLine().trim();
+                                
+                                if(LecUsername.equals("empty"))
+                                {
+                                    System.out.println("\nCan't add lecturer with username empty ");
+                                    break;
+                                }
 
                                 int status = LecturerManagement.addLecturer(LecUsername, LecPassword);
                                 if (status != -1) {
@@ -109,30 +115,36 @@ public class AdminRole {
 
                             case 5: //update lecturer
 
-                                boolean isFound;
+                                lecIndex = -1;
                                 int validInput = 1;
                                 do {
                                     System.out.print("enter lecturer ID to update his info: ");
                                     lecID = Functions.readPositiveInt();
-                                    isFound = LecturerManagement.isFound(lecID);
-                                    if (isFound) {
+                                    lecIndex = LecturerManagement.findLecIndex(lecID);
+                                    if (lecIndex != -1) {
+                                        Lecturer lecturer = LecturerManagement.searchLecturer(lecIndex);
                                         int updateOP = Menus.adminUpdateUsersInfo();
                                         if (updateOP == 1) {
                                             System.out.print("enter the new Username: ");
                                             String newUsername = input.nextLine().toLowerCase().trim();
-                                            boolean update = LecturerManagement.updateLecUsername(lecID, newUsername);
-                                            System.out.println(update ? "updated username successfully" : "failure to update the username");
+                                            int update = lecturer.setUserName(newUsername);
+                                            if (update == -1) {
+                                                System.out.println("\nCan't change username to empty");
+                                            } else if (update == -2) {
+                                                System.out.println("\nThis username already exists");
+                                            } else {
+                                                System.out.println("\nUsername updated successfully");
+                                            }
                                         } else if (updateOP == 2) {
                                             System.out.print("enter the new password: ");
                                             String newPassword = input.nextLine().trim();
-                                            boolean update = LecturerManagement.updateLecPassword(lecID, newPassword);
-                                            System.out.println(update ? "updated password successfully" : "failure to update the password");
+                                            lecturer.setPassword(newPassword);
+                                            System.out.println("Password updated successfully");
                                         } else if (updateOP == 0) {
                                             break;
                                         } else {
                                             System.out.println("this operation not exist");
                                         }
-
                                     } else {
                                         System.out.println("this lecturer ID is not found");
                                         do {
@@ -147,7 +159,7 @@ public class AdminRole {
                                         }while (validInput != 1 && validInput != 0);
                                     }
 
-                                } while (!isFound && validInput== 1);
+                                } while (lecIndex == -1 && validInput == 1);
 
 
                                 break;
@@ -160,24 +172,30 @@ public class AdminRole {
                                     System.out.println("\nthere are no subjects in the system, Please add a subject first!");
                                     break;
                                 } else {
-                                    System.out.print("enter lecturer ID: ");
+                                    System.out.print("Enter lecturer ID: ");
                                     lecID = Functions.readPositiveInt();
                                     lecIndex = LecturerManagement.findLecIndex(lecID);
                                     if (lecIndex == -1) {
-                                        System.out.println("\nlecturer not found");
+                                        System.out.println("\nLecturer not found");
                                         break;
-                                    } else {
-                                        Lecturer lecturer = LecturerManagement.searchLecturer(lecIndex);
+                                    } 
+                                    Lecturer lecturer = LecturerManagement.searchLecturer(lecIndex);
+                                    if(lecturer.getUserName().equals("empty") && lecturer.getPassword().equals("empty"))
+                                    {
+                                        System.out.println("\nLecturer not found");
+                                        break;
+                                    }
+                                    else {
                                         System.out.println("You are now adding subject to " + lecturer.getUserName() + "\n");
                                         System.out.println("Here are the list of subjects");
                                         for (Subject subjects : SubjectManagement.getSubjectArrayList()) {
                                             System.out.println(subjects.getSubjID() + "=> " + subjects.getSubjectName());
                                         }
-                                        System.out.print("enter subject ID: ");
+                                        System.out.print("Enter subject ID: ");
                                         subID = Functions.readPositiveInt();
                                         int subIndex = SubjectManagement.findSubjIndex(subID);
                                         if (subIndex == -1) {
-                                            System.out.println("subject not found");
+                                            System.out.println("\nSubject not found");
                                             break;
                                         } else {
                                             Subject subject = SubjectManagement.searchSubject(subIndex);
@@ -185,7 +203,6 @@ public class AdminRole {
                                                 System.out.println("\nthis subject is already assigned to this lecturer");
                                                 break;
                                             } else {
-//                                                boolean isAssigned = SubjectManagement.assignSubjectToStudent(subject, lecID);
                                                 boolean isAssigned = SubjectManagement.assignSubjectToLecturer(subject, lecID);
                                                 System.out.println(isAssigned ? "\nsubject assigned successfully" : "\nfailure to assign subject");
                                             }
@@ -200,20 +217,26 @@ public class AdminRole {
                                     System.out.println("\nthere are no lecturers in the system, Please add a lecturer first!");
                                     break;
                                 } else {
-                                    System.out.print("enter lecturer ID: ");
+                                    System.out.print("Enter lecturer ID: ");
                                     lecID = Functions.readPositiveInt();
                                     lecIndex = LecturerManagement.findLecIndex(lecID);
                                     if (lecIndex == -1) {
-                                        System.out.println("lecturer not found");
+                                        System.out.println("\nLecturer not found");
                                         break;
-                                    } else {
-                                        Lecturer lecturer = LecturerManagement.searchLecturer(lecIndex);
+                                    }
+                                    Lecturer lecturer = LecturerManagement.searchLecturer(lecIndex);
+                                    if(lecturer.getUserName().equals("empty") && lecturer.getPassword().equals("empty"))
+                                    {
+                                        System.out.println("\nLecturer not found");
+                                        break;
+                                    }
+                                    else {
                                         if (lecturer.getLecturerSubjects().isEmpty()) {
-                                            System.out.println("No Subjects Assigned");
+                                            System.out.println("\nNo Subjects Assigned");
                                             break;
                                         } else {
                                             ArrayList<Subject> lecSubjects = lecturer.getLecturerSubjects(); // array list of subjects of the lecturer
-                                            System.out.println("\nlecturer " + lecturer.getUserName() + " has Subjects: ");
+                                            System.out.println("\nLecturer " + lecturer.getUserName() + " has Subjects: ");
                                             for (Subject subject : lecSubjects) {
                                                 System.out.println(subject.getSubjID() + "=> " + subject.getSubjectName());
                                             }
@@ -229,14 +252,13 @@ public class AdminRole {
                                             } else if (answer == 0)
                                                 break;
                                             else
-                                                System.out.println("invalid input");
+                                                System.out.println("\n\nSubject not found");
                                             break;
                                         }
                                     }
                                 }
 
                             case 0:
-//                                System.out.println("logout successfully");
                                 isBackChosen = true;
                                 isStillOperating = false;
                                 break;
@@ -280,6 +302,12 @@ public class AdminRole {
 
                                 System.out.print("Enter Student password: ");
                                 String stdPassword = input.nextLine().trim();
+
+                                if(stdUsername.equals("empty"))
+                                {
+                                    System.out.println("\nCan't add student with username empty ");
+                                    break;
+                                }
 
                                 int status = StudentManagement.addStd(stdUsername, stdPassword);
                                 if (status != -1) {
@@ -343,30 +371,33 @@ public class AdminRole {
 
                             case 5: // update (student)
 
-
-                                boolean isFound;
+                                int stdIndex = -1;
                                 int validInput= 1;
                                 do {
                                     System.out.print("enter student ID to update this info: ");
                                     stdID = Functions.readPositiveInt();
-
-                                    isFound = StudentManagement.isfound(stdID);
-
-                                    if (isFound) {
+                                    stdIndex = StudentManagement.findStdIndex(stdID);
+                                    if (stdIndex != -1) {
+                                        Student student = StudentManagement.searchStd(stdIndex);
                                         int updateOP = Menus.adminUpdateUsersInfo();
                                         if (updateOP == 1) {
 
-
                                             System.out.print("enter the new Username: ");
                                             String newUsername = input.nextLine().toLowerCase().trim();
-                                            boolean update = StudentManagement.updateStdUsername(stdID, newUsername);
-                                            System.out.println(update ? "updated username successfully" : "failure to update the username");
+                                            int update = student.setUserName(newUsername);
+                                            if (update == -1) {
+                                                System.out.println("\nCan't change username to empty");
+                                            } else if (update == -2) {
+                                                System.out.println("\nThis username already exists");
+                                            } else {
+                                                System.out.println("\nUsername updated successfully");
+                                            }
                                         } else if (updateOP == 2) {
 
                                             System.out.print("enter the new password: ");
                                             String newPassword = input.nextLine().trim();
-                                            boolean update = StudentManagement.updateStdPassword(stdID, newPassword);
-                                            System.out.println(update ? "updated password successfully" : "failure to update the password");
+                                            student.setPassword(newPassword);
+                                            System.out.println("Password updated successfully");
                                         } else if (updateOP == 0) {
                                             break;
                                         } else {
@@ -375,19 +406,19 @@ public class AdminRole {
                                     } else {
                                         System.out.println("this student ID is not exist");
 
-                                       do {
-                                           System.out.println("1=> try again");
-                                           System.out.println("0=> back");
-                                           System.out.print("Enter your answer: ");
-                                           validInput= Functions.readPositiveORZeroInt();
-                                           if(validInput != 1 && validInput != 0)
-                                           {
-                                               System.out.println("enter a valid input");
-                                           }
-                                       }while (validInput != 1 && validInput != 0);
+                                        do {
+                                            System.out.println("1=> try again");
+                                            System.out.println("0=> back");
+                                            System.out.print("Enter your answer: ");
+                                            validInput= Functions.readPositiveORZeroInt();
+                                            if(validInput != 1 && validInput != 0)
+                                            {
+                                                System.out.println("enter a valid input");
+                                            }
+                                        }while (validInput != 1 && validInput != 0);
                                     }
 
-                                } while (!isFound && validInput == 1);
+                                } while (stdIndex == -1 && validInput == 1);
 
 
                                 break;
@@ -403,12 +434,18 @@ public class AdminRole {
                                 } else {
                                     System.out.print("enter student ID: ");
                                     stdID = Functions.readPositiveInt();
-                                    int stdIndex = StudentManagement.findStdIndex(stdID);
+                                    stdIndex = StudentManagement.findStdIndex(stdID);
                                     if (stdIndex == -1) {
-                                        System.out.println("\nstudent not found");
+                                        System.out.println("\nStudent not found");
                                         break;
-                                    } else {
-                                        Student student = StudentManagement.searchStd(stdIndex);
+                                    }
+                                    Student student = StudentManagement.searchStd(stdIndex);
+                                    if(student.getUserName().equals("empty") && student.getPassword().equals("empty"))
+                                    {
+                                        System.out.println("\nStudent not found");
+                                        break;
+                                    }
+                                    else {
                                         System.out.println("You are now adding subject to " + student.getUserName() + "\n");
                                         System.out.println("Here are the list of subjects");
                                         for (Subject subjects : SubjectManagement.getSubjectArrayList()) {
@@ -418,7 +455,7 @@ public class AdminRole {
                                         subID = Functions.readPositiveInt();
                                         int subIndex = SubjectManagement.findSubjIndex(subID);
                                         if (subIndex == -1) {
-                                            System.out.println("subject not found");
+                                            System.out.println("\nsubject not found");
                                             break;
                                         } else {
                                             Subject subject = SubjectManagement.searchSubject(subIndex);
@@ -440,20 +477,26 @@ public class AdminRole {
                                     System.out.println("\nthere are no students in the system, Please add a student first!");
                                     break;
                                 } else {
-                                    System.out.println("enter student ID: ");
+                                    System.out.print("Enter student ID: ");
                                     stdID = Functions.readPositiveInt();
-                                    int stdIndex = StudentManagement.findStdIndex(stdID);
+                                    stdIndex = StudentManagement.findStdIndex(stdID);
                                     if (stdIndex == -1) {
-                                        System.out.println("Student not found");
+                                        System.out.println("\nStudent not found");
                                         break;
-                                    } else {
-                                        Student student = StudentManagement.searchStd(stdIndex);
+                                    }
+                                    Student student = StudentManagement.searchStd(stdIndex);
+                                    if(student.getUserName().equals("empty") && student.getPassword().equals("empty"))
+                                    {
+                                        System.out.println("\nStudent not found");
+                                        break;
+                                    }
+                                    else {
                                         if (student.getSubjects().isEmpty()) {
-                                            System.out.println("No Subject Assigned");
+                                            System.out.println("\nNo Subject Assigned");
                                             break;
                                         } else {
                                             ArrayList<Subject> stdSubjects = student.getSubjects();
-                                            System.out.println("student " + student.getUserName() + " has Subjects: ");
+                                            System.out.println("Student " + student.getUserName() + " has Subjects: ");
                                             for (Subject subject : stdSubjects) {
                                                 System.out.println(subject.getSubjID() + "=> " + subject.getSubjectName());
                                             }
@@ -611,21 +654,25 @@ public class AdminRole {
                     while (true) {
                         int updateChoice = Menus.updatePersonalInfo();
                         if (updateChoice == 1) {// update username
-                            System.out.print("enter new username: ");
+                            System.out.print("Enter new username: ");
                             String newUsername = input.nextLine().toLowerCase().trim();
-                            System.out.println(admin.setUserName(newUsername) ? "username updated successfully" : "some thing went wrong");
+                            admin.setUserName(newUsername);
+                            System.out.println("Username updated successfully");
                         } else if (updateChoice == 2) {  //update password
-                            System.out.print("enter new password: ");
+                            System.out.print("Enter new password: ");
                             String newPassword = input.nextLine().trim();
-                            System.out.println(admin.setPassword(newPassword) ? "password updated successfully" : "some thing went wrong");
+                            admin.setPassword(newPassword);
+                            System.out.println("Password updated successfully");
                         } else if (updateChoice == 3) { //update email
-                            System.out.print("enter new email: ");
+                            System.out.print("Enter new email: ");
                             String newEmail = input.nextLine().trim();
-                            System.out.println(admin.setEmail(newEmail) ? "email updated successfully" : "some thing went wrong");
+                            admin.setEmail(newEmail);
+                            System.out.println("Email updated successfully");
                         } else if (updateChoice == 4) { //update phone
                             System.out.print("enter new phone: ");
                             String newPhone = input.nextLine().trim();
-                            System.out.println(admin.setPhone(newPhone) ? "phone updated successfully" : "some thing went wrong");
+                            admin.setPhone(newPhone);
+                            System.out.println("Phone updated successfully");
                         } else if (updateChoice == 0) {  // back
                             // isBackChosen = true;
                             break;
@@ -634,12 +681,20 @@ public class AdminRole {
                         }
                     }
                 } else if (optionsAnswer == 6) { //Polymorphism
-                    System.out.println("\nSystem has a total of " + Person.getUsersCount() + " users \n");
                     Admin.emptyAllUsers();
                     Admin.FillUsers(admin);
+                    int usersCount = Person.getUsersCount();
                     for (Person person : Admin.getAllUsers()) {
-                        System.out.println(person.getBriefInfo());
+                        if(!person.getUserName().equals("empty"))
+                            System.out.println(person.getBriefInfo());
+                        else
+                            usersCount--;
                     }
+                    System.out.println("admin"+"{" +
+                    " userName='" + admin.getUserName() + '\'' +
+                    ", password='" + admin.getPassword() + '\'' +
+                    '}');
+                    System.out.println("\nSystem has a total of " + usersCount + " users \n");
                 } else {
                     System.out.print("enter valid option to manage or 0 to exit: ");
                     optionsAnswer = Functions.readPositiveORZeroInt();

@@ -28,6 +28,22 @@ public class Student extends Person {
 
     // Setters
 
+    // override the original setUserName of class Person to check if the username is already taken or no and to make sure he can't name himself empty
+    @Override
+    public int setUserName(String userName) {
+        if(userName.equals("empty")){ // check if the username is empty
+            return -1; // if yes return -1
+        }
+        for(Student student : StudentManagement.getStudentArray()) { // loop through the array of students
+            if(student.getUserName().equals(userName)) // check if the username is already taken
+                return -2; // if yes return -2
+        }
+            super.setUserName(userName); // if no call the original setUserName method in class Person and set the username
+            return 1;
+    }
+
+
+
     public void addGrade(int grade) {
         this.grades.add(grade);
     }
@@ -141,6 +157,16 @@ public class Student extends Person {
         this.finalDegree = finalDegree;
     }
 
+    public int TotalDegree() {
+        int totalDegree = 0;
+        for(Subject subject : registeredSubjects) {
+            if(subject.isExamCreated()){
+                totalDegree += subject.getExam().getQuestions().size();
+            }
+        }
+        return totalDegree;
+    }
+
 
     public String toString() {
         return "Student{" +
@@ -149,8 +175,8 @@ public class Student extends Person {
                 ", password='" + this.getPassword() + '\'' +
                 ", Email='" + this.getEmailToString() + '\'' +
                 ", Phone='" + this.getPhoneToString() + '\'' +
-                ", registeredSubjects =" + this.getSubjectsAsString() + '\'' +
-                ", finalDegree=" + this.getFinalDegree() + '\''+
+                ", registeredSubjects ='" + this.getSubjectsAsString() + '\'' +
+                ", finalDegree='" + this.getFinalDegree()+ "/" + this.TotalDegree()+ '\''+
                 '}';
     }
 

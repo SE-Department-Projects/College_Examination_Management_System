@@ -22,14 +22,13 @@ public abstract class Person {
 
     // Setters
 
-    public boolean setUserName(String userName) {
-            this.userName = userName;
-            return true;
+    public int setUserName(String userName) {
+        this.userName = userName;
+        return 1;
     }
 
-    public boolean setPassword(String password) {
-            this.password = password;
-            return true;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public boolean setEmail(String email) {

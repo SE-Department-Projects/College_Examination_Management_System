@@ -12,7 +12,6 @@ public class Exam {
     // Constructors
     public Exam(){
         this.questions = new ArrayList<>();
-        // this.examFile = new FileHandler("exam_" + this.examID + ".txt");
     }
 
 

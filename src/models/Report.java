@@ -1,8 +1,6 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Date;
-
 public class Report {
     
     
@@ -63,7 +61,7 @@ public class Report {
             }
         }
         this.reportData = reportData;
-        return "Report for Subject "+ subject.getSubjectName() + " created successfully with id: " + this.reportID;
+        return "\nReport for Subject "+ subject.getSubjectName() + " created successfully with id: " + this.reportID;
     }
 
     public String getReportData() {

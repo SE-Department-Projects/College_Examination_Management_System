@@ -57,17 +57,18 @@ public class StudentManagement {
 
   // -------------------------- find is that the student exist or not ----------------------
 
-    public static boolean isfound(int studentID)
-    {
-        for (Student std : studentArray) {
-            if (std.getID() == studentID)
-            {
-                return true;
-            }
+    //TODO del later
+    // public static boolean isfound(int studentID)
+    // {
+    //     for (Student std : studentArray) {
+    //         if (std.getID() == studentID)
+    //         {
+    //             return true;
+    //         }
 
-        }
-        return false;
-    }
+    //     }
+    //     return false;
+    // }
 
 
 //-------------------SEARCH STUDENT--------------------------------------------
@@ -92,31 +93,6 @@ public class StudentManagement {
         return false;
     }
 
-
-
-    //-------------------UPDATE STUDENT USERNAME---------------------------------
-
-    public static boolean updateStdUsername(int id, String newUsername) {
-        int index = findStdIndex(id);
-
-        if (index != -1) {
-            studentArray.get(index).setUserName(newUsername);
-            return true;
-        }
-        return false;
-    }
-
-
-    //------------------UPDATE STUDENT PASSWORD-----------------------------------
-
-    public static boolean updateStdPassword(int id, String newPass) {
-        int index = findStdIndex(id);
-        if (index != -1) {
-            studentArray.get(index).setPassword(newPass);
-            return true;
-        }
-        return false;
-    }
 
 
     

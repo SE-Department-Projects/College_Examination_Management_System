@@ -18,6 +18,8 @@ public class Main {
 
         Files.subjectsFileReader();
 
+        Admin admin = Files.adminFileReader();
+
         String username, password;
         int roleNum;
         boolean isLoggedin = false;
@@ -38,7 +40,7 @@ public class Main {
             }
 
             while (roleNum != 1 && roleNum != 2 && roleNum != 3) {
-                System.out.print("this role doesn't exist please enter a valid role num or 0 for exit: ");
+                System.out.print("Enter a valid role or 0 to exit: ");
                 roleNum = Functions.readInt();
                 if (roleNum == 0) {
                     System.out.println("Exit Success");
@@ -54,8 +56,11 @@ public class Main {
 
                 password = input.nextLine().trim();
 
-                if (roleNum == 1) { // admin role
-                    Admin admin = Files.adminFileReader();
+                if(username.equals("empty")) {
+                    worngAuth = true;
+                }
+                else if (roleNum == 1) { // admin role
+                    
                     
                     // if the file was empty (or didn't satisfy the pattern) the method will return an admin object with userName = "empty" 
                     if (admin.getUserName().equals("empty")) { 
@@ -71,7 +76,6 @@ public class Main {
                     } else {
                         worngAuth = true;
                     }
-
                 } else if (roleNum == 2) { // lecturer role
                     int lecturerID = Authentication.lecturerLogin(username, password);
                     if (lecturerID != -1) {
@@ -81,14 +85,11 @@ public class Main {
                         System.out.println("login Success");
                         System.out.println("==========================================\n");
                         LecturerRole.lecturerRole(lecturerID);
-//                        isLoggedin = true;
-
                     } else {
                         worngAuth = true;
                     }
 
                 } else  { // student role
-
                     int studentID = Authentication.studentLogin(username, password);
                     if (studentID != -1) {
                         worngAuth = false;
@@ -96,17 +97,13 @@ public class Main {
                         isLoggedin = true;
                         System.out.println("login Success");
                         System.out.println("==========================================\n");
-
-
                         StudentRole.studentRole(studentID);
-//                        isLoggedin = true;
                     } else {
                         worngAuth = true;
                     }
                 }
 
                 if (worngAuth) {
-
                     int answer = Menus.notAuthenticatedMenu();
                     if (answer == 0)
                         break;
@@ -118,9 +115,7 @@ public class Main {
                     }
                 }
             }
-
         }
-
     System.out.println("Log out successfully");
     }
 }

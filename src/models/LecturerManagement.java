@@ -22,7 +22,7 @@ public class LecturerManagement {
             }
         }
         if (reports.isEmpty()) {
-            return "No reports found";
+            return "\nNo reports found";
         }
         return reports;
     }
@@ -93,14 +93,15 @@ public class LecturerManagement {
 
     // ------------------------------ check that is the lecturer is found or not ---------------------------------------
 
-    public static  boolean isFound(int lecID)
-    {
-        for (Lecturer lec: lecturersArr) {
-            if(lec.getID() == lecID)
-                return true;
-        }
-        return  false;
-    }
+    //TODO del later
+    // public static  boolean isFound(int lecID)
+    // {
+    //     for (Lecturer lec: lecturersArr) {
+    //         if(lec.getID() == lecID)
+    //             return true;
+    //     }
+    //     return  false;
+    // }
 
 
     //-------------------SEARCH LECTURER--------------------------------------------
@@ -138,28 +139,6 @@ public class LecturerManagement {
             return true;  // done
         }
         return false; // D.N.E
-    }
-
-
-    //---------------UPDATE LECTURER----------------------------------------------
-
-    public static boolean updateLecUsername(int ID, String newUsername) {
-        int index = findLecIndex(ID);
-        if (index != -1) {
-
-            lecturersArr.get(index).setUserName(newUsername);
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean updateLecPassword(int ID, String password) {
-        int index = findLecIndex(ID);
-        if (index != -1) {
-            lecturersArr.get(index).setPassword(password);
-            return true;
-        }
-        return false;
     }
 
 
