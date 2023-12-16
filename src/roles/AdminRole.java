@@ -618,13 +618,23 @@ public class AdminRole {
                             case 5: // update subject
                                 System.out.print("enter subject ID to update the subject: ");
                                 subID = Functions.readPositiveInt();
-                                System.out.print("enter the new subject name: ");
-                                String subNewName = input.nextLine().toLowerCase().trim();
-                                System.out.print("enter the new subject code: ");
-                                int subjNewCode = Functions.readPositiveInt();
-                                String subNewCode = subNewName + "-" + subjNewCode;
-                                boolean isUpdated = SubjectManagement.updateSubject(subID, subNewName, subNewCode);
-                                System.out.println(isUpdated ? "\nsubject updated successfully" : "\nsubject not exist");
+                                int subjectIndex =SubjectManagement.findSubjIndex(subID) ;
+
+                                if(subjectIndex!= -1)
+                                {
+                                    System.out.print("enter the new subject name: ");
+                                    String subNewName = input.nextLine().toLowerCase().trim();
+                                    System.out.print("enter the new subject code: ");
+                                    int subjNewCode = Functions.readPositiveInt();
+                                    String subNewCode = subNewName + "-" + subjNewCode;
+                                    boolean isUpdated = SubjectManagement.updateSubject(subjectIndex, subNewName, subNewCode);
+                                    System.out.println(isUpdated ? "\nsubject updated successfully" : "failure to update bec this code is exist\n");
+                                }
+                                else
+                                {
+                                    System.out.println("this subject id not exist");
+                                }
+
                                 break;
 
                             case 0:
