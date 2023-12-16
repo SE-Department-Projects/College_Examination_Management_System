@@ -34,7 +34,7 @@ public class Files {
 
 
     public static Report reportFileReader(int reportID){
-    FileHandler reportFileHandler = new FileHandler(Paths.reportsPath+reportID+".txt");
+        FileHandler reportFileHandler = new FileHandler(Paths.reportsPath+reportID+".txt");
 
         reportFileHandler.createFile();
 
@@ -71,7 +71,7 @@ public class Files {
 
         if (adminData != ""){ // if the file is not empty
             adminData = adminData.trim();
-            if(adminData.matches("\\w+-\\w+-.+-.+")){ // pattern to match the format of the file (userName-password-email-phone)
+            if(adminData.matches("\\w+-.+-.+-.+")){ // pattern to match the format of the file (userName-password-email-phone)
                 String[] data = adminData.split("-"); // split the data into userName, password, email, phone
                 Admin admin = new Admin(data[0],data[1],data[2],data[3]); // create a new admin object (userName, password, email, phone)
                 return admin;
@@ -99,7 +99,7 @@ public class Files {
 
             String[] lecturers = lecturersData.split("\n"); // split the data into lines
             for (String line : lecturers) { // loop through the lines
-                if(line.matches("\\d+-\\w+-\\w+-.+-.+")){ // if the line matches the pattern (id-username-password)
+                if(line.matches("\\d+-\\w+-.+-.+-.+")){ // if the line matches the pattern (id-username-password)
                     String[] data = line.split("-"); // split the line into id, username, password
                      Lecturer lecturer1 = new Lecturer(Integer.parseInt(data[0]),data[1],data[2],data[3],data[4]); // create a new lecturer object (username, password)
                     LecturerManagement.addLecturer(lecturer1); // add the lecturer to the array
@@ -126,7 +126,7 @@ public class Files {
 
             for (String line : students) { // loop through the lines
 
-                if(line.matches("\\d+-\\w+-\\w+-.+-.+")){ // if the line matches the pattern (id-username-password)
+                if(line.matches("\\d+-\\w+-.+-.+-.+")){ // if the line matches the pattern (id-username-password)
 
                     String[] data = line.split("-"); // split the line into id, username, password
                     Student student1 = new Student(Integer.parseInt(data[0]),data[1],data[2],data[3],data[4]); // create a new student object (username, password)
@@ -242,7 +242,6 @@ public class Files {
                             Subject subject = SubjectManagement.searchSubject(index);
                             lecturer.addSubject(subject); // add the subject to the lecturer
                             subject.addLecturerID(lecturer.getID());
-
                         }
                     }
                 }
@@ -390,7 +389,7 @@ public class Files {
 
 
     //function that writes in the subj_ID_Exam file
-    public static void subjectIdExamFileWriter(Lecturer lecturer){ 
+    public static void subjectIdExamFileWriter(Lecturer lecturer){
         for (Subject subject : lecturer.getLecturerSubjects()) {
             FileHandler examFile = new FileHandler(Paths.examPath+ subject.getSubjID() + "_exam.txt");
             if(subject.isExamCreated()){

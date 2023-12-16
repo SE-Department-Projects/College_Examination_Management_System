@@ -14,12 +14,9 @@ public class Admin extends Person
     // add user to the arraylist of allUsers
     public static void FillUsers(Person user) {
 
-        for (Student student : StudentManagement.getStudentArray()) {
-            allUsers.add(student);
-        }
-        for (Lecturer lecturer : LecturerManagement.getLecturersArr()) {
-            allUsers.add(lecturer);
-        }
+        allUsers.addAll(StudentManagement.getStudentArray());
+        allUsers.addAll(LecturerManagement.getLecturersArr());
+        allUsers.add(user);
     }
 
     public static ArrayList<Person> getAllUsers() {

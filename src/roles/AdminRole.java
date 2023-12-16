@@ -520,7 +520,6 @@ public class AdminRole {
 
 
                             case 0:
-//                                System.out.println("logout successfully");
                                 isBackChosen = true;
                                 isStillOperating = false;
                                 break;
@@ -551,7 +550,6 @@ public class AdminRole {
                         op = Menus.adminManageSubjects();
                         if (op == 6) {
                             isBackChosen = true; // set isBackChosen to true to not enter the outer loop, but we set it to false again when he choose an option so he can enter again
-//                            System.out.println("==========================================\n");
                             break; // to exit the inner do while loop
                         }
 
@@ -564,7 +562,6 @@ public class AdminRole {
                                 System.out.print("enter subject code: ");
                                 int subjCode = Functions.readPositiveInt();
                                 String subjectCode = subjectName + "-" + subjCode;
-                                // String subjectCode = input.nextLine().trim();
                                 int status = SubjectManagement.addSubject(subjectName, subjectCode);
                                 if (status != -1) {
                                     System.out.println("\n---- subject added successfully ----\n");
@@ -684,18 +681,15 @@ public class AdminRole {
                     Admin.emptyAllUsers();
                     Admin.FillUsers(admin);
                     int usersCount = Person.getUsersCount();
-                    for (Person person : Admin.getAllUsers()) {
+                    for (Person person : Admin.getAllUsers()) { // here polymorphism is used
                         if(!person.getUserName().equals("empty"))
                             System.out.println(person.getBriefInfo());
                         else
                             usersCount--;
                     }
-                    System.out.println("admin"+"{" +
-                    " userName='" + admin.getUserName() + '\'' +
-                    ", password='" + admin.getPassword() + '\'' +
-                    '}');
                     System.out.println("\nSystem has a total of " + usersCount + " users \n");
-                } else {
+                } 
+                else {
                     System.out.print("enter valid option to manage or 0 to exit: ");
                     optionsAnswer = Functions.readPositiveORZeroInt();
                 }

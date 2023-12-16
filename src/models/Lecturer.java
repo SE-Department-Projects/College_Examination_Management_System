@@ -136,8 +136,8 @@ public class Lecturer extends Person {
         if(userName.equals("empty")){ // if the username is empty return -1
             return -1;
         }
-        for(Lecturer student : LecturerManagement.getLecturersArr()) { // loop on the array of Lecturers
-            if(student.getUserName().equals(userName)) // check if the username is already taken
+        for(Lecturer lecturer : LecturerManagement.getLecturersArr()) { // loop on the array of Lecturers
+            if(lecturer.getUserName().equals(userName)) // check if the username is already taken
                 return -2; // if yes return -2
         }
             super.setUserName(userName); // if no call the original setUserName method in class Person and set the username
