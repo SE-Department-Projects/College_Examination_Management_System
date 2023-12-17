@@ -166,14 +166,18 @@ public class StudentRole {
                     }
 
                 }
-            } else if (op == 4) {
+            } else if (op == 4) { // personal info
                 System.out.println(student.toString());
-            } else if (op == 5) {
+            } else if (op == 5) { // update personal info
                 while (true) {
                     int updateOp = Menus.updatePersonalInfo();
                     if (updateOp == 1) {
                         System.out.print("Enter new username: ");
                         String newUsername = input.nextLine().toLowerCase().trim();
+                        if(newUsername.equals("-")) {
+                            System.out.println("\nUsername can't contain '-' character\n");
+                            continue;
+                        }
                         int update = student.setUserName(newUsername);
                         if (update == -1) {
                             System.out.println("\nCan't change username to empty");
@@ -185,16 +189,32 @@ public class StudentRole {
                     } else if (updateOp == 2) {
                         System.out.print("Enter new password: ");
                         String newPassword = input.nextLine().trim();
+                        if(newPassword.equals("-")) {
+                            System.out.println("\nPassword can't contain '-' character\n");
+                            continue;
+                        }
                         student.setPassword(newPassword);
                         System.out.println("Password updated successfully");
                     } else if (updateOp == 3) {
                         System.out.print("Enter new email: ");
                         String newEmail = input.nextLine().trim();
+                        if(newEmail.equals("-")) {
+                            System.out.println("\nEmail can't contain '-' character\n");
+                            continue;
+                        }
+                        else if(!newEmail.contains("@") || !newEmail.contains(".")) {
+                            System.out.println("\nInvalid email\n");
+                            continue;
+                        }
                         student.setEmail(newEmail);
                         System.out.println("Email updated successfully");
                     } else if (updateOp == 4) {
                         System.out.print("Enter new phone: ");
                         String newPhone = input.nextLine().trim();
+                        if(newPhone.equals("-")) {
+                            System.out.println("\nPhone can't contain '-' character\n");
+                            continue;
+                        }
                         student.setPhone(newPhone);
                         System.out.println("Phone updated successfully");
                     } else if (updateOp == 0) {

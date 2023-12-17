@@ -15,10 +15,10 @@ public class Exam {
     }
 
 
-    public Exam(Subject subject, int subjID) {
+    public Exam(Subject subject) {
         this.subjectName = subject.getSubjectName();
         this.questions = new ArrayList<>();
-        this.subjID = subjID;
+        this.subjID = subject.getSubjID();
     }
     
     public void addQuestion(Question question) {

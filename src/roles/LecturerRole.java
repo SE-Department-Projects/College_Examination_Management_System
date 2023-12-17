@@ -63,7 +63,7 @@ public class LecturerRole {
 
                                 System.out
                                         .println("\nYou are now adding an exam to subject: " + subject.getSubjectName());
-                                Exam exam1 = new Exam(subject, subjID);
+                                Exam exam1 = new Exam(subject);
 
                                 System.out.print("Enter number of questions: ");
                                 int questionsNum = Functions.readPositiveInt();
@@ -97,8 +97,8 @@ public class LecturerRole {
                                 break;
 
                             case 2:
-                                System.out.println("\n" + lecturer.getSubjectsWithExams() + "\n");
-                                System.out.println("0=> Exit");
+                                System.out.println("\n" + lecturer.getSubjectsWithExams());
+                                System.out.println("0=> Back");
                                 System.out.print("Enter your answer: ");
                                 subjID = Functions.readPositiveORZeroInt();
                                 if (subjID == 0)
@@ -117,6 +117,16 @@ public class LecturerRole {
                                 break;
 
                             case 3:
+                                boolean isThereAnyExams = false;
+                                for (Subject subject1 : lecturer.getLecturerSubjects()) {
+                                    if (subject1.isExamCreated()) {
+                                        isThereAnyExams = true;
+                                    }
+                                }
+                                if (!isThereAnyExams) {
+                                    System.out.println("\nYou don't have exams to view\n");
+                                    break;
+                                }
                                 System.out.println("List of Exams:");
                                 System.out.printf("%-10s%-16s\n", "ID", "Subject Name");
                                 for (Subject subject1 : lecturer.getLecturerSubjects()) {
@@ -154,7 +164,7 @@ public class LecturerRole {
                             isBackChosen = true;
                             break;
                         } else if (op == 1) { // generate report
-                            System.out.println("\n");
+                            System.out.print("\n");
                             System.out.println(lecturer.getSubjectstoChooseFrom());
                             System.out.println("0=> Back");
                             System.out.print("Enter your answer: ");
@@ -180,6 +190,7 @@ public class LecturerRole {
                             Files.reportsHeadsFileWriter(report);
                             break;
                         } else if (op == 2) { // view reports
+
                             System.out.println(lecturer.getSubjectstoChooseFrom());
                             System.out.println("0=> Back");
                             System.out.print("Enter your answer: ");
@@ -207,7 +218,7 @@ public class LecturerRole {
                                             System.out.println("\nNo data in this report");
                                         } else {
                                             System.out.printf("%-10s%-16s%-25s\n", "ID", "Name", "Degree");
-                                            System.out.println("\n");
+                                            System.out.print("\n");
                                             String[] students = reportData.split("/");
                                             for (String student : students) {
                                                 String[] studentData = student.split(",");
@@ -240,6 +251,10 @@ public class LecturerRole {
                     if (updateAnswer == 1) { // update username
                         System.out.print("Enter new username: ");
                         String newUsername = input.nextLine().toLowerCase().trim();
+                        if(newUsername.equals("-")) {
+                            System.out.println("\nUsername can't contain '-' character\n");
+                            continue;
+                        }
                         int update = lecturer.setUserName(newUsername);
                         if (update == -1) {
                             System.out.println("\nCan't change username to empty");
@@ -251,16 +266,32 @@ public class LecturerRole {
                     } else if (updateAnswer == 2) { // update password
                         System.out.print("Enter new password: ");
                         String newPassword = input.nextLine().trim();
+                        if(newPassword.equals("-")) {
+                            System.out.println("\nPassword can't contain '-' character\n");
+                            continue;
+                        }
                         lecturer.setPassword(newPassword);
                         System.out.println("Password updated successfully");
                     } else if (updateAnswer == 3) { // update email
                         System.out.print("Enter new email: ");
                         String newEmail = input.nextLine().trim();
+                        if(newEmail.equals("-")) {
+                            System.out.println("\nEmail can't contain '-' character\n");
+                            continue;
+                        }
+                        else if(!newEmail.contains("@") || !newEmail.contains(".")) {
+                            System.out.println("\nInvalid email\n");
+                            continue;
+                        }
                         lecturer.setEmail(newEmail);
                         System.out.println("Email updated successfully");
                     } else if (updateAnswer == 4) { // update phone
                         System.out.print("Enter new phone: ");
                         String newPhone = input.nextLine().trim();
+                        if(newPhone.equals("-")) {
+                            System.out.println("\nPhone can't contain '-' character\n");
+                            continue;
+                        }
                         lecturer.setPhone(newPhone);
                         System.out.println("Phone updated successfully");
                     } else if (updateAnswer == 0) {

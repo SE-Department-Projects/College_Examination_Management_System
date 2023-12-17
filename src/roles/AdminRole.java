@@ -50,7 +50,11 @@ public class AdminRole {
                                 
                                 if(LecUsername.equals("empty"))
                                 {
-                                    System.out.println("\nCan't add lecturer with username empty ");
+                                    System.out.println("\nCan't add lecturer with username empty\n");
+                                    break;
+                                }
+                                else if(LecUsername.contains("-") || LecPassword.contains("-")){
+                                    System.out.println("\nCan't add lecturer with username or password contains '-' Character ");
                                     break;
                                 }
 
@@ -68,7 +72,7 @@ public class AdminRole {
 
                                 lecIndex = LecturerManagement.findLecIndex(lecID);
                                 if (lecIndex == -1) {
-                                    System.out.println("\n------ the lecturer not found ----\n");
+                                    System.out.println("\n------ Lecturer not found ------\n");
                                 } else {
                                     System.out.println(LecturerManagement.deleteLecturer(lecID) ? "\n-------- lecturer deleted success --------\n" : "\n------- failure to delete lecturer------\n");
                                 }
@@ -80,7 +84,7 @@ public class AdminRole {
 
                                 lecIndex = LecturerManagement.findLecIndex(lecID);
                                 if (lecIndex == -1) {
-                                    System.out.println("\n------ the lecturer not found ----\n");
+                                    System.out.println("\n------ Lecturer not found ------\n");
                                 } else {
                                     Lecturer lecturer = LecturerManagement.searchLecturer(lecIndex);
                                     if (lecturer.getUserName().equals("empty") && lecturer.getPassword().equals("empty")) {
@@ -96,8 +100,9 @@ public class AdminRole {
                             case 4: // lecturer list
 
                                 if (LecturerManagement.getLecturersArr().isEmpty()) {
-                                    System.out.println("------- there is no lecturers in the system -------");
-                                } else {
+                                    System.out.println("\n------- there is no lecturers in the system -------");
+                                } 
+                                else {
                                     System.out.println("------- the lecturers in the system -------");
                                     System.out.printf("%-10s%-16s%-25s%-30s\n", "id", "name", "password", "subject");
 
@@ -127,26 +132,36 @@ public class AdminRole {
                                         if (updateOP == 1) {
                                             System.out.print("enter the new Username: ");
                                             String newUsername = input.nextLine().toLowerCase().trim();
-                                            int update = lecturer.setUserName(newUsername);
-                                            if (update == -1) {
-                                                System.out.println("\nCan't change username to empty");
-                                            } else if (update == -2) {
-                                                System.out.println("\nThis username already exists");
-                                            } else {
-                                                System.out.println("\nUsername updated successfully");
+                                            if(newUsername.contains("-")){
+                                                System.out.println("\nUsername can't contain '-' Character\n");
+                                            }
+                                            else{
+                                                int update = lecturer.setUserName(newUsername);
+                                                if (update == -1) {
+                                                    System.out.println("\nCan't change username to empty");
+                                                } else if (update == -2) {
+                                                    System.out.println("\nThis username already exists");
+                                                } else {
+                                                    System.out.println("\nUsername updated successfully");
+                                                }
                                             }
                                         } else if (updateOP == 2) {
                                             System.out.print("enter the new password: ");
                                             String newPassword = input.nextLine().trim();
-                                            lecturer.setPassword(newPassword);
-                                            System.out.println("Password updated successfully");
+                                            if(newPassword.contains("-")){
+                                                System.out.println("\nPassword can't contain '-' Character\n");
+                                            }
+                                            else{
+                                                lecturer.setPassword(newPassword);
+                                                System.out.println("Password updated successfully");
+                                            }
                                         } else if (updateOP == 0) {
                                             break;
                                         } else {
                                             System.out.println("this operation not exist");
                                         }
                                     } else {
-                                        System.out.println("this lecturer ID is not found");
+                                        System.out.println("\nLecturer not found\n");
                                         do {
                                             System.out.println("1=> try again");
                                             System.out.println("0=> back");
@@ -189,6 +204,10 @@ public class AdminRole {
                                         System.out.println("You are now adding subject to " + lecturer.getUserName() + "\n");
                                         System.out.println("Here are the list of subjects");
                                         for (Subject subjects : SubjectManagement.getSubjectArrayList()) {
+                                            if(subjects.getSubjectName().equals("empty") && subjects.getSubjectCode().equals("empty-0"))
+                                            {
+                                                continue;
+                                            }
                                             System.out.println(subjects.getSubjID() + "=> " + subjects.getSubjectName());
                                         }
                                         System.out.print("Enter subject ID: ");
@@ -199,12 +218,19 @@ public class AdminRole {
                                             break;
                                         } else {
                                             Subject subject = SubjectManagement.searchSubject(subIndex);
-                                            if (lecturer.getLecturerSubjects().contains(subject)) {
-                                                System.out.println("\nthis subject is already assigned to this lecturer");
+                                            if(subject.getSubjectName().equals("empty") && subject.getSubjectCode().equals("empty-0"))
+                                            {
+                                                System.out.println("\nSubject not found");
                                                 break;
-                                            } else {
-                                                boolean isAssigned = SubjectManagement.assignSubjectToLecturer(subject, lecID);
-                                                System.out.println(isAssigned ? "\nsubject assigned successfully" : "\nfailure to assign subject");
+                                            }
+                                            else{
+                                                if (lecturer.getLecturerSubjects().contains(subject)) {
+                                                    System.out.println("\nthis subject is already assigned to this lecturer");
+                                                    break;
+                                                } else {
+                                                    boolean isAssigned = SubjectManagement.assignSubjectToLecturer(subject, lecID);
+                                                    System.out.println(isAssigned ? "\nsubject assigned successfully" : "\nfailure to assign subject");
+                                                }
                                             }
                                         }
                                         break;
@@ -305,7 +331,12 @@ public class AdminRole {
 
                                 if(stdUsername.equals("empty"))
                                 {
-                                    System.out.println("\nCan't add student with username empty ");
+                                    System.out.println("\nCan't add student with username empty\n");
+                                    break;
+                                }
+                                else if(stdUsername.contains("-") || stdPassword.contains("-"))
+                                {
+                                    System.out.println("\nCan't add student with username or password contains '-' Character\n");
                                     break;
                                 }
 
@@ -321,7 +352,7 @@ public class AdminRole {
                                 System.out.print("Enter student id to delete: ");
                                 stdID = Functions.readPositiveInt();
 
-                                System.out.println(StudentManagement.deleteStd(stdID) ? "\n-------- student deleted success --------\n" : "\n-------the Student not found ------\n");
+                                System.out.println(StudentManagement.deleteStd(stdID) ? "\n-------- Student deleted successfully --------\n" : "\n------- Student not found ------\n");
 
                                 break;
 
@@ -331,7 +362,7 @@ public class AdminRole {
 
                                 int index = StudentManagement.findStdIndex(stdID);
                                 if (index == -1) {
-                                    System.out.println("\n------ the Student not found ------\n");
+                                    System.out.println("\n------ Student not found ------\n");
                                 } else {
                                     Student student = StudentManagement.searchStd(index);
                                     if (student.getUserName().equals("empty") && student.getPassword().equals("empty")) {
@@ -352,7 +383,7 @@ public class AdminRole {
                             case 4: // students list
 
                                 if (StudentManagement.getStudentArray().isEmpty()) {
-                                    System.out.println("there is no students in the system");
+                                    System.out.println("\nthere is no students in the system");
                                 } else {
                                     System.out.println("--- students in the system --- ");
                                     System.out.printf("%-10s%-16s%-25s%-30s\n", "id", "name", "password", "subject(s)");
@@ -384,27 +415,37 @@ public class AdminRole {
 
                                             System.out.print("enter the new Username: ");
                                             String newUsername = input.nextLine().toLowerCase().trim();
-                                            int update = student.setUserName(newUsername);
-                                            if (update == -1) {
-                                                System.out.println("\nCan't change username to empty");
-                                            } else if (update == -2) {
-                                                System.out.println("\nThis username already exists");
-                                            } else {
-                                                System.out.println("\nUsername updated successfully");
+                                            if(newUsername.contains("-")){
+                                                System.out.println("\nUsername can't contain '-' Character\n");
+                                            }
+                                            else{
+                                                int update = student.setUserName(newUsername);
+                                                if (update == -1) {
+                                                    System.out.println("\nCan't change username to empty");
+                                                } else if (update == -2) {
+                                                    System.out.println("\nThis username already exists");
+                                                } else {
+                                                    System.out.println("\nUsername updated successfully");
+                                                }
                                             }
                                         } else if (updateOP == 2) {
 
                                             System.out.print("enter the new password: ");
                                             String newPassword = input.nextLine().trim();
-                                            student.setPassword(newPassword);
-                                            System.out.println("Password updated successfully");
+                                            if(newPassword.contains("-")){
+                                                System.out.println("\nPassword can't contain '-' Character\n");
+                                            }
+                                            else{
+                                                student.setPassword(newPassword);
+                                                System.out.println("Password updated successfully");
+                                            }
                                         } else if (updateOP == 0) {
                                             break;
                                         } else {
                                             System.out.println("this operation not exist");
                                         }
                                     } else {
-                                        System.out.println("this student ID is not exist");
+                                        System.out.println("\nStudent not found\n");
 
                                         do {
                                             System.out.println("1=> try again");
@@ -449,22 +490,31 @@ public class AdminRole {
                                         System.out.println("You are now adding subject to " + student.getUserName() + "\n");
                                         System.out.println("Here are the list of subjects");
                                         for (Subject subjects : SubjectManagement.getSubjectArrayList()) {
+                                            if (subjects.getSubjectName().equals("empty") && subjects.getSubjectCode().equals("empty-0")) {
+                                                continue;
+                                            }
                                             System.out.println(subjects.getSubjID() + "=> " + subjects.getSubjectName());
                                         }
                                         System.out.print("enter subject ID: ");
                                         subID = Functions.readPositiveInt();
                                         int subIndex = SubjectManagement.findSubjIndex(subID);
                                         if (subIndex == -1) {
-                                            System.out.println("\nsubject not found");
+                                            System.out.println("\nSubject not found");
                                             break;
                                         } else {
                                             Subject subject = SubjectManagement.searchSubject(subIndex);
-                                            if (student.getSubjects().contains(subject)) {
-                                                System.out.println("\nthis subject is already assigned to this student");
+                                            if (subject.getSubjectName().equals("empty") && subject.getSubjectCode().equals("empty-0")){
+                                                System.out.println("\nSubject not found");
                                                 break;
-                                            } else {
-                                                boolean isAssigned = SubjectManagement.assignSubjectToStudent(subject, stdID);
-                                                System.out.println(isAssigned ? "\nsubject assigned successfully" : "\nfailure to assign subject");
+                                            }
+                                            else{
+                                                if (student.getSubjects().contains(subject)) {
+                                                    System.out.println("\nthis subject is already assigned to this student");
+                                                    break;
+                                                } else {
+                                                    boolean isAssigned = SubjectManagement.assignSubjectToStudent(subject, stdID);
+                                                    System.out.println(isAssigned ? "\nsubject assigned successfully" : "\nfailure to assign subject");
+                                                }
                                             }
                                         }
                                         break;
@@ -558,6 +608,10 @@ public class AdminRole {
 
                                 System.out.print("Enter subject name: ");
                                 String subjectName = input.nextLine().toLowerCase().trim();
+                                if(subjectName.contains(",")){
+                                    System.out.println("\nSubject name can't contain ',' Character\n");
+                                    break;
+                                }
 
                                 System.out.print("enter subject code: ");
                                 int subjCode = Functions.readPositiveInt();
@@ -587,7 +641,7 @@ public class AdminRole {
                                 } else {
                                     Subject subject = SubjectManagement.searchSubject(index);
                                     if (subject.getSubjectName().equals("empty") && subject.getSubjectCode().equals("empty-0")) {
-                                        System.out.println("\n------the subject not found----\n");
+                                        System.out.println("\n------ Subject not found ------\n");
                                         break;
                                     }
 
@@ -601,17 +655,22 @@ public class AdminRole {
                                 break;
 
                             case 4: // subject list
-                                System.out.println("--- the subjects in the system ");
-                                System.out.printf("%-10s%-16s%-25s%-30s\n", "id", "subject name", "subject code", "lecturer ID");
-                                for (Subject sub : SubjectManagement.getSubjectArrayList()) {
-                                    if (sub.getSubjectName().equals("empty") && sub.getSubjectCode().equals("empty-0")) {
-                                        continue;
+                                if (SubjectManagement.getSubjectArrayList().isEmpty()) {
+                                    System.out.println("\n------- there is no subjects in the system -------");
+                                } 
+                                else{
+                                    System.out.println("--- the subjects in the system ");
+                                    System.out.printf("%-10s%-16s%-25s%-30s\n", "id", "subject name", "subject code", "lecturer ID");
+                                    for (Subject sub : SubjectManagement.getSubjectArrayList()) {
+                                        if (sub.getSubjectName().equals("empty") && sub.getSubjectCode().equals("empty-0")) {
+                                            continue;
+                                        }
+
+                                        System.out.printf("%-10s%-16s%-25s", sub.getSubjID(), sub.getSubjectName(), sub.getSubjectCode());
+
+                                        System.out.printf("%-30s\n", sub.getLecturersID().isEmpty() ?
+                                                "No Lecturer Assigned" : sub.getLecturersIdAsString());
                                     }
-
-                                    System.out.printf("%-10s%-16s%-25s", sub.getSubjID(), sub.getSubjectName(), sub.getSubjectCode());
-
-                                    System.out.printf("%-30s\n", sub.getLecturersID().isEmpty() ?
-                                            "No Lecturer Assigned" : sub.getLecturersIdAsString());
                                 }
                                 break;
 
@@ -624,6 +683,10 @@ public class AdminRole {
                                 {
                                     System.out.print("enter the new subject name: ");
                                     String subNewName = input.nextLine().toLowerCase().trim();
+                                    if(subNewName.contains(",")){
+                                        System.out.println("\nSubject name can't contain ',' Character\n");
+                                        continue;
+                                    }
                                     System.out.print("enter the new subject code: ");
                                     int subjNewCode = Functions.readPositiveInt();
                                     String subNewCode = subNewName + "-" + subjNewCode;
@@ -663,21 +726,42 @@ public class AdminRole {
                         if (updateChoice == 1) {// update username
                             System.out.print("Enter new username: ");
                             String newUsername = input.nextLine().toLowerCase().trim();
+                            if(newUsername.contains("-")){
+                                System.out.println("\nUsername can't contain '-' Character\n");
+                                continue;
+                            }
                             admin.setUserName(newUsername);
                             System.out.println("\nUsername updated successfully\n");
                         } else if (updateChoice == 2) {  //update password
                             System.out.print("Enter new password: ");
                             String newPassword = input.nextLine().trim();
+                            if(newPassword.contains("-")){
+                                System.out.println("\nPassword can't contain '-' Character\n");
+                                continue;
+                            }
                             admin.setPassword(newPassword);
                             System.out.println("\nPassword updated successfully\n");
                         } else if (updateChoice == 3) { //update email
                             System.out.print("Enter new email: ");
                             String newEmail = input.nextLine().trim();
+                            if(newEmail.contains("-")){
+                                System.out.println("\nEmail can't contain '-' Character\n");
+                                continue;
+                            }
+                            else if(!newEmail.contains("@") || !newEmail.contains(".")) {
+                                System.out.println("\nInvalid email\n");
+                                continue;
+                            }
                             admin.setEmail(newEmail);
                             System.out.println("\nEmail updated successfully\n");
                         } else if (updateChoice == 4) { //update phone
                             System.out.print("enter new phone: ");
                             String newPhone = input.nextLine().trim();
+                            if(newPhone.contains("-")){
+                                System.out.println("\nPhone can't contain '-' Character\n");
+                                continue;
+                            }
+                            
                             admin.setPhone(newPhone);
                             System.out.println("\nPhone updated successfully\n");
                         } else if (updateChoice == 0) {  // back

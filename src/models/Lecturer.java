@@ -119,7 +119,7 @@ public class Lecturer extends Person {
             }
         }
         if (subjects.isEmpty())
-            subjects += "No exams";
+            subjects += "No exams\n";
         return subjects;
     }
 
