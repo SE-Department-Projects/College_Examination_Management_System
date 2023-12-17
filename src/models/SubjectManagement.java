@@ -16,7 +16,7 @@ public class SubjectManagement {
 
     public static int addSubject(String subjectName, String subjectCode) { // adds new subject to the list
         for (Subject subject : subjectArrayList) {
-            if (subject.getSubjectName().equals(subjectName)) {
+            if (subject.getSubjectName().equals(subjectName) && subject.getSubjectCode().equals(subjectCode)) {
                 return -1; // subjName already exists
             }
         }

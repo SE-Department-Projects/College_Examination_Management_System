@@ -512,7 +512,7 @@ public class AdminRole {
                                             } else if (answer == 0)
                                                 break;
                                             else
-                                                System.out.println("invalid input");
+                                                System.out.println("\ninvalid input\n");
                                             break;
                                         }
                                     }
@@ -525,7 +525,7 @@ public class AdminRole {
                                 break;
 
                             default:
-                                System.out.println("\ncan not find the operation");
+                                System.out.println("\nEnter a valid option\n");
                         }
                         if (op != 0) {
                             System.out.println("==========================================\n");
@@ -566,7 +566,7 @@ public class AdminRole {
                                 if (status != -1) {
                                     System.out.println("\n---- subject added successfully ----\n");
                                 } else {
-                                    System.out.println("\n Subject name already exists \n");
+                                    System.out.println("\n Subject already exists \n");
                                 }
                                 break;
 
@@ -574,7 +574,7 @@ public class AdminRole {
                                 System.out.print("Enter subject id to delete: ");
                                 subID = Functions.readPositiveInt();
 
-                                System.out.println(SubjectManagement.deleteSubject(subID) ? "\n-------- subject deleted success --------\n" : " the subject not exist");
+                                System.out.println(SubjectManagement.deleteSubject(subID) ? "\n-------- subject deleted success --------\n" : "\nSubject not found\n");
                                 break;
 
                             case 3: //search subject
@@ -628,11 +628,11 @@ public class AdminRole {
                                     int subjNewCode = Functions.readPositiveInt();
                                     String subNewCode = subNewName + "-" + subjNewCode;
                                     boolean isUpdated = SubjectManagement.updateSubject(subjectIndex, subNewName, subNewCode);
-                                    System.out.println(isUpdated ? "\nsubject updated successfully" : "failure to update bec this code is exist\n");
+                                    System.out.println(isUpdated ? "\nSubject updated successfully\n" : "\nSubject already exists\n");
                                 }
                                 else
                                 {
-                                    System.out.println("this subject id not exist");
+                                    System.out.println("\nSubject not found\n");
                                 }
 
                                 break;
@@ -643,7 +643,7 @@ public class AdminRole {
                                 break;
 
                             default:
-                                System.out.println("can not find the operation");
+                                System.out.println("\nEnter a valid option\n");
                         }
 
                         if (op != 0) {
@@ -664,44 +664,43 @@ public class AdminRole {
                             System.out.print("Enter new username: ");
                             String newUsername = input.nextLine().toLowerCase().trim();
                             admin.setUserName(newUsername);
-                            System.out.println("Username updated successfully");
+                            System.out.println("\nUsername updated successfully\n");
                         } else if (updateChoice == 2) {  //update password
                             System.out.print("Enter new password: ");
                             String newPassword = input.nextLine().trim();
                             admin.setPassword(newPassword);
-                            System.out.println("Password updated successfully");
+                            System.out.println("\nPassword updated successfully\n");
                         } else if (updateChoice == 3) { //update email
                             System.out.print("Enter new email: ");
                             String newEmail = input.nextLine().trim();
                             admin.setEmail(newEmail);
-                            System.out.println("Email updated successfully");
+                            System.out.println("\nEmail updated successfully\n");
                         } else if (updateChoice == 4) { //update phone
                             System.out.print("enter new phone: ");
                             String newPhone = input.nextLine().trim();
                             admin.setPhone(newPhone);
-                            System.out.println("Phone updated successfully");
+                            System.out.println("\nPhone updated successfully\n");
                         } else if (updateChoice == 0) {  // back
                             // isBackChosen = true;
                             break;
                         } else {
-                            System.out.println("Enter a valid option");
+                            System.out.println("\nEnter a valid option\n");
                         }
                     }
                 } else if (optionsAnswer == 6) { //Polymorphism
                     Admin.emptyAllUsers();
                     Admin.FillUsers(admin);
-                    int usersCount = Person.getUsersCount();
+                    int usersCount = 0;
                     for (Person person : Admin.getAllUsers()) { // here polymorphism is used
-                        if(!person.getUserName().equals("empty"))
+                        if(!person.getUserName().equals("empty")){
                             System.out.println(person.getBriefInfo());
-                        else
-                            usersCount--;
+                            usersCount++;
+                        }
                     }
                     System.out.println("\nSystem has a total of " + usersCount + " users \n");
                 } 
                 else {
-                    System.out.print("enter valid option to manage or 0 to exit: ");
-                    optionsAnswer = Functions.readPositiveORZeroInt();
+                    System.out.println("\nEnter valid option\n");
                 }
                 break;
             }
