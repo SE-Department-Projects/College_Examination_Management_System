@@ -99,7 +99,7 @@ public class AdminRole {
 
                             case 4: // lecturer list
 
-                                if (LecturerManagement.getLecturersArr().isEmpty()) {
+                                if (LecturerManagement.isLecturersListEmpty()) {
                                     System.out.println("\n------- there is no lecturers in the system -------");
                                 } 
                                 else {
@@ -180,10 +180,10 @@ public class AdminRole {
                                 break;
 
                             case 6: // assign subject (lecturer)
-                                if (LecturerManagement.getLecturersArr().isEmpty()) {
+                                if (LecturerManagement.isLecturersListEmpty()) {
                                     System.out.println("\nthere are no lecturers in the system, Please add a lecturer first!");
                                     break;
-                                } else if (SubjectManagement.getSubjectArrayList().isEmpty()) {
+                                } else if (SubjectManagement.isSubjectListEmpty()) {
                                     System.out.println("\nthere are no subjects in the system, Please add a subject first!");
                                     break;
                                 } else {
@@ -239,7 +239,7 @@ public class AdminRole {
 
 
                             case 7: // unassign subject (lecturer)
-                                if (LecturerManagement.getLecturersArr().isEmpty()) {
+                                if (LecturerManagement.isLecturersListEmpty()) {
                                     System.out.println("\nthere are no lecturers in the system, Please add a lecturer first!");
                                     break;
                                 } else {
@@ -382,7 +382,7 @@ public class AdminRole {
 
                             case 4: // students list
 
-                                if (StudentManagement.getStudentArray().isEmpty()) {
+                                if (StudentManagement.isStudentListEmpty()) {
                                     System.out.println("\nthere is no students in the system");
                                 } else {
                                     System.out.println("--- students in the system --- ");
@@ -466,10 +466,10 @@ public class AdminRole {
 
 
                             case 6: // assign subject (student)
-                                if (StudentManagement.getStudentArray().isEmpty()) {
+                                if (StudentManagement.isStudentListEmpty()) {
                                     System.out.println("\nthere are no students in the system, Please add a student first!");
                                     break;
-                                } else if (SubjectManagement.getSubjectArrayList().isEmpty()) {
+                                } else if (SubjectManagement.isSubjectListEmpty()) {
                                     System.out.println("\nthere are no subjects in the system, Please add a subject first!");
                                     break;
                                 } else {
@@ -523,7 +523,7 @@ public class AdminRole {
 
 
                             case 7: // unassign subject (student)
-                                if (StudentManagement.getStudentArray().isEmpty()) {
+                                if (StudentManagement.isStudentListEmpty()) {
                                     System.out.println("\nthere are no students in the system, Please add a student first!");
                                     break;
                                 } else {
@@ -655,9 +655,9 @@ public class AdminRole {
                                 break;
 
                             case 4: // subject list
-                                if (SubjectManagement.getSubjectArrayList().isEmpty()) {
+                                if (SubjectManagement.isSubjectListEmpty()) {
                                     System.out.println("\n------- there is no subjects in the system -------");
-                                } 
+                                }
                                 else{
                                     System.out.println("--- the subjects in the system ");
                                     System.out.printf("%-10s%-16s%-25s%-30s\n", "id", "subject name", "subject code", "lecturer ID");
@@ -717,6 +717,8 @@ public class AdminRole {
 
                     Files.subjectsFileWriter();
                     Files.allSubjectsIdExamFileWriter();
+                    Files.studentIdSubjectFileWriter();
+                    Files.lecturerIdSubjectFileWriter();
                 } else if (optionsAnswer == 4) {// see personal info
                     System.out.println("\n" + admin.toString() + "\n");
                     break;

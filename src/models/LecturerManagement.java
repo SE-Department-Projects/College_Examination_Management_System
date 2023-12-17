@@ -152,5 +152,16 @@ public class LecturerManagement {
     }
 
 
+
+    public static boolean isLecturersListEmpty(){
+        for(Lecturer lecturer : lecturersArr){
+            if(!lecturer.getUserName().equals("empty")){
+                return false;
+            }
+        }
+        return true;
+    }
+
+
 }
 

@@ -21,7 +21,7 @@ public class Files {
 
         String reportsHeadsData = reportsHeadsFileHandler.readFile();
 
-        if (reportsHeadsData != ""){ // if the file is not empty
+        if (!reportsHeadsData.isEmpty()){ // if the file is not empty
             String[] reportsHeads = reportsHeadsData.split("\n"); // split the data into lines
             for (String line : reportsHeads) { // loop through the lines
                 String[] data = line.split(","); // split the line into reportID, subjectID, date
@@ -40,7 +40,7 @@ public class Files {
 
         String reportData = reportFileHandler.readFile();
 
-        if (reportData != ""){ // if the file is not empty
+        if (!reportData.isEmpty()){ // if the file is not empty
             String[] report = reportData.split("\n"); // split the data into lines
             int subjectID = Integer.parseInt(report[0]);
             String lecName = report[1];
@@ -69,7 +69,7 @@ public class Files {
 
         String adminData = adminFileHandler.readFile();
 
-        if (adminData != ""){ // if the file is not empty
+        if (!adminData.isEmpty()){ // if the file is not empty
             adminData = adminData.trim();
             if(adminData.matches("\\w+-.+-.+-.+")){ // pattern to match the format of the file (userName-password-email-phone)
                 String[] data = adminData.split("-"); // split the data into userName, password, email, phone
@@ -95,7 +95,7 @@ public class Files {
 
         String lecturersData = lecturerFileHandler.readFile(); // read the file
 
-        if (lecturersData != "") { // if the file is not empty
+        if (!lecturersData.isEmpty()) { // if the file is not empty
 
             String[] lecturers = lecturersData.split("\n"); // split the data into lines
             for (String line : lecturers) { // loop through the lines
@@ -120,7 +120,7 @@ public class Files {
 
         String studentsData = studentFileHandler.readFile(); // read the file
 
-        if(studentsData != ""){ // if the file is not empty
+        if(!studentsData.isEmpty()){ // if the file is not empty
 
             String[] students = studentsData.split("\n"); // split the data into lines
 
@@ -148,7 +148,7 @@ public class Files {
 
         String subjectsData = subjectsFileHandler.readFile(); // read the file
 
-        if(subjectsData != ""){ // if the file is not empty
+        if(!subjectsData.isEmpty()){ // if the file is not empty
 
             String[] subjects = subjectsData.split("\n"); // split the data into lines
 
@@ -178,7 +178,7 @@ public class Files {
 
             String stdSubjData = stdSubjFileHandler.readFile(); // read the file
 
-            if(stdSubjData != ""){ // if the file is not empty
+            if(!stdSubjData.isEmpty()){ // if the file is not empty
 
                 String[] stdSubjs = stdSubjData.split("\n"); // split the data into lines
 
@@ -228,7 +228,7 @@ public class Files {
 
             String lecSubjData = lecSubjFileHandler.readFile(); // read the file
 
-            if(lecSubjData != ""){ // if the file is not empty
+            if(!lecSubjData.isEmpty()){ // if the file is not empty
 
                 String[] lecSubjs = lecSubjData.split("\n"); // split the data into lines
 
@@ -261,7 +261,7 @@ public class Files {
 
             String subExamData = subExamFileHandler.readFile(); // read the file
 
-            if(subExamData != ""){ // if the file is not empty
+            if(!subExamData.isEmpty()){ // if the file is not empty
 
                 String[] subExams = subExamData.split("\n"); // split the data into lines
                 if(subExams[0].matches("-*\\d{1}")){

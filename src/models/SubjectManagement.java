@@ -58,6 +58,12 @@ public class SubjectManagement {
         int index = findSubjIndex(id); // returns the index of the subject if it exist , else returns -1
         if (index != -1) {
             Subject sub = searchSubject(index);
+            for(Lecturer lecturer : LecturerManagement.getLecturersArr()){
+                lecturer.delSubject(sub);
+            }
+            for(Student student : StudentManagement.getStudentArray()){
+                student.delSubject(sub);
+            }
             int subID = sub.getSubjID();
             subjectArrayList.remove(sub);
             subjectArrayList.add(index, new Subject(subID, "empty", "empty-0"));
@@ -150,6 +156,15 @@ public class SubjectManagement {
         subjectArrayList.get(subIndex).setSubjectCode(newSubjectCode);
         return true;
 
+    }
+
+    public static boolean isSubjectListEmpty(){
+        for(Subject subject : subjectArrayList){
+            if(!subject.getSubjectName().equals("empty")){
+                return false;
+            }
+        }
+        return true;
     }
 
 }

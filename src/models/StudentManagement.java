@@ -103,4 +103,15 @@ public class StudentManagement {
     public static ArrayList<Student> getStudentArray() {
         return studentArray;
     }
+
+
+
+    public static boolean isStudentListEmpty() {
+        for (Student student : studentArray) {
+            if (!student.getUserName().equals("empty")) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
