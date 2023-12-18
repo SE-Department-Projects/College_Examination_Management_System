@@ -73,8 +73,14 @@ public class AdminRole {
                                 lecIndex = LecturerManagement.findLecIndex(lecID);
                                 if (lecIndex == -1) {
                                     System.out.println("\n------ Lecturer not found ------\n");
-                                } else {
-                                    System.out.println(LecturerManagement.deleteLecturer(lecID) ? "\n-------- lecturer deleted success --------\n" : "\n------- failure to delete lecturer------\n");
+                                }
+                                else {
+                                    Lecturer lecturer = LecturerManagement.searchLecturer(lecIndex);
+                                    if(lecturer.getUserName().equals("empty")){
+                                        System.out.println("\n------ Lecturer not found ------\n");
+                                        break;
+                                    }
+                                        System.out.println(LecturerManagement.deleteLecturer(lecID) ? "\n-------- lecturer deleted success --------\n" : "\n------- failure to delete lecturer ------\n");
                                 }
                                 break;
 
@@ -128,6 +134,10 @@ public class AdminRole {
                                     lecIndex = LecturerManagement.findLecIndex(lecID);
                                     if (lecIndex != -1) {
                                         Lecturer lecturer = LecturerManagement.searchLecturer(lecIndex);
+                                        if(lecturer.getUserName().equals("empty")){
+                                            System.out.println("\n------ Lecturer not found ------\n");
+                                            break;
+                                        }
                                         int updateOP = Menus.adminUpdateUsersInfo();
                                         if (updateOP == 1) {
                                             System.out.print("enter the new Username: ");
@@ -160,6 +170,7 @@ public class AdminRole {
                                         } else {
                                             System.out.println("this operation not exist");
                                         }
+                                    
                                     } else {
                                         System.out.println("\nLecturer not found\n");
                                         do {
@@ -352,7 +363,21 @@ public class AdminRole {
                                 System.out.print("Enter student id to delete: ");
                                 stdID = Functions.readPositiveInt();
 
-                                System.out.println(StudentManagement.deleteStd(stdID) ? "\n-------- Student deleted successfully --------\n" : "\n------- Student not found ------\n");
+                                int stdIndex = StudentManagement.findStdIndex(stdID);
+                                if(stdIndex == -1)
+                                {
+                                    System.out.println("\n------ Student not found ------\n");
+                                }
+                                else {
+                                    Student student = StudentManagement.searchStd(stdIndex);
+                                    if(student.getUserName().equals("empty"))
+                                    {
+                                        System.out.println("\n------ Student not found ------\n");
+                                        break;
+                                    }
+                                    System.out.println(StudentManagement.deleteStd(stdID) ? "\n-------- Student deleted successfully --------\n" : "\n------- Student not found ------\n");
+                                }
+
 
                                 break;
 
@@ -402,7 +427,7 @@ public class AdminRole {
 
                             case 5: // update (student)
 
-                                int stdIndex = -1;
+                                stdIndex = -1;
                                 int validInput= 1;
                                 do {
                                     System.out.print("enter student ID to update this info: ");
@@ -410,7 +435,12 @@ public class AdminRole {
                                     stdIndex = StudentManagement.findStdIndex(stdID);
                                     if (stdIndex != -1) {
                                         Student student = StudentManagement.searchStd(stdIndex);
+                                        if(student.getUserName().equals("empty")){
+                                            System.out.println("\n------ Student not found ------\n");
+                                            break;
+                                        }
                                         int updateOP = Menus.adminUpdateUsersInfo();
+
                                         if (updateOP == 1) {
 
                                             System.out.print("enter the new Username: ");
@@ -628,7 +658,19 @@ public class AdminRole {
                                 System.out.print("Enter subject id to delete: ");
                                 subID = Functions.readPositiveInt();
 
-                                System.out.println(SubjectManagement.deleteSubject(subID) ? "\n-------- subject deleted success --------\n" : "\nSubject not found\n");
+                                int subIndex = SubjectManagement.findSubjIndex(subID);
+                                if (subIndex == -1) {
+                                    System.out.println("\n------ Subject not found ------\n");
+                                } else {
+                                    Subject subject = SubjectManagement.searchSubject(subIndex);
+                                    if(subject.getSubjectName().equals("empty"))
+                                    {
+                                        System.out.println("\n------ Subject not found ------\n");
+                                        break;
+                                    }
+                                    System.out.println(SubjectManagement.deleteSubject(subID) ? "\n-------- subject deleted success --------\n" : "\nSubject not found\n");
+                                }
+
                                 break;
 
                             case 3: //search subject
@@ -681,6 +723,12 @@ public class AdminRole {
 
                                 if(subjectIndex!= -1)
                                 {
+                                    Subject subject = SubjectManagement.searchSubject(subjectIndex);
+                                    if(subject.getSubjectName().equals("empty"))
+                                    {
+                                        System.out.println("\nSubject not found\n");
+                                        break;
+                                    }
                                     System.out.print("enter the new subject name: ");
                                     String subNewName = input.nextLine().toLowerCase().trim();
                                     if(subNewName.contains(",")){
