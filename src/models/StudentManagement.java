@@ -55,20 +55,6 @@ public class StudentManagement {
         return -1;
     }
 
-  // -------------------------- find is that the student exist or not ----------------------
-
-    //TODO del later
-    // public static boolean isfound(int studentID)
-    // {
-    //     for (Student std : studentArray) {
-    //         if (std.getID() == studentID)
-    //         {
-    //             return true;
-    //         }
-
-    //     }
-    //     return false;
-    // }
 
 
 //-------------------SEARCH STUDENT--------------------------------------------
