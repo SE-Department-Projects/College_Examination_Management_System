@@ -91,18 +91,6 @@ public class LecturerManagement {
         return -1;
     }
 
-    // ------------------------------ check that is the lecturer is found or not ---------------------------------------
-
-    //TODO del later
-    // public static  boolean isFound(int lecID)
-    // {
-    //     for (Lecturer lec: lecturersArr) {
-    //         if(lec.getID() == lecID)
-    //             return true;
-    //     }
-    //     return  false;
-    // }
-
 
     //-------------------SEARCH LECTURER--------------------------------------------
 
